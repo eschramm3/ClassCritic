@@ -76,3 +76,7 @@ select {
 	width: 28px;
 	margin: 10px 21px 10px 2px;
 }
+#login-btn {
+	float: right;
+	margin-right: 4px 40px 4px 1px;
+}

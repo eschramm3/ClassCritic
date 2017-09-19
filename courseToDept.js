@@ -58,7 +58,7 @@ const ATTRS = {
     [artSciAttrKey]: artSciAttrs,
     [artSciIQAttrKey]: artSciIQAttrs
 };
-    
+
 let dictionary = {};
 for (let i = 0; i < engineeringDeptNameArray.length; i++) {
     dictionary[engineeringDeptNameArray[i]] = engineeringDeptCodeArray[i];
@@ -71,7 +71,7 @@ for (let i = 0; i < artSciDeptNameArray.length; i++) {
 for (let i = 0; i < olinDeptNameArray.length; i++) {
     dictionary[olinDeptNameArray[i]] = olinDeptCodeArray[i];
 }
-    
+
 function getCodeFromDeptName(name) {
     return dictionary[name];
 }
@@ -82,12 +82,37 @@ const depts = {
     business: olinDeptNameArray
 };   
 
-$(function() {
+$(() => {
+    let loggedIn = false;
+    let userId;
+    const checkLoginState = () => {
+        FB.getLoginStatus((response) => {
+            if (response.status === 'connected') {
+                loggedIn = true;
+                console.log("logged in");
+            /*
+                authResponse: {
+                    accessToken: '...',
+                    expiresIn:'...',
+                    signedRequest:'...',
+                    userID:'...'
+                }
+                */
+                userId = response.authResponse.userID;
+            }
+            else {
+                loggedIn = false;
+            // to open dialog call FB.login()
+        }
+    });
+    };
+
+    const url = "http://Ratemycourse-env.dxtgyiksq8.us-east-2.elasticbeanstalk.com";
     let curr_school = $('#school option:selected').attr("id");
     let curr_dept = $('#dept option:selected').attr("id");
     console.log(curr_school);
     
-    $('#school').on('change', function() {
+    $('#school').on('change', () => {
         curr_school = $('#school option:selected').attr("id");
         // set dept to all
         $('#dept').empty().append('<option id="all" selected="selected">All</option>');
@@ -100,12 +125,30 @@ $(function() {
         }
     });
 
-    $('#dept').on('change', function() {
+    $('#dept').on('change', () => {
         curr_dept = $('#dept option:selected').attr("id"); 
         console.log(curr_dept);
 
     });
 
+    const getProducts = () => { 
+        $.ajax({
+            type : "POST",
+            contentType : "application/json",
+            url : url + "/query",
+            dataType : 'json',
+            timeout : 100000,
+            success : function(data) {
+                // now you have "data" which is in json format-same data that is displayed on browser.
+            },
+            error : function(e) {
+                //do something
+            },
+            done : function(e) {
+                //do something
+            }
+        });
+    }
 
 
     
