@@ -13,6 +13,7 @@ public class Course {
 	@Id
 	private long id;
 	private String key;
+	
 	private char school;
 	private String dept;
 	private String number;
