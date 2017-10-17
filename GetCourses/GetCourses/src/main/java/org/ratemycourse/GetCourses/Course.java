@@ -48,8 +48,8 @@ public class Course {
 		Iterator<Rating> ratingIterator = this.ratings.iterator();
 		while (ratingIterator.hasNext()) {
 			Rating currentRating = ratingIterator.next();
-			if (currentRating.getId().equals(r.getId())) {
-				currentRating.remove();
+			if (currentRating.getId() == (r.getId())) {
+				ratingIterator.remove();
 				--this.numScores;
 				this.sumOfScores -= r.getScore();
 				this.avgScore = this.sumOfScores / (double) this.numScores;
