@@ -1,6 +1,7 @@
 package org.ratemycourse.GetCourses;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,6 +14,7 @@ public class Course {
 	@Id
 	private long id;
 	private String key;
+	
 	private char school;
 	private String dept;
 	private String number;
@@ -43,7 +45,17 @@ public class Course {
 		this.avgScore = this.sumOfScores / (double) this.numScores;
 	}
 	public void deleteRating(Rating r) {
-		// TODO
+		Iterator<Rating> ratingIterator = this.ratings.iterator();
+		while (ratingIterator.hasNext()) {
+			Rating currentRating = ratingIterator.next();
+			if (currentRating.getId() == (r.getId())) {
+				ratingIterator.remove();
+				--this.numScores;
+				this.sumOfScores -= r.getScore();
+				this.avgScore = this.sumOfScores / (double) this.numScores;
+				continue;
+			}
+		}
 	}
 	public long getId() {
 		return id;
