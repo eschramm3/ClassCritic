@@ -1,6 +1,7 @@
 package org.ratemycourse.GetCourses;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,13 +14,13 @@ public class Course {
 	@Id
 	private long id;
 	private String key;
-	private char school;
+	private String school;
 	private String dept;
 	private String number;
 	private String name;
 	private String description;
-	private ArrayList<String> attrs;
-	private ArrayList<Rating> ratings;
+	private List<String> attrs;
+	private List<Rating> ratings;
 	private int sumOfScores;
 	private int numScores;
 	private double avgScore;
@@ -33,7 +34,7 @@ public class Course {
 	public double getAvgScore() {
 		return avgScore;
 	}
-	public ArrayList<Rating> getRatings() {
+	public List<Rating> getRatings() {
 		return ratings;
 	}
 	public void addRating(Rating r) {
@@ -61,11 +62,11 @@ public class Course {
 			this.key = key;
 		else throw new UnsupportedOperationException("You cannot change the course key once it has been set");
 	}
-	public char getSchool() {
+	public String getSchool() {
 		return school;
 	}
-	public void setSchool(char school) {
-		if (this.school == '\u0000')
+	public void setSchool(String school) {
+		if (this.school == "")
 			this.school = school;
 		else throw new UnsupportedOperationException("You cannot change the school once it has been set");
 	}
@@ -99,7 +100,7 @@ public class Course {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public ArrayList<String> getAttrs() {
+	public List<String> getAttrs() {
 		return attrs;
 	}
 	public void setAttrs(String[] attrs) {

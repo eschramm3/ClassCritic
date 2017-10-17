@@ -17,15 +17,31 @@ public class MainController {
 	private CourseRepository courseRepository;
 
 	@RequestMapping(path="/add", method=RequestMethod.POST)
-	public @ResponseBody String addNewUser (@RequestParam String name, @RequestParam String email) {
+	public @ResponseBody String addNewCourse (@RequestParam(value="id") int id, 
+			@RequestParam(value="name") String name, @RequestParam(value="school") String school, 
+			@RequestParam(value="dept") String dept, @RequestParam(value="number") String number,
+			@RequestParam(value="description") String description, @RequestParam(value="attrs") String attrs) {
 		// @ResponseBody means the returned String is the response, not a view name
 		// @RequestParam means it is a parameter from the GET or POST request
 
 		Course n = new Course();
+		n.setId(id);
+		n.setSchool(school);
+		n.setDept(dept);
+		n.setNumber(number);
+		n.setAttrs(new String[] {attrs});
 		n.setName(name);
+		n.setDescription(description);
+
 		courseRepository.save(n);
 		return "Saved";
 	}
+	
+//	@GetMapping(path="/get")
+//	public @ResponseBody Iterable<Course> getCourseData() {
+//		// returns JSON with the courses
+//		return courseRepository.
+//	}
 
 	@GetMapping(path="/all")
 	public @ResponseBody Iterable<Course> getAllCourses() {
