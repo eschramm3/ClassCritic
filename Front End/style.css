@@ -1,0 +1,90 @@
+nav {
+	background-color: #eaeaea;
+}
+
+body {
+	/*display: inline-block;*/
+}
+
+button {
+	background-color: #e1ebed;
+	color:#676768;
+	border-radius: 15px 50px 30px;
+}
+
+h1 {
+	color: #008CBA;
+}
+
+.contentContainer {
+	display: inline-block;
+}
+
+.sliderDummy {
+	margin-top: 2vh;
+	background-color: #e1ebed;
+}
+
+.carousel-inner {
+	height: 60vh;
+	widows: 100vw;
+	background-color: #e1ebed;
+}
+
+.carouselExampleControls {
+	margin-top: 2vh;
+}
+
+.btnContainer {
+	left: 45%;
+	margin-top: 2vh;
+	position: absolute;
+}
+
+.reviewBtn {
+	font-size: 20px;
+}
+
+.reviewBtn:hover {
+	background-color: #008CBA;
+	color: white;
+	transition: .75s;
+}
+
+/*.univHome {
+	margin-top: 7vh;
+	left: 30vw;
+	position: absolute;
+}*/
+
+.dropdown {
+	margin-top: 4vh;
+	left: 18vw;
+	position: absolute;
+}
+
+.container {
+	margin-top: 7vh;
+	position: absolute;
+}
+
+.home {
+	left: 30vw;
+}
+
+.search {
+	margin-left: 7vw;
+	margin-right: 7vw;
+	left: 10vw;
+}
+
+.message {
+	text-align: center;
+	color: #008CBA;
+}
+
+
+
+
+
+
