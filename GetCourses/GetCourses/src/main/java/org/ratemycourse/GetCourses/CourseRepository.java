@@ -1,5 +1,6 @@
 package org.ratemycourse.GetCourses;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,7 +11,7 @@ import org.ratemycourse.GetCourses.Course;
 //This will be AUTO IMPLEMENTED by Spring into a Bean called userRepository
 //CRUD refers Create, Read, Update, Delete
 @Repository
-public interface CourseRepository extends PagingAndSortingRepository<Course, Long> {
+public interface CourseRepository extends JpaRepository<Course, Long> {
 	
 //	List<Course> findByName(String name);
 //	List<Course> findBySchool(String school);
