@@ -1,9 +1,18 @@
 package org.ratemycourse.GetCourses;
 
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
+@Entity
 public class Rating {
 
+	@Id
 	private long id;
-	private long courseId;
+	@ManyToOne(targetEntity=Course.class, fetch=FetchType.EAGER)
+	private Course course;
+//	@ManyToOne
 	private long userId;
 	private int score;
 	private int workload;
@@ -25,13 +34,13 @@ public class Rating {
 			this.id = id;
 		else throw new UnsupportedOperationException("You cannot change the id once it has been set");
 	}
-	public long getCourseId() {
-		return courseId;
+	public Course getCourse() {
+		return course;
 	}
-	public void setCourseId(long courseId) {
-		if (this.courseId == 0)
-			this.courseId = courseId;
-		else throw new UnsupportedOperationException("You cannot change the id once it has been set");
+	public void setCourse(Course course) {
+		if (this.course == null)
+			this.course = course;
+		else throw new UnsupportedOperationException("You cannot change the course once it has been set");
 
 	}
 	public long getUserId() {

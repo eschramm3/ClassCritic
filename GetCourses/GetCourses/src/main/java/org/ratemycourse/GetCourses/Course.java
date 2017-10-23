@@ -1,12 +1,17 @@
 package org.ratemycourse.GetCourses;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity // This tells Hibernate to make a table out of this class
 public class Course {
@@ -19,12 +24,31 @@ public class Course {
 	private String number;
 	private String name;
 	private String description;
-	private List<String> attrs;
+	@ElementCollection(targetClass=String.class)
+	private Set<String> attrs;
+	@OneToMany(targetEntity=Rating.class, mappedBy="course", fetch=FetchType.EAGER)
 	private List<Rating> ratings;
 	private int sumOfScores;
 	private int numScores;
 	private double avgScore;
+	
+	public Course() {}
 
+	public Course(long id, String key, String school, String dept, String number, String name, String description,
+			Set<String> attrs) {
+		this.id = id;
+		this.key = key;
+		this.school = school;
+		this.dept = dept;
+		this.number = number;
+		this.name = name;
+		this.description = description;
+		this.attrs = attrs;
+		this.ratings = new ArrayList<>();
+		this.sumOfScores = 0;
+		this.numScores = 0;
+		this.avgScore = 0;
+	}
 	public int getSumOfScores() {
 		return sumOfScores;
 	}
@@ -100,11 +124,11 @@ public class Course {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public List<String> getAttrs() {
+	public Set<String> getAttrs() {
 		return attrs;
 	}
 	public void setAttrs(String[] attrs) {
-		this.attrs = new ArrayList<>(attrs.length);
+		this.attrs = new HashSet<>(attrs.length);
 		for (String a : attrs) {
 			this.attrs.add(a);
 		}
