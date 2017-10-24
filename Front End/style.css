@@ -22,6 +22,10 @@ select {
 	height: 40px;
 }
 
+a {
+	text-decoration: none;
+}
+
 .contentContainer {
 	display: inline-block;
 	margin-left: 10vw;
@@ -97,13 +101,55 @@ select {
 
 .searchDisplay {
 	margin-top: 50px;
+	display: none;
 }
 
 .individualClass {
-	background-color: silver;
+	/*background-color: silver;*/
+	border:solid silver;
 	margin-top: 10px;
 	margin-left:3.5vw;
 	
+}
+
+.indvidualClass:hover {
+	text-decoration: none;
+}
+
+.classNumber {
+	color: silver;
+}
+
+.classNumber:hover {
+	color: black;
+	text-decoration: none;
+}
+
+.className {
+	color: silver
+}
+.className:hover {
+	color: black;
+}
+
+.star {
+	color: silver;
+	height: 0px;
+	/*margin-top: 5px;*/
+	margin-bottom: 20px;
+}
+
+.star:hover {
+	color: #f4e842;
+	text-decoration: none;
+}
+
+.searchDisplay {
+	margin-left: 7vw;
+}
+
+.searchFooter {
+	margin-top: 10vh;
 }
 
 
