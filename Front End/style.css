@@ -16,8 +16,18 @@ h1 {
 	color: #008CBA;
 }
 
+select {
+	background-color: grey;
+	color: white;
+	height: 40px;
+}
+
 .contentContainer {
 	display: inline-block;
+	margin-left: 10vw;
+	margin-right: 7vw;
+	left: 10vw;
+	height: 10vh;
 }
 
 .sliderDummy {
@@ -58,9 +68,9 @@ h1 {
 }*/
 
 .dropdown {
-	margin-top: 4vh;
-	left: 18vw;
-	position: absolute;
+	
+	position: static;
+	display: inline-flex;
 }
 
 .container {
@@ -68,14 +78,12 @@ h1 {
 	position: absolute;
 }
 
-.home {
-	left: 30vw;
+.contentContainer {
+	display: inline-flex;
 }
 
-.search {
-	margin-left: 7vw;
-	margin-right: 7vw;
-	left: 10vw;
+.home {
+	left: 30vw;
 }
 
 .message {
@@ -83,6 +91,20 @@ h1 {
 	color: #008CBA;
 }
 
+.dropdownContainer {
+	display: inline-block;
+}
+
+.searchDisplay {
+	margin-top: 50px;
+}
+
+.individualClass {
+	background-color: silver;
+	margin-top: 10px;
+	margin-left:3.5vw;
+	
+}
 
 
 
