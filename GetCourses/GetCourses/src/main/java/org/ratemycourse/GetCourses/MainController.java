@@ -52,10 +52,11 @@ public class MainController {
 		}
 		else {
 			UniqueCourse uc = new UniqueCourse(val, Arrays.asList(c));
-			c.setParent(uc);
 			System.out.println("parent id: " + c.getParent().getId());
 			System.out.println("child key: " + ((Course) uc.getSames().toArray()[0]).getId());
+			courseRepository.save(c);
 			uniqueCourseRepository.save(uc);
+			c.setParent(uc);
 			courseRepository.save(c);
 		}
 		return "Saved";
