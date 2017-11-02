@@ -5,133 +5,123 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity // This tells Hibernate to make a table out of this class
 public class Course {
 
+	@ManyToOne(fetch = FetchType.LAZY)
+	@NotFound(action = NotFoundAction.IGNORE)
+	@JsonManagedReference
+	private UniqueCourse parent = new UniqueCourse();
+	private long commonVal;
 	@Id
-	private long id;
-	private String key;
+	private String id;
 	private String school;
 	private String dept;
-	private String number;
+	private String num;
 	private String name;
 	private String description;
 	@ElementCollection(targetClass=String.class)
 	private Set<String> attrs;
-	@OneToMany(targetEntity=Rating.class, mappedBy="course", fetch=FetchType.EAGER)
-	private List<Rating> ratings;
-	private int sumOfScores;
-	private int numScores;
-	private double avgScore;
+	private boolean isMain;
 	
 	public Course() {}
 
-	public Course(long id, String key, String school, String dept, String number, String name, String description,
-			Set<String> attrs) {
-		this.id = id;
-		this.key = key;
+	public Course(UniqueCourse parent, long commonVal, String school, String dept, String number, String name, 
+			String description, Set<String> attrs, boolean isMain) {
+		this.parent = parent;
+		this.commonVal = commonVal;
+		this.id = dept + "-" + number;
 		this.school = school;
 		this.dept = dept;
-		this.number = number;
+		this.num = number;
 		this.name = name;
 		this.description = description;
-		this.attrs = attrs;
-		this.ratings = new ArrayList<>();
-		this.sumOfScores = 0;
-		this.numScores = 0;
-		this.avgScore = 0;
+		this.attrs = new HashSet<>(attrs);
+		this.isMain = isMain;
 	}
-	public int getSumOfScores() {
-		return sumOfScores;
+	
+	public String getId() {
+		return this.id;
 	}
-	public int getNumScores() {
-		return numScores;
+	public void setId(String id) {
+		this.id = id;
 	}
-	public double getAvgScore() {
-		return avgScore;
+	public long getCommonVal() {
+		return this.commonVal;
 	}
-	public List<Rating> getRatings() {
-		return ratings;
-	}
-	public void addRating(Rating r) {
-		this.ratings.add(r);
-		++this.numScores;
-		this.sumOfScores += r.getScore();
-		this.avgScore = this.sumOfScores / (double) this.numScores;
-	}
-	public void deleteRating(Rating r) {
-		// TODO
-	}
-	public long getId() {
-		return id;
-	}
-	public void setId(long id) {
-		if (this.id == 0)
-			this.id = id;
-		else throw new UnsupportedOperationException("You cannot change the id once it has been set");
-	}
-	public String getKey() {
-		return key;
-	}
-	public void setKey(String key) {
-		if (this.key.equals(""))
-			this.key = key;
-		else throw new UnsupportedOperationException("You cannot change the course key once it has been set");
+	public void setCommonVal(long val) {
+		this.commonVal = val;
 	}
 	public String getSchool() {
-		return school;
+		return this.school;
 	}
 	public void setSchool(String school) {
-		if (this.school == "")
+		if (this.school == null)
 			this.school = school;
 		else throw new UnsupportedOperationException("You cannot change the school once it has been set");
 	}
 	public String getDept() {
-		return dept;
+		return this.dept;
 	}
 	public void setDept(String dept) {
-		if (this.dept.equals(""))
+		if (this.dept == null)
 			this.dept = dept;
 		else throw new UnsupportedOperationException("You cannot change the department once it has been set");
 	}
-	public String getNumber() {
-		return number;
+	public String getNum() {
+		return this.num;
 	}
-	public void setNumber(String number) {
-		if (this.number.equals(""))
-			this.number = number;
+	public void setNum(String number) {
+		if (this.num == null)
+			this.num = number;
 		else throw new UnsupportedOperationException("You cannot change the course number once it has been set");
 	}
 	public String getName() {
-		return name;
+		return this.name;
 	}
 	public void setName(String name) {
-		if (this.name.equals(""))
+		if (this.name == null)
 		this.name = name;
 		else throw new UnsupportedOperationException("You cannot change the name once it has been set");
 	}
 	public String getDescription() {
-		return description;
+		return this.description;
 	}
 	public void setDescription(String description) {
 		this.description = description;
 	}
 	public Set<String> getAttrs() {
-		return attrs;
+		return this.attrs;
 	}
-	public void setAttrs(String[] attrs) {
-		this.attrs = new HashSet<>(attrs.length);
-		for (String a : attrs) {
-			this.attrs.add(a);
-		}
+	public void setAttrs(Set<String> attrs) {
+		this.attrs = new HashSet<>(attrs);
 	}
-
+	public boolean isMain() {
+		return this.isMain;
+	}
+	public void setMain(boolean isMain) {
+		this.isMain = isMain;
+	}
+	public UniqueCourse getParent() {
+		return this.parent;
+	}
+	public void setParent(UniqueCourse parent) {
+		this.parent = parent;
+	}
 }

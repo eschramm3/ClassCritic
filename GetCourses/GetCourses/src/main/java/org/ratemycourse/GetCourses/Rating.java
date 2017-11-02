@@ -3,48 +3,72 @@ package org.ratemycourse.GetCourses;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Rating {
 
 	@Id
 	private long id;
-	@ManyToOne(targetEntity=Course.class, fetch=FetchType.EAGER)
-	private Course course;
-//	@ManyToOne
+	@ManyToOne(optional=false, fetch = FetchType.LAZY)
+	@NotFound(action = NotFoundAction.IGNORE)
+	@JsonManagedReference
+	private UniqueCourse uniqueCourse = new UniqueCourse();
 	private long userId;
 	private int score;
 	private int workload;
 	private int difficulty;
 	private String review;
 	private boolean isAnonymous;
+	private String semTaken;
+
+	public Rating() {}
+
+	public Rating(UniqueCourse uniqCourse, long userId, int score, int workload, int difficulty, String review,
+			boolean isAnonymous, String semTaken) {
+		this.uniqueCourse = uniqCourse;
+		this.userId = userId;
+		this.score = score;
+		this.workload = workload;
+		this.difficulty = difficulty;
+		this.review = review;
+		this.isAnonymous = isAnonymous;
+		this.semTaken = semTaken;
+	}
+
+
 
 	public boolean isAnonymous() {
-		return isAnonymous;
+		return this.isAnonymous;
 	}
 	public void setAnonymous(boolean isAnonymous) {
 		this.isAnonymous = isAnonymous;
 	}
 	public long getId() {
-		return id;
+		return this.id;
 	}
 	public void setId(long id) {
 		if (this.id == 0)
 			this.id = id;
 		else throw new UnsupportedOperationException("You cannot change the id once it has been set");
 	}
-	public Course getCourse() {
-		return course;
+	public UniqueCourse getUniqueCourse() {
+		return this.uniqueCourse;
 	}
-	public void setCourse(Course course) {
-		if (this.course == null)
-			this.course = course;
+	public void setUniqueCourse(UniqueCourse course) {
+		if (this.uniqueCourse == null)
+			this.uniqueCourse = course;
 		else throw new UnsupportedOperationException("You cannot change the course once it has been set");
 
 	}
 	public long getUserId() {
-		return userId;
+		return this.userId;
 	}
 	public void setUserId(long userId) {
 		if (this.userId == 0)
@@ -52,30 +76,35 @@ public class Rating {
 		else throw new UnsupportedOperationException("You cannot change the id once it has been set");
 	}
 	public int getScore() {
-		return score;
+		return this.score;
 	}
 	public void setScore(int score) {
 		this.score = score;
 	}
 	public int getWorkload() {
-		return workload;
+		return this.workload;
 	}
 	public void setWorkload(int workload) {
 		this.workload = workload;
 	}
 	public int getDifficulty() {
-		return difficulty;
+		return this.difficulty;
 	}
 	public void setDifficulty(int difficulty) {
 		this.difficulty = difficulty;
 	}
 	public String getReview() {
-		return review;
+		return this.review;
 	}
 	public void setReview(String review) {
 		this.review = review;
 	}
-
+	public String getSemTaken() {
+		return this.semTaken;
+	}
+	public void setSemTaken(String semTaken) {
+		this.semTaken = semTaken;
+	}
 
 
 
