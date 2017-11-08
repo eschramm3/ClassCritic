@@ -54,10 +54,10 @@ public class MainController {
 			UniqueCourse uc = new UniqueCourse(val, Arrays.asList(c));
 			System.out.println("parent id: " + c.getParent().getId());
 			System.out.println("child key: " + ((Course) uc.getSames().toArray()[0]).getId());
-			courseRepository.save(c);
+			courseRepository.save(c); // parent_id is null here bc no entry in unique repo yet
 			uniqueCourseRepository.save(uc);
 			c.setParent(uc);
-			courseRepository.save(c);
+			courseRepository.save(c); // update parent reference
 		}
 		return "Saved";
 	}

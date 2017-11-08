@@ -35,6 +35,7 @@ public class Course {
 	private String dept;
 	private String num;
 	private String name;
+	@Column(columnDefinition="TEXT")
 	private String description;
 	@ElementCollection(targetClass=String.class)
 	private Set<String> attrs;
