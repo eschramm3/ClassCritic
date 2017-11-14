@@ -14,7 +14,7 @@ import org.ratemycourse.GetCourses.Course;
 //This will be AUTO IMPLEMENTED by Spring into a Bean called userRepository
 //CRUD refers Create, Read, Update, Delete
 @Repository
-public interface CourseRepository extends JpaRepository<Course, Long> {
+public interface CourseRepository extends PagingAndSortingRepository<Course, String> {
 	
 	List<Course> findByDept(@Param("dept") String dept);
 	List<Course> findBySchool(@Param("school") String school);

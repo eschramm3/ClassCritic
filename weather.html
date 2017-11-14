@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>My First Web Page</title>
+</head>
+<style>
+
+.weather{
+    width: 200px;
+    border: 1px solid black;
+    padding: 5px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.weather-loc{
+    font-size: 18px;
+}
+
+.weather-temp{
+    float:left;
+}
+.weather-temp::before{
+    content: 'Currently ';
+}
+
+.weather-humidity{
+    float: right;
+}
+.weather-humidity::before{
+    content: 'Humidity: ';
+}
+.weather-humidity::after{
+    content: '%';
+}
+
+</style>
+<script type="text/javascript">
+
+
+function fetchWeather() {
+	var weatherRequest = new XMLhttpRequest();
+	weatherRequest.open("GET", "https://classes.engineering.wustl.edu/cse330/content/weather_json.php", true);
+	weatherRequest.addEventListener("load", ajaxCallback, false);
+	weatherRequest.send(null);
+ 
+} 
+function ajaxCallback(event){
+	var jsonData = JSON.parse(event.target.responseText); // parse the JSON into a JavaScript object
+	alert(event.target.responseText);
+	
+	var tomorrowURL = "https://us.yimg.com/i/us/nws/weather/gr/" + jsonData.tomorrow.code + "ds.png";
+	var dayafterURL = "https://us.yimg.com/i/us/nws/weather/gr/" + jsonData.dayafter.code + "ds.png";
+	var cityNode = jsonData.location.city;
+	var stateNode = jsonData.location.state;
+	var humidityNode = jsonData.atmosphere.humidity;
+	var tempNode = jsonData.current.temp;
+	
+	document.getElementById("weatherWidget").innerHTML="<div class = 'weather-loc'>" + "<strong>" + cityNode + "</strong>" + " " + stateNode + "</div>" + "<div class = 'weather-temp'>" + tempNode + "</div>" + "<div class = 'weather-humidity'>" + humidityNode + "</div>" + "<img class = 'weather-tomorrow' src='" + tomorrowURL + "' alt='Mountain View'>" + "</img>" + "<img class = 'weather-dayaftertomorrow' src='" + dayafterURL + "' alt='Mountain View'>";
+	if(jsonData.success){
+		alert("You've been Logged In!");
+		}
+	else{
+	}
+}
+
+
+
+</script>
+<body>	
+<div class="weather" id="weatherWidget">
+	<div class="weather-loc"></div>
+	<div class="weather-humidity"></div>
+	<div class="weather-temp"></div>
+	<img class="weather-tomorrow" />
+	<img class="weather-dayaftertomorrow" />
+</div>
+	<p id="city">Hello World!</p>
+
+<form>
+<input name="submit" type=button value="Send Ajax Request"
+onClick="fetchWeather()">
+</form>
+</body>
+</html>

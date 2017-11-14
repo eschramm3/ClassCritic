@@ -1,6 +1,8 @@
 package org.ratemycourse.GetCourses;
 
 import java.util.List;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping(path="/courses")
+@RequestMapping(path="/api")
 public class MainController {
 
 	@Autowired // This means to get the bean called userRepository
@@ -24,31 +26,46 @@ public class MainController {
 	
 	
 	private CourseRepository courseRepository;
+	
+	@Autowired
+	private UniqueCourseRepository uniqueCourseRepository;
 
-	@RequestMapping(path="/add", method=RequestMethod.POST)
-	public @ResponseBody String addNewCourse (@RequestParam(value="id") int id, 
+	@RequestMapping(path="/courses/add", method=RequestMethod.POST)
+	public @ResponseBody String addNewCourse (@RequestParam(value="val") long val, 
 			@RequestParam(value="name") String name, @RequestParam(value="school") String school, 
 			@RequestParam(value="dept") String dept, @RequestParam(value="number") String number,
-			@RequestParam(value="description") String description, @RequestParam(value="attrs") String attrs) {
+			@RequestParam(value="description") String description, @RequestParam(value="attrs") String attrs,
+			@RequestParam(value="isMain") boolean isMain) {
 		// @ResponseBody means the returned String is the response, not a view name
 		// @RequestParam means it is a parameter from the GET or POST request
 
-		Course n = new Course();
-		n.setId(id);
-		n.setSchool(school);
-		n.setDept(dept);
-		n.setNumber(number);
-		n.setAttrs(new String[] {attrs});
-		n.setName(name);
-		n.setDescription(description);
-
-		courseRepository.save(n);
+		Course c = new Course();
+		String id = dept + "-" + number;
+		c.setCommonVal(val);
+		c.setId(id);
+		c.setSchool(school);
+		c.setDept(dept);
+		c.setNum(number);
+		String[] ats = attrs.split(",");
+		c.setAttrs(new HashSet<String>(Arrays.asList(ats)));
+		c.setName(name);
+		c.setDescription(description);
+		c.setMain(isMain);
+		if (uniqueCourseRepository.existsById(val)) {
+			UniqueCourse uc = uniqueCourseRepository.findById(val).get();
+			uc.addSame(c);
+			courseRepository.save(c);
+		}
+		else {
+			UniqueCourse uc = new UniqueCourse(val, Arrays.asList(c));
+			System.out.println("parent id: " + c.getParent().getId());
+			System.out.println("child key: " + ((Course) uc.getSames().toArray()[0]).getId());
+			courseRepository.save(c);
+			uniqueCourseRepository.save(uc);
+			c.setParent(uc);
+			courseRepository.save(c);
+		}
 		return "Saved";
-	}
-	
-	@RequestMapping(value = "/{courseId}", method = RequestMethod.GET)
-	public @ResponseBody Optional<Course> getCourse(@PathVariable long courseId) {
-		return courseRepository.findById(courseId);
 	}
 	
 	@RequestMapping(path="/findDept", method=RequestMethod.GET)
@@ -67,10 +84,21 @@ public class MainController {
 		return courseRepository.findBySchoolAndDept(schoolId, deptId);
 	}
 
-	@GetMapping(path="/all")
+	@GetMapping(path="/courses/all")
 	public @ResponseBody Iterable<Course> getAllCourses() {
 		// returns JSON with the courses
 		return courseRepository.findAll();
+	}
+	
+	@GetMapping(path="/courses/unique")
+	public @ResponseBody Iterable<UniqueCourse> getAllUniqueCourses() {
+		// returns JSON with the courses
+		return uniqueCourseRepository.findAll();
+	}
+	
+	@RequestMapping(value="/courses/{courseKey}", method = RequestMethod.GET)
+	public @ResponseBody Optional<Course> getCourse(@PathVariable String courseKey) {
+		return courseRepository.findById(courseKey);
 	}
 
 }
