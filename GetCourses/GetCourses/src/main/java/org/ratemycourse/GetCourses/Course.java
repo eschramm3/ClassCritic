@@ -175,7 +175,7 @@ public class Course {
 	private String id;
 	private String school;
 	private String dept;
-	private String num;
+	private String number;
 	private String name;
 	@Column(columnDefinition="TEXT")
 	private String description;
@@ -192,7 +192,7 @@ public class Course {
 		this.id = dept + "-" + number;
 		this.school = school;
 		this.dept = dept;
-		this.num = number;
+		this.number = number;
 		this.name = name;
 		this.description = description;
 		this.attrs = new HashSet<>(attrs);
@@ -227,12 +227,12 @@ public class Course {
 			this.dept = dept;
 		else throw new UnsupportedOperationException("You cannot change the department once it has been set");
 	}
-	public String getNum() {
-		return this.num;
+	public String getNumber() {
+		return this.number;
 	}
-	public void setNum(String number) {
-		if (this.num == null)
-			this.num = number;
+	public void setNumber(String number) {
+		if (this.number == null)
+			this.number = number;
 		else throw new UnsupportedOperationException("You cannot change the course number once it has been set");
 	}
 	public String getName() {
