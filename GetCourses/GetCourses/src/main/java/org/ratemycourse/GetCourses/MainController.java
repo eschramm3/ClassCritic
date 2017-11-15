@@ -50,13 +50,15 @@ public class MainController {
 		c.setMain(isMain);
 		if (uniqueCourseRepository.existsById(val)) {
 			UniqueCourse uc = uniqueCourseRepository.findById(val).get();
+			if (uc.getMain().equals("") && isMain) {
+				uc.setMain(id);
+			}
 			uc.addSame(c);
 			courseRepository.save(c);
 		}
 		else {
 			UniqueCourse uc = new UniqueCourse(val, Arrays.asList(c));
-			System.out.println("parent id: " + c.getParent().getId());
-			System.out.println("child key: " + ((Course) uc.getSames().toArray()[0]).getId());
+			if (isMain) uc.setMain(id);
 			courseRepository.save(c); // parent_id is null here bc no entry in unique repo yet
 			uniqueCourseRepository.save(uc);
 			c.setParent(uc);
@@ -101,14 +103,14 @@ public class MainController {
 			if (params.containsKey("attrs")) {
 				String[] ats = params.get("attrs").split(",");
 				HashSet<String> attrs = new HashSet<>(Arrays.asList(ats));
-				return courseRepository.findDistinctBySchoolAndAttrsInAllIgnoreCaseOrderByParent_AvgScoreDesc(school, attrs, page);
+				return courseRepository.findDistinctCourseBySchoolAndAttrsInAllIgnoreCase(school, attrs, page);
 			}
 			return courseRepository.findBySchoolIgnoreCaseOrderByParent_AvgScoreDesc(school, page);
 		}
 		if (params.containsKey("attrs")) {
 			String[] ats = params.get("attrs").split(",");
 			HashSet<String> attrs = new HashSet<>(Arrays.asList(ats));			
-			return courseRepository.findDistinctByAttrsInAllIgnoreCaseOrderByParent_AvgScoreDesc(attrs, page);
+			return courseRepository.findDistinctCourseByAttrsInIgnoreCase(attrs, page);
 		}
 		if (params.containsKey("name")) {
 			return courseRepository.findByNameContainingIgnoreCaseOrderByParent_AvgScoreDesc(params.get("name"), page);
@@ -136,6 +138,11 @@ public class MainController {
 	@RequestMapping(value="/courses/id/{courseKey}", method = RequestMethod.GET)
 	public @ResponseBody Optional<Course> getCourse(@PathVariable String courseKey) {
 		return courseRepository.findByIdIgnoreCase(courseKey);
+	}
+	
+	@RequestMapping(value="/error")
+	public @ResponseBody String error() {
+		return "Oops! Something went wrong with your HTTP request :(";
 	}
 
 
