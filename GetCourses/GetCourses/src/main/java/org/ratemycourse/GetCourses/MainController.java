@@ -94,35 +94,32 @@ public class MainController {
 					return Arrays.asList(courseRepository.findBySchoolAndDeptAndNumberAllIgnoreCase(school, dept, params.get("number")).orElse(null));
 				}
 				if (params.containsKey("name")) {
-					return Arrays.asList(courseRepository.findBySchoolAndDeptAndNameAllIgnoreCase(school, dept, params.get("name")).orElse(null));
+					return Arrays.asList(courseRepository.findBySchoolAndDeptAndNameContainingAllIgnoreCase(school, dept, params.get("name")).orElse(null));
 				}
-				return courseRepository.findBySchoolAndDeptAllIgnoreCase(school, dept, page);
+				return courseRepository.findBySchoolAndDeptAllIgnoreCaseOrderByParent_AvgScoreDesc(school, dept, page);
 			}
 			if (params.containsKey("attrs")) {
 				String[] ats = params.get("attrs").split(",");
 				HashSet<String> attrs = new HashSet<>(Arrays.asList(ats));
-				return courseRepository.findDistinctBySchoolAndAttrsAllIgnoreCaseIn(school, attrs, page);
+				return courseRepository.findDistinctBySchoolAndAttrsInAllIgnoreCaseOrderByParent_AvgScoreDesc(school, attrs, page);
 			}
-			return courseRepository.findBySchoolIgnoreCase(school, page);
+			return courseRepository.findBySchoolIgnoreCaseOrderByParent_AvgScoreDesc(school, page);
 		}
 		if (params.containsKey("attrs")) {
 			String[] ats = params.get("attrs").split(",");
 			HashSet<String> attrs = new HashSet<>(Arrays.asList(ats));			
-			return courseRepository.findDistinctByAttrsAllIgnoreCaseIn(attrs, page);
+			return courseRepository.findDistinctByAttrsInAllIgnoreCaseOrderByParent_AvgScoreDesc(attrs, page);
 		}
 		if (params.containsKey("name")) {
-			return courseRepository.findByNameIgnoreCase(params.get("name"), page);
+			return courseRepository.findByNameContainingIgnoreCaseOrderByParent_AvgScoreDesc(params.get("name"), page);
 		}
 		if (params.containsKey("description")) {
-			return courseRepository.findByDescriptionIgnoreCase(params.get("description"), page);
+			return courseRepository.findByDescriptionContainingIgnoreCaseOrderByParent_AvgScoreDesc(params.get("description"), page);
 		}
 		else {
 			return null;
 		}
 	}
-
-	// example Pageable
-	// PageRequest.of(0, 100,Direction.ASC, "id")
 
 	@GetMapping(path="/courses/all")
 	public @ResponseBody Iterable<Course> getAllCourses() {

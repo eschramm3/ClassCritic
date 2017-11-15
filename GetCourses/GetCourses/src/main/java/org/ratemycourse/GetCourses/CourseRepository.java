@@ -24,20 +24,20 @@ public interface CourseRepository extends JpaRepository<Course, String> {
 	List<Course> findBySchoolAndDeptAllIgnoreCaseOrderByParent_AvgScoreDesc(@Param(value="school") String school, @Param(value="dept") String dept);
 	Optional<Course> findBySchoolAndDeptAndNumberAllIgnoreCase(@Param(value="school") String school, @Param(value="dept") String dept, @Param(value="number") String number);
 	Optional<Course> findBySchoolAndDeptAndNameContainingAllIgnoreCase(@Param(value="school") String school, @Param(value="dept") String dept, @Param(value="name") String name);
-	List<Course> findDistinctByAttrsAllIgnoreCaseOrderByParent_AvgScoreDescIn(@Param(value="attrs") Set<String> attrs);
-	List<Course> findDistinctBySchoolAndAttrsAllIgnoreCaseOrderByParent_AvgScoreDescIn(@Param(value="school") String school, @Param(value="attrs") Set<String> attrs);
-	List<Course> findDistinctBySchoolAndDeptAndAttrsAllIgnoreCaseOrderByParent_AvgScoreDescIn(@Param(value="school") String school, @Param(value="dept") String dept, @Param(value="attrs") Set<String> attrs);
-	List<Course> findByDescriptionContainingIgnoreCase(@Param(value="description") String description);
-	List<Course> findByNumberContainingIgnoreCase(@Param(value="number") String num);
+	List<Course> findDistinctByAttrsInAllIgnoreCaseOrderByParent_AvgScoreDesc(@Param(value="attrs") Set<String> attrs);
+	List<Course> findDistinctBySchoolAndAttrsInAllIgnoreCaseOrderByParent_AvgScoreDesc(@Param(value="school") String school, @Param(value="attrs") Set<String> attrs);
+	List<Course> findDistinctBySchoolAndDeptAndAttrsInAllIgnoreCaseOrderByParent_AvgScoreDesc(@Param(value="school") String school, @Param(value="dept") String dept, @Param(value="attrs") Set<String> attrs);
+	List<Course> findByDescriptionContainingIgnoreCaseOrderByParent_AvgScoreDesc(@Param(value="description") String description);
+	List<Course> findByNumberContainingIgnoreCaseOrderByParent_AvgScoreDesc(@Param(value="number") String num);
 	
 	Page<Course> findByNameContainingIgnoreCaseOrderByParent_AvgScoreDesc(String name, Pageable page);
 	Page<Course> findBySchoolIgnoreCaseOrderByParent_AvgScoreDesc(String school, Pageable page);
 	Page<Course> findBySchoolAndDeptAllIgnoreCaseOrderByParent_AvgScoreDesc(String school, String dept, Pageable page);
-	Page<Course> findDistinctByAttrsAllIgnoreCaseOrderByParent_AvgScoreDescIn(Set<String> attrs, Pageable page);
-	Page<Course> findDistinctBySchoolAndAttrsAllIgnoreCaseOrderByParent_AvgScoreDescIn(String school, Set<String> attrs, Pageable page);
-	Page<Course> findDistinctBySchoolAndDeptAndAttrsAllIgnoreCaseOrderByParent_AvgScoreDescIn(String school, String dept, Set<String> attrs, Pageable page);
-	Page<Course> findByDescriptionIgnoreCaseOrderByParent_AvgScoreDesc(String description, Pageable page);
-	Page<Course> findByNumberIgnoreCaseOrderByParent_AvgScoreDesc(String num, Pageable page);
+	Page<Course> findDistinctByAttrsInAllIgnoreCaseOrderByParent_AvgScoreDesc(Set<String> attrs, Pageable page);
+	Page<Course> findDistinctBySchoolAndAttrsInAllIgnoreCaseOrderByParent_AvgScoreDesc(String school, Set<String> attrs, Pageable page);
+	Page<Course> findDistinctBySchoolAndDeptAndAttrsInAllIgnoreCaseOrderByParent_AvgScoreDesc(String school, String dept, Set<String> attrs, Pageable page);
+	Page<Course> findByDescriptionContainingIgnoreCaseOrderByParent_AvgScoreDesc(String description, Pageable page);
+	Page<Course> findByNumberContainingIgnoreCaseOrderByParent_AvgScoreDesc(String num, Pageable page);
 	Optional<Course> findByIdIgnoreCase(String id);
 	
 }
