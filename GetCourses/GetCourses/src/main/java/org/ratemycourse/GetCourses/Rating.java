@@ -5,7 +5,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.NotFound;
@@ -27,19 +26,23 @@ public class Rating {
 	private int score;
 	private int workload;
 	private int difficulty;
+	private int content;
+	private int grading;
 	private String review;
 	private boolean isAnonymous;
 	private String semTaken;
 
 	public Rating() {}
 
-	public Rating(UniqueCourse uniqCourse, long userId, int score, int workload, int difficulty, String review,
-			boolean isAnonymous, String semTaken) {
+	public Rating(UniqueCourse uniqCourse, long userId, int score, int workload, int difficulty, 
+			int grading, int content, String review, boolean isAnonymous, String semTaken) {
 		this.uniqueCourse = uniqCourse;
 		this.userId = userId;
 		this.score = score;
 		this.workload = workload;
 		this.difficulty = difficulty;
+		this.content = content;
+		this.grading = grading;
 		this.review = review;
 		this.isAnonymous = isAnonymous;
 		this.semTaken = semTaken;
@@ -108,7 +111,17 @@ public class Rating {
 	public void setSemTaken(String semTaken) {
 		this.semTaken = semTaken;
 	}
-
-
+	public int getContent() {
+		return content;
+	}
+	public void setContent(int content) {
+		this.content = content;
+	}
+	public int getGrading() {
+		return grading;
+	}
+	public void setGrading(int grading) {
+		this.grading = grading;
+	}
 
 }
