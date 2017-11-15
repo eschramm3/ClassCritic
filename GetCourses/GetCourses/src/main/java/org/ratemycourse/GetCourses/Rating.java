@@ -2,6 +2,8 @@ package org.ratemycourse.GetCourses;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -15,8 +17,9 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 public class Rating {
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
-	@ManyToOne(optional=false, fetch = FetchType.LAZY)
+	@ManyToOne(optional=false, fetch=FetchType.LAZY)
 	@NotFound(action = NotFoundAction.IGNORE)
 	@JsonManagedReference
 	private UniqueCourse uniqueCourse = new UniqueCourse();

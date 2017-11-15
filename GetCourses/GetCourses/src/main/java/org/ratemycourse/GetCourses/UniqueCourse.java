@@ -30,6 +30,7 @@ public class UniqueCourse {
 	@OneToMany(mappedBy="uniqueCourse", fetch=FetchType.LAZY)
 	@JsonBackReference
 	private List<Rating> ratings;
+	private String main;
 	
 	public UniqueCourse() {}
 	
@@ -100,6 +101,14 @@ public class UniqueCourse {
 	}
 	public void deleteRating(Rating r) {
 		this.ratings.remove(r);
+	}
+	
+	public String getMain() {
+		return main;
+	}
+
+	public void setMain(String main) {
+		this.main = main;
 	}
 	
 	
