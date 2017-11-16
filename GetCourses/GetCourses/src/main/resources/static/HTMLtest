@@ -1,0 +1,11 @@
+<html>
+<head></head>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js"></script>
+<script src="getrequest.js"> </script>
+<body>
+	<button onclick='getProducts()'>Click for fun</button>
+	<p id="wow"></p>
+	
+</body>
+</html>
