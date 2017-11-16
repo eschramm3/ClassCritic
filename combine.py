@@ -34,7 +34,8 @@ for course in file2:
             course['val'] = count
             count += 1
             file1.append(course)
-
+    #else :
+        #update the attrs bc they could have changed
 
 
 with open('allCoursesInfo.json', 'w') as f:

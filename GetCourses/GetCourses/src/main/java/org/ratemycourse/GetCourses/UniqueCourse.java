@@ -44,6 +44,7 @@ public class UniqueCourse {
 			s.setParent(this);
 		}
 		this.ratings = new ArrayList<>();
+		this.main = "";
 	}
 
 	public long getId() {

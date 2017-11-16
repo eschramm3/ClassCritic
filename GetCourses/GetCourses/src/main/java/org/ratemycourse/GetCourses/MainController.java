@@ -155,13 +155,15 @@ public class MainController {
 		c.setMain(isMain);
 		if (uniqueCourseRepository.existsById(val)) {
 			UniqueCourse uc = uniqueCourseRepository.findById(val).get();
+			if (uc.getMain().equals("") && isMain) {
+				uc.setMain(id);
+			}
 			uc.addSame(c);
 			courseRepository.save(c);
 		}
 		else {
 			UniqueCourse uc = new UniqueCourse(val, Arrays.asList(c));
-			System.out.println("parent id: " + c.getParent().getId());
-			System.out.println("child key: " + ((Course) uc.getSames().toArray()[0]).getId());
+			if (isMain) uc.setMain(id);
 			courseRepository.save(c); // parent_id is null here bc no entry in unique repo yet
 			uniqueCourseRepository.save(uc);
 			c.setParent(uc);
@@ -199,35 +201,32 @@ public class MainController {
 					return Arrays.asList(courseRepository.findBySchoolAndDeptAndNumberAllIgnoreCase(school, dept, params.get("number")).orElse(null));
 				}
 				if (params.containsKey("name")) {
-					return Arrays.asList(courseRepository.findBySchoolAndDeptAndNameAllIgnoreCase(school, dept, params.get("name")).orElse(null));
+					return Arrays.asList(courseRepository.findBySchoolAndDeptAndNameContainingAllIgnoreCase(school, dept, params.get("name")).orElse(null));
 				}
-				return courseRepository.findBySchoolAndDeptAllIgnoreCase(school, dept, page);
+				return courseRepository.findBySchoolAndDeptAllIgnoreCaseOrderByParent_AvgScoreDesc(school, dept, page);
 			}
 			if (params.containsKey("attrs")) {
 				String[] ats = params.get("attrs").split(",");
 				HashSet<String> attrs = new HashSet<>(Arrays.asList(ats));
-				return courseRepository.findDistinctBySchoolAndAttrsAllIgnoreCaseIn(school, attrs, page);
+				return courseRepository.findDistinctCourseBySchoolAndAttrsInAllIgnoreCase(school, attrs, page);
 			}
-			return courseRepository.findBySchoolIgnoreCase(school, page);
+			return courseRepository.findBySchoolIgnoreCaseOrderByParent_AvgScoreDesc(school, page);
 		}
 		if (params.containsKey("attrs")) {
 			String[] ats = params.get("attrs").split(",");
 			HashSet<String> attrs = new HashSet<>(Arrays.asList(ats));			
-			return courseRepository.findDistinctByAttrsAllIgnoreCaseIn(attrs, page);
+			return courseRepository.findDistinctCourseByAttrsInIgnoreCase(attrs, page);
 		}
 		if (params.containsKey("name")) {
-			return courseRepository.findByNameIgnoreCase(params.get("name"), page);
+			return courseRepository.findByNameContainingIgnoreCaseOrderByParent_AvgScoreDesc(params.get("name"), page);
 		}
 		if (params.containsKey("description")) {
-			return courseRepository.findByDescriptionIgnoreCase(params.get("description"), page);
+			return courseRepository.findByDescriptionContainingIgnoreCaseOrderByParent_AvgScoreDesc(params.get("description"), page);
 		}
 		else {
 			return null;
 		}
 	}
-
-	// example Pageable
-	// PageRequest.of(0, 100,Direction.ASC, "id")
 
 	@GetMapping(path="/courses/all")
 	public @ResponseBody Iterable<Course> getAllCourses() {
@@ -244,6 +243,11 @@ public class MainController {
 	@RequestMapping(value="/courses/id/{courseKey}", method = RequestMethod.GET)
 	public @ResponseBody Optional<Course> getCourse(@PathVariable String courseKey) {
 		return courseRepository.findByIdIgnoreCase(courseKey);
+	}
+	
+	@RequestMapping(value="/error")
+	public @ResponseBody String error() {
+		return "Oops! Something went wrong with your HTTP request :(";
 	}
 
 
