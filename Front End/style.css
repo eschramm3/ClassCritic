@@ -9,7 +9,7 @@ body {
 button {
 	background-color: #e1ebed;
 	color:#676768;
-	border-radius: 15px 50px 30px;
+	/*border-radius: 15px 50px 30px;*/
 }
 
 h1 {
@@ -251,6 +251,10 @@ a {
 	position: absolute;
 	left: 70%;
 	top:100%;
+}
+
+.classRate {
+	margin-top: 50px;
 }
 
 
