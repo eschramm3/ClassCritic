@@ -22,8 +22,8 @@ public interface CourseRepository extends JpaRepository<Course, String> {
 //	List<Course> findByNameContainingIgnoreCaseOrderByParent_AvgScoreDesc(@Param(value="name") String name);
 //	List<Course> findBySchoolIgnoreCaseOrderByParent_AvgScoreDesc(@Param(value="school") String school);
 //	List<Course> findBySchoolAndDeptAllIgnoreCaseOrderByParent_AvgScoreDesc(@Param(value="school") String school, @Param(value="dept") String dept);
-	Optional<Course> findBySchoolAndDeptAndNumberAllIgnoreCase(@Param(value="school") String school, @Param(value="dept") String dept, @Param(value="number") String number);
-	Optional<Course> findBySchoolAndDeptAndNameContainingAllIgnoreCase(@Param(value="school") String school, @Param(value="dept") String dept, @Param(value="name") String name);
+//	List<Course> findBySchoolAndDeptAndNumberAllIgnoreCase(@Param(value="school") String school, @Param(value="dept") String dept, @Param(value="number") String number);
+//	List<Course> findBySchoolAndDeptAndNameContainingAllIgnoreCase(@Param(value="school") String school, @Param(value="dept") String dept, @Param(value="name") String name);
 //	List<Course> findDistinctCourseByAttrsInAllIgnoreCaseOrderByParent_AvgScoreDesc(@Param(value="attrs") Set<String> attrs);
 //	List<Course> findDistinctCourseBySchoolAndAttrsInAllIgnoreCaseOrderByParent_AvgScoreDesc(@Param(value="school") String school, @Param(value="attrs") Set<String> attrs);
 //	List<Course> findDistinctCourseBySchoolAndDeptAndAttrsInAllIgnoreCaseOrderByParent_AvgScoreDesc(@Param(value="school") String school, @Param(value="dept") String dept, @Param(value="attrs") Set<String> attrs);
@@ -38,6 +38,9 @@ public interface CourseRepository extends JpaRepository<Course, String> {
 	Page<Course> findDistinctCourseBySchoolAndDeptAndAttrsInAllIgnoreCase(String school, String dept, Set<String> attrs, Pageable page);
 	Page<Course> findByDescriptionContainingIgnoreCaseOrderByParent_AvgScoreDesc(String description, Pageable page);
 	Page<Course> findByNumberContainingIgnoreCaseOrderByParent_AvgScoreDesc(String num, Pageable page);
+	Page<Course> findBySchoolAndDeptAndNumberAllIgnoreCase(String school, String dept, String number, Pageable page);
+	Page<Course> findBySchoolAndDeptAndNameContainingAllIgnoreCase(String school, String dept, String name, Pageable page);
+	
 	Optional<Course> findByIdIgnoreCase(String id);
 	
 }

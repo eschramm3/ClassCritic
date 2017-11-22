@@ -93,10 +93,10 @@ public class MainController {
 			if (params.containsKey("dept")) {
 				String dept = params.get("dept");
 				if (params.containsKey("number")) {
-					return Arrays.asList(courseRepository.findBySchoolAndDeptAndNumberAllIgnoreCase(school, dept, params.get("number")).orElse(null));
+					return courseRepository.findBySchoolAndDeptAndNumberAllIgnoreCase(school, dept, params.get("number"), page);
 				}
 				if (params.containsKey("name")) {
-					return Arrays.asList(courseRepository.findBySchoolAndDeptAndNameContainingAllIgnoreCase(school, dept, params.get("name")).orElse(null));
+					return courseRepository.findBySchoolAndDeptAndNameContainingAllIgnoreCase(school, dept, params.get("name"), page);
 				}
 				return courseRepository.findBySchoolAndDeptAllIgnoreCaseOrderByParent_AvgScoreDesc(school, dept, page);
 			}

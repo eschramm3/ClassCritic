@@ -1,0 +1,66 @@
+Engineering attributes: (EN)
+DU	Engineering Design Units
+H	Engineering Humanity
+LU	Engineering Lab Units
+S	Engineering Social Science
+SU	Engineering Science Units
+TU	Engineering Topics Units
+
+Business attributes: (BU)
+BA	Behavioral Analysis
+ETH	Ethics/Values
+HUM	Humanities
+IS	International Studies
+SCI	Physical/Life Science
+
+ArtSci attributes: (A&S)
+LA	Language and Arts
+NS	Natural Sciences and Mathematics
+SS	Social Sciences
+TH	Textual and Historical Studies
+CD	Cultural Diversity
+QA	Quantitative Analysis
+SD	Social Differentiation Disc
+WI	Writing Intensive Disc
+
+ArtSci IQ attributes: (A&S IQ)
+AN	Applied Numeracy
+LS	LS Language & Cultural Diversity-Language
+SD	Social Differentiation IQ
+WI	Writing Intensive IQ
+HUM	Humanities
+LCD	LCD Language & Cultural Diversity-Culture
+NSM	Natural Sciences and Mathematics
+SSC	Social Sciences
+
+Art attributes: (Art)
+AH	FA Art History
+CDES	FA Communication Design
+Comp	FA English Composition
+FAAM	FA Art Minor
+FADM	FA Design Minor
+HUM	FA Humanities
+LIT	FA Literature
+LNG	FA Foreign Language
+NSM	FA Natural Sciences or Mathematics
+SSC	FA Social and Behavioral Sciences
+SSP	FA Social Sciences or Philosophy
+GFAH	GF Art History
+
+Architecture attributes: (Arch)
+CAST	AR Case Studies
+HT	AR History Theory
+HUM	AR Humanities
+LIT	AR Literature
+NSM	AR Natural Science or Mathematics
+RW	AR Research & Writing
+SSC	AR Social and Behavioral Sciences
+SSP	AR Social Science or Philosophy
+UI	AR Urban Issues
+ECOL	GA Ecological Elective
+GACS	GA Case Studies
+GAHT	GA History/Theory
+GAMUD	GA MUD Track
+GANS	GA Natural Systems
+GARW	GA Research & Writing
+GAUI	GA Urban Issues
