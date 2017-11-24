@@ -95,7 +95,8 @@ public class UniqueCourse {
 	}
 	public void addRating(Rating r) {
 		this.ratings.add(r);
-		r.setUniqueCourse(this);
+		if (r.getUniqueCourse() == null)
+			r.setUniqueCourse(this);
 		++this.numScores;
 		this.sumOfScores += r.getScore();
 		this.avgScore = this.sumOfScores / (double) this.numScores;

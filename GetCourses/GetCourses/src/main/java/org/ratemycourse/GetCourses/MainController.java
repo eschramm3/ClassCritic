@@ -26,6 +26,9 @@ public class MainController {
 
 	@Autowired
 	private UniqueCourseRepository uniqueCourseRepository;
+	
+	@Autowired
+	private RatingRepository ratingRepository;
 
 	@RequestMapping(path="/courses/add", method=RequestMethod.POST)
 	public @ResponseBody String addNewCourse (@RequestParam(value="val") long val, 
@@ -48,7 +51,13 @@ public class MainController {
 		c.setName(name);
 		c.setDescription(description);
 		c.setMain(isMain);
-		if (uniqueCourseRepository.existsById(val)) {
+		if (courseRepository.existsById(id)) { // was already added so update properties if changed
+			Course prior = courseRepository.findByIdIgnoreCase(id).get();
+			if (!prior.getAttrs().equals(c.getAttrs())) prior.setAttrs(c.getAttrs());
+			if (!prior.getDescription().equals(c.getDescription())) prior.setDescription(description);
+			if (!prior.getName().equals(c.getName())) prior.setName(name);
+		}
+		else if (uniqueCourseRepository.existsById(val)) { // parent already exists bc a same was added already
 			UniqueCourse uc = uniqueCourseRepository.findById(val).get();
 			if (uc.getMain().equals("") && isMain) {
 				uc.setMain(id);
@@ -56,7 +65,7 @@ public class MainController {
 			uc.addSame(c);
 			courseRepository.save(c);
 		}
-		else {
+		else { // first of its kind to be added so create unique parent
 			UniqueCourse uc = new UniqueCourse(val, Arrays.asList(c));
 			if (isMain) uc.setMain(id);
 			courseRepository.save(c); // parent_id is null here bc no entry in unique repo yet
@@ -64,17 +73,10 @@ public class MainController {
 			c.setParent(uc);
 			courseRepository.save(c); // update parent reference
 		}
+		courseRepository.flush();
+		uniqueCourseRepository.flush();
 		return "Saved";
 	}
-
-	//	@GetMapping(path="/courses/find")
-	//	public @ResponseBody Iterable<Course> getFilteredCourses(@RequestParam(value="school", ) String school, 
-	//			@RequestParam(value="dept") String dept, @RequestParam(value="number") String number,
-	//			@RequestParam(value="name") String name, @RequestParam(value="description") String description, 
-	//			@RequestParam(value="attrs") String attrs) {
-	//		// returns JSON with the courses
-	//		return courseRepository.
-	//	}
 
 	@GetMapping(path="/courses/find")
 	public @ResponseBody Iterable<Course> getFilteredCourses(@RequestParam Map<String, String> params) {
@@ -88,35 +90,64 @@ public class MainController {
 			pageSize = Integer.parseInt(params.get("size"));
 		}
 		PageRequest page = PageRequest.of(pageNumber, pageSize);
+		String school = params.get("school");
+		String dept = params.get("dept");
+		String number = params.get("number");
+		String name = params.get("name");
+		String description = params.get("description");
+		HashSet<String> attrs = null;
+		if (params.containsKey("attrs")) {
+			String[] ats = params.get("attrs").split(",");
+			attrs = new HashSet<>(Arrays.asList(ats));
+		}
+		
 		if (params.containsKey("school")) {
-			String school = params.get("school");
 			if (params.containsKey("dept")) {
-				String dept = params.get("dept");
 				if (params.containsKey("number")) {
-					return courseRepository.findBySchoolAndDeptAndNumberAllIgnoreCase(school, dept, params.get("number"), page);
+					return courseRepository.findBySchoolAndDeptAndNumberAllIgnoreCaseOrderByParent_AvgScoreDesc(school, dept, number, page);
 				}
 				if (params.containsKey("name")) {
-					return courseRepository.findBySchoolAndDeptAndNameContainingAllIgnoreCase(school, dept, params.get("name"), page);
+					return courseRepository.findBySchoolAndDeptAndNameContainingAllIgnoreCaseOrderByParent_AvgScoreDesc(school, dept, name, page);
+				}
+				if (params.containsKey("description")) {
+					return courseRepository.findBySchoolAndDeptAndDescriptionContainingAllIgnoreCaseOrderByParent_AvgScoreDesc(school, dept, description, page);
+				}
+				if (params.containsKey("attrs")) {
+					return courseRepository.findDistinctCourseBySchoolAndDeptAndAttrsInAllIgnoreCase(school, dept, attrs, page);
 				}
 				return courseRepository.findBySchoolAndDeptAllIgnoreCaseOrderByParent_AvgScoreDesc(school, dept, page);
 			}
 			if (params.containsKey("attrs")) {
-				String[] ats = params.get("attrs").split(",");
-				HashSet<String> attrs = new HashSet<>(Arrays.asList(ats));
 				return courseRepository.findDistinctCourseBySchoolAndAttrsInAllIgnoreCase(school, attrs, page);
+			}
+			if (params.containsKey("number")) {
+				return courseRepository.findBySchoolAndNumberAllIgnoreCaseOrderByParent_AvgScoreDesc(school, number, page);
+			}
+			if (params.containsKey("name")) {
+				return courseRepository.findBySchoolAndNameContainingAllIgnoreCaseOrderByParent_AvgScoreDesc(school, name, page);
+			}
+			if (params.containsKey("description")) {
+				return courseRepository.findBySchoolAndDescriptionContainingAllIgnoreCaseOrderByParent_AvgScoreDesc(school, description, page);
 			}
 			return courseRepository.findBySchoolIgnoreCaseOrderByParent_AvgScoreDesc(school, page);
 		}
 		if (params.containsKey("attrs")) {
-			String[] ats = params.get("attrs").split(",");
-			HashSet<String> attrs = new HashSet<>(Arrays.asList(ats));			
+			if (params.containsKey("description")) {
+				return courseRepository.findDistinctCourseByDescriptionContainingAndAttrsInAllIgnoreCase(description, attrs, page);
+			}
+			if (params.containsKey("name")) {
+				return courseRepository.findDistinctCourseByNameContainingAndAttrsInAllIgnoreCase(name, attrs, page);
+			}
 			return courseRepository.findDistinctCourseByAttrsInIgnoreCase(attrs, page);
 		}
 		if (params.containsKey("name")) {
-			return courseRepository.findByNameContainingIgnoreCaseOrderByParent_AvgScoreDesc(params.get("name"), page);
+			return courseRepository.findByNameContainingIgnoreCaseOrderByParent_AvgScoreDesc(name, page);
 		}
 		if (params.containsKey("description")) {
-			return courseRepository.findByDescriptionContainingIgnoreCaseOrderByParent_AvgScoreDesc(params.get("description"), page);
+			return courseRepository.findByDescriptionContainingIgnoreCaseOrderByParent_AvgScoreDesc(description, page);
+		}
+		if (params.containsKey("number")) {
+			return courseRepository.findByNumberContainingIgnoreCaseOrderByParent_AvgScoreDesc(number, page);
 		}
 		else {
 			return null;
@@ -138,6 +169,61 @@ public class MainController {
 	@RequestMapping(value="/courses/id/{courseKey}", method = RequestMethod.GET)
 	public @ResponseBody Optional<Course> getCourse(@PathVariable String courseKey) {
 		return courseRepository.findByIdIgnoreCase(courseKey);
+	}
+	
+	
+	@RequestMapping(path="/ratings/add", method=RequestMethod.POST)
+	public @ResponseBody String addNewRating (@RequestParam(value="val") long val, 
+			@RequestParam(value="userId") String userId, @RequestParam(value="score") int score, 
+			@RequestParam(value="workload") int workload, @RequestParam(value="difficulty") int difficulty,
+			@RequestParam(value="content") int content, @RequestParam(value="grading") int grading,
+			@RequestParam(value="review") String review, @RequestParam(value="isAnon") boolean isAnon,
+			@RequestParam(value="semTaken") String semTaken) {
+
+		if (uniqueCourseRepository.existsById(val)) {
+			UniqueCourse uc = uniqueCourseRepository.findById(val).get();
+			Rating r = new Rating(uc, userId, score, workload, difficulty, grading, content, review, isAnon, semTaken);
+			uc.addRating(r);
+			ratingRepository.saveAndFlush(r);
+			uniqueCourseRepository.flush();
+			return "Saved";
+		}
+		return "Failed to save rating. Is that a valid UniqueCourse id (val)?";
+		
+	}	
+	
+	@GetMapping(path="/ratings/find")
+	public @ResponseBody Iterable<Rating> getFilteredRatings(@RequestParam Map<String, String> params) {
+		int pageNumber = 0;
+		int pageSize = 20;
+		if (params.containsKey("page")) {
+			pageNumber = Integer.parseInt(params.get("page"));
+		}
+		if (params.containsKey("size")) {
+			pageSize = Integer.parseInt(params.get("size"));
+		}
+		PageRequest page = PageRequest.of(pageNumber, pageSize);
+		if (params.containsKey("id")) {
+			String id = params.get("id");
+			if (courseRepository.existsById(id)) {
+				Course c = courseRepository.findById(id).get();
+				UniqueCourse uc = c.getParent();
+				return ratingRepository.findByUniqueCourse(uc, page);
+			}
+		}
+		if (params.containsKey("val")) {
+			long val = Long.parseLong(params.get("val"));
+			if (uniqueCourseRepository.existsById(val)) {
+				UniqueCourse uc = uniqueCourseRepository.findById(val).get();
+				return ratingRepository.findByUniqueCourse(uc, page);
+			}
+		}
+		return null;
+	}
+
+	@RequestMapping(value="/ratings/id/{ratingId}", method = RequestMethod.GET)
+	public @ResponseBody Optional<Rating> getRating(@PathVariable long ratingId) {
+		return ratingRepository.findById(ratingId);
 	}
 	
 	@RequestMapping(value="/error")

@@ -11,14 +11,13 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RatingRepository extends JpaRepository<Rating, Long> {
 			
-		List<Rating> findByUniqueCourse(@Param(value="course") UniqueCourse uc);
-		List<Rating> findBySemTaken(@Param(value="semTaken") String semTaken);
-		List<Rating> findByUserId(@Param(value="userId") Long userId);
+//		List<Rating> findByUniqueCourse(@Param(value="course") UniqueCourse uc);
+//		List<Rating> findBySemTaken(@Param(value="semTaken") String semTaken);
+//		List<Rating> findByUserId(@Param(value="userId") Long userId);
 		
-		List<Rating> findByUserId(Long userId, Pageable page);
-		
-		Page<Rating> findByUniqueCourse(UniqueCourse uc, Pageable page);
-		Page<Rating> findBySemTaken(String semTaken, Pageable page);
+		Page<Rating> findByUserId(String userId, Pageable page);
 		Page<Rating> findByUserIdOrderBySemTakenAsc(Long userId, Pageable page);
+		Page<Rating> findByUniqueCourse(UniqueCourse uc, Pageable page);
+		Page<Rating> findByUniqueCourseOrderBySemTakenAsc(UniqueCourse uc, Pageable page);
 		
 }

@@ -97,9 +97,7 @@ public class Course {
 		return this.name;
 	}
 	public void setName(String name) {
-		if (this.name == null)
 		this.name = name;
-		else throw new UnsupportedOperationException("You cannot change the name once it has been set");
 	}
 	public String getDescription() {
 		return this.description;

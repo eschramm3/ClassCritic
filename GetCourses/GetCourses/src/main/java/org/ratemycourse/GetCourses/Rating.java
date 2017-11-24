@@ -22,7 +22,7 @@ public class Rating {
 	@NotFound(action = NotFoundAction.IGNORE)
 	@JsonManagedReference
 	private UniqueCourse uniqueCourse = new UniqueCourse();
-	private long userId;
+	private String userId;
 	private int score;
 	private int workload;
 	private int difficulty;
@@ -34,7 +34,7 @@ public class Rating {
 
 	public Rating() {}
 
-	public Rating(UniqueCourse uniqCourse, long userId, int score, int workload, int difficulty, 
+	public Rating(UniqueCourse uniqCourse, String userId, int score, int workload, int difficulty, 
 			int grading, int content, String review, boolean isAnonymous, String semTaken) {
 		this.uniqueCourse = uniqCourse;
 		this.userId = userId;
@@ -73,11 +73,11 @@ public class Rating {
 		else throw new UnsupportedOperationException("You cannot change the course once it has been set");
 
 	}
-	public long getUserId() {
+	public String getUserId() {
 		return this.userId;
 	}
-	public void setUserId(long userId) {
-		if (this.userId == 0)
+	public void setUserId(String userId) {
+		if (this.userId == null)
 			this.userId = userId;
 		else throw new UnsupportedOperationException("You cannot change the id once it has been set");
 	}
