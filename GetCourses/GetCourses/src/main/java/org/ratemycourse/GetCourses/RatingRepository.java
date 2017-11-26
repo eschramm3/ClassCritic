@@ -15,8 +15,8 @@ public interface RatingRepository extends JpaRepository<Rating, Long> {
 //		List<Rating> findBySemTaken(@Param(value="semTaken") String semTaken);
 //		List<Rating> findByUserId(@Param(value="userId") Long userId);
 		
-		Page<Rating> findByUserId(String userId, Pageable page);
-		Page<Rating> findByUserIdOrderBySemTakenAsc(Long userId, Pageable page);
+		Page<Rating> findByUserID(String userId, Pageable page);
+		Page<Rating> findByUserIDOrderBySemTakenAsc(Long userID, Pageable page);
 		Page<Rating> findByUniqueCourse(UniqueCourse uc, Pageable page);
 		Page<Rating> findByUniqueCourseOrderBySemTakenAsc(UniqueCourse uc, Pageable page);
 		

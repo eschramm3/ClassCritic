@@ -174,7 +174,7 @@ public class MainController {
 	
 	@RequestMapping(path="/ratings/add", method=RequestMethod.POST)
 	public @ResponseBody String addNewRating (@RequestParam(value="val") long val, 
-			@RequestParam(value="userId") String userId, @RequestParam(value="score") int score, 
+			@RequestParam(value="userID") String userID, @RequestParam(value="score") int score, 
 			@RequestParam(value="workload") int workload, @RequestParam(value="difficulty") int difficulty,
 			@RequestParam(value="content") int content, @RequestParam(value="grading") int grading,
 			@RequestParam(value="review") String review, @RequestParam(value="isAnon") boolean isAnon,
@@ -182,7 +182,7 @@ public class MainController {
 
 		if (uniqueCourseRepository.existsById(val)) {
 			UniqueCourse uc = uniqueCourseRepository.findById(val).get();
-			Rating r = new Rating(uc, userId, score, workload, difficulty, grading, content, review, isAnon, semTaken);
+			Rating r = new Rating(uc, userID, score, workload, difficulty, grading, content, review, isAnon, semTaken);
 			uc.addRating(r);
 			ratingRepository.saveAndFlush(r);
 			uniqueCourseRepository.flush();

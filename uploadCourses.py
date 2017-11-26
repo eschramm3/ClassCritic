@@ -1,7 +1,7 @@
 import json
 import requests
 
-url = 'http://localhost:8080/api/courses/add?'
+url = 'http://localhost:5000/api/courses/add?'
 with open('allCoursesInfo.json') as file:
     courses = json.load(file)
 for c in courses:
