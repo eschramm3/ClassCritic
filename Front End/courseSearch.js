@@ -7,6 +7,12 @@ const artSciDeptCodeArray = ["all","L90", "L98", "L48", "L49", "L52", "L01", "L4
 const olinDeptNameArray = ["All","Accounting (Undergrad)", "Accounting (Grad)", "Administration", "Finance (Undergrad)", "Finance (Grad)", "Human Resource Management", "International Studies", "Management (Undergrad)", "Management (Grad)", "Managerial Economics (Undergrad)", "Managerial Economics (Grad)", "Marketing (Undergrad)", "Marketing (Grad)", "Oper & Manufacturing Mgmt (Undergrad)", "Oper & Manufacturing Mgmt (Grad)", "Operations And Supply Chain Management", "Organizational Behavior", "Quantitative Bus Analysis"];
 const olinDeptCodeArray = ["all", "B50", "B60", "B51", "B52", "B62", "B56", "B99", "B53", "B63", "B54", "B64", "B55", "B65", "B57", "B67", "B58", "B66", "B59"];
 
+//onst olinDeptNameArray = ["All","Accounting (Undergrad)", "Accounting (Grad)", "Administration", "Finance (Undergrad)", "Finance (Grad)", "Human Resource Management", "International Studies", "Management (Undergrad)", "Management (Grad)", "Managerial Economics (Undergrad)", "Managerial Economics (Grad)", "Marketing (Undergrad)", "Marketing (Grad)", "Oper & Manufacturing Mgmt (Undergrad)", "Oper & Manufacturing Mgmt (Grad)", "Operations And Supply Chain Management", "Organizational Behavior", "Quantitative Bus Analysis"];
+//const olinDeptCodeArray = ["all", "B50", "B60", "B51", "B52", "B62", "B56", "B99", "B53", "B63", "B54", "B64", "B55", "B65", "B57", "B67", "B58", "B66", "B59"];
+
+//const olinDeptNameArray = ["All","Accounting (Undergrad)", "Accounting (Grad)", "Administration", "Finance (Undergrad)", "Finance (Grad)", "Human Resource Management", "International Studies", "Management (Undergrad)", "Management (Grad)", "Managerial Economics (Undergrad)", "Managerial Economics (Grad)", "Marketing (Undergrad)", "Marketing (Grad)", "Oper & Manufacturing Mgmt (Undergrad)", "Oper & Manufacturing Mgmt (Grad)", "Operations And Supply Chain Management", "Organizational Behavior", "Quantitative Bus Analysis"];
+//const olinDeptCodeArray = ["all", "B50", "B60", "B51", "B52", "B62", "B56", "B99", "B53", "B63", "B54", "B64", "B55", "B65", "B57", "B67", "B58", "B66", "B59"];
+
 const schoolToDept = [engineeringDeptNameArray, engineeringDeptNameArray, olinDeptNameArray, artSciDeptNameArray];
 
 //   'Engineering and Applied Sciences': engineeringDeptNameArray, 
@@ -209,8 +215,8 @@ function getProducts() {
     var dept = document.getElementById("deptDropdown");
     deptSelected = dept.options[dept.selectedIndex].innerHTML;
     
-    var attrs = document.getElementById("checkboxes");
-    var attrSelected = attrs.options[attrs.selectedIndex].value;
+    var attrs = document.getElementById("attrBoxes");
+    //var attrSelected = attrs.options[attrs.selectedOptions].value;
 
 
 
@@ -218,8 +224,14 @@ function getProducts() {
     console.log(dictionary);
     console.log(dictionary[deptSelected]);
     const proxyurl = "https://cors-anywhere.herokuapp.com/";
-    const url = "http://ratemycourse-env.dxtgyiksq8.us-east-2.elasticbeanstalk.com/api/courses/find?school="
-    + schoolSelected + "&dept=" + dictionary[deptSelected] +  "&attrs=" + attrSelected; // site that doesn't send Access-Control-*
+    var url = "http://ratemycourse-env.dxtgyiksq8.us-east-2.elasticbeanstalk.com/api/courses/find?school="
+    + schoolSelected + "&dept=" + dictionary[deptSelected]; // site that doesn't send Access-Control-*
+    
+    for (i = 0; i < attrs.selectedOptions.length; i++) {
+        url = url + "&attrs=" + attrs.selectedOptions[i].value;
+    }
+
+
     console.log(url);
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open( "GET", proxyurl+url, false ); // false for synchronous request
