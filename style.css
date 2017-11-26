@@ -1,0 +1,331 @@
+nav {
+	background-color: #eaeaea;
+}
+
+body {
+	/*display: inline-block;*/
+}
+
+button {
+	background-color: #e1ebed;
+	color:#676768;
+	/*border-radius: 15px 50px 30px;*/
+}
+
+h1 {
+	color: #008CBA;
+}
+
+select {
+	background-color: grey;
+	color: white;
+	height: 40px;
+}
+
+a {
+	text-decoration: none;
+}
+
+.carouselHead {
+	position: absolute;
+	left: 20vw;
+	top: 10vh;
+	background-color: none;
+}
+
+.carouselClass {
+	position: absolute;
+	left: 40vw;
+	top: 10vh;
+	background-color: none;
+}
+
+.carouselSearch {
+	width: 5vw;
+}
+
+.contentContainer {
+	display: inline-block;
+	margin-left: 10vw;
+	margin-right: 7vw;
+	left: 10vw;
+}
+
+.sliderDummy {
+	margin-top: 2vh;
+	background-color: #e1ebed;
+}
+
+.carousel-inner {
+	height: 60vh;
+	widows: 100vw;
+	background-color: #e1ebed;
+}
+
+.carouselExampleControls {
+	margin-top: 2vh;
+}
+
+.btnContainer {
+	left: 45%;
+	margin-top: 2vh;
+	position: absolute;
+}
+
+.reviewBtn {
+	font-size: 20px;
+}
+
+.reviewBtn:hover {
+	background-color: #008CBA;
+	color: white;
+	transition: .75s;
+}
+
+/*.univHome {
+	margin-top: 7vh;
+	left: 30vw;
+	position: absolute;
+}*/
+
+.loadButton {
+	margin-top: 30px;
+}
+
+.dropdown {
+	
+	position: static;
+	display: inline-flex;
+}
+
+.container {
+	margin-top: 7vh;
+	position: absolute;
+}
+
+.contentContainer {
+	display: inline-flex;
+}
+
+.home {
+	left: 30vw;
+}
+
+.message {
+	text-align: center;
+	color: #008CBA;
+}
+
+.dropdownContainer {
+	display: inline-block;
+}
+
+.searchDisplay {
+	margin-top: 50px;
+	display: none;
+}
+
+.individualClass {
+	/*background-color: silver;*/
+	border:solid silver;
+	margin-top: 10px;
+	margin-left:3.5vw;
+	
+}
+
+.indvidualClass:hover {
+	text-decoration: none;
+}
+
+.classNumber {
+	color: silver;
+}
+
+.classNumber:hover {
+	color: black;
+	text-decoration: none;
+}
+
+.className {
+	color: silver
+}
+.className:hover {
+	color: black;
+}
+
+.star {
+	color: silver;
+	height: 0px;
+	/*margin-top: 5px;*/
+	margin-bottom: 20px;
+}
+
+.star:hover {
+	color: #f4e842;
+	text-decoration: none;
+}
+
+.searchDisplay {
+	margin-left: 7vw;
+}
+
+.searchFooter {
+	margin-top: 10vh;
+}
+
+
+/*START CLASS STYLES*/
+
+.starContainer {
+	margin-top: 20px;
+}
+
+.overallRatingsContainer {
+	margin-left:50px;
+	margin-right: 20px;
+	display: inline-flex;
+	width: 100%;
+}
+
+.attributes {
+	color: #9eb0d8;
+}
+
+.rating {
+	margin-top: 60px;
+	margin-right: 30px;
+}
+
+.ratingsContainer {
+	/*margin-left: 10vw;*/
+	display: inline-flex;
+	align-items:center;
+	margin-top: 10vh;
+}
+
+.individualRating {
+	padding-left: 20px;
+	display: inline-block;
+}
+
+.userImage {
+	width: 100px;
+	height: 100px;
+	/*margin: auto;*/
+	font-size: 25px
+}
+
+.background {
+	background-color: #dedfe0;
+	padding: 20px;
+	width: 30vw;
+	margin: auto;
+	margin-left: 20px;
+	height: auto;
+}
+
+.ratingsContainer {
+	display: inline-flex;
+}
+
+.ratingsContainer .row .individualRating .star {
+	color: black;
+	font-size: 25px;
+}
+
+.ratingRating {
+	width: 150px;
+}
+
+.overviewRatings {
+	display: inline-flex;
+	width: 300px;
+}
+
+.info {
+	/*margin-top: 10px;*/
+	left: -50px;
+}
+
+.classStars {
+	margin-left: 20px;
+	margin-top: 20px;
+}
+
+.writtenReview {
+	margin: 20px;
+	height: auto; 
+	/*overflow: hidden;*/
+	/*overflow-x: none;*/
+}
+
+
+.expand {
+	position: absolute; 
+	top:92%;
+	left:75%;
+	/*font-size: 30em;*/
+}
+
+.expandContainer {
+	font-size: 1.5em;
+}
+
+.thumbsContainer {
+	font-size: 2em;
+	position: absolute;
+	left: 70%;
+	top:100%;
+}
+
+.classRate {
+	margin-top: 50px;
+}
+
+.reviewDisplay {
+	margin-top: 50px;
+	display: none;
+	background-color: #dee8f7;
+	padding:20px;
+}
+
+.stars {
+	margin-bottom: 50px;
+}
+
+
+div.stars {
+  width: 270px;
+  display: inline-flex;
+}
+
+input.star { display: none; }
+
+label.star {
+  float: right;
+  padding: 5px;
+  font-size: 36px;
+  color: #444;
+  transition: all .2s;
+}
+
+input.star:checked ~ label.star:before {
+  content: '\f005';
+  color: #FD4;
+  transition: all .25s;
+}
+
+/*input.star-5:checked ~ label.star:before {
+  color: #FE7;
+}*/
+
+/*input.star-1:checked ~ label.star:before { color: #F62; }*/
+
+label.star:hover { color: #FD4}
+
+label.star:before {
+  content: '\f006';
+  font-family: FontAwesome;
+}
+
+
