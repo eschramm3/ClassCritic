@@ -88,6 +88,10 @@ a {
 	position: absolute;
 }*/
 
+.loadButton {
+	margin-top: 30px;
+}
+
 .dropdown {
 	
 	position: static;
