@@ -14,7 +14,24 @@
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
 </head>
-<body style="height:120vh;">
+<body>
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+		window.fbAsyncInit = function() {
+			FB.init({
+				appId      : '317590075369877',
+				cookie     : true,
+				xfbml      : true,
+				version    : 'v2.10'
+			});
+			FB.AppEvents.logPageView();   
+		};
+		var js, fjs = d.getElementsByTagName(s)[0];
+		if (d.getElementById(id)) return;
+		js = d.createElement(s); js.id = id;
+		js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.11';
+		fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));</script>
 
 	<!-- START NAVBAR -->
 	<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
@@ -39,9 +56,13 @@
 				</li>
 
 				<li class="nav-item">
-					<a class="nav-link" href="#">Sign In</a>
+					<a class="nav-link" href="ClassCritic-Review.html">Write a Review</a>
 				</li>
 
+				<li class="nav-item">
+					<div class="fb-login-button nav-link" data-max-rows="1" data-size="medium" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></div>
+				</li>
+				s
 			</ul>
 			
 		</div>
