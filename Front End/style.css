@@ -254,3 +254,6 @@ a {
 }
 
 
+.bootstrap-select.btn-group .dropdown-menu.inner {
+  display: block;
+}
