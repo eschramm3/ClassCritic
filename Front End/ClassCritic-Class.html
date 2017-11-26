@@ -14,7 +14,24 @@
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
 </head>
-<body style="height:120vh;">
+<body>
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+		window.fbAsyncInit = function() {
+			FB.init({
+				appId      : '317590075369877',
+				cookie     : true,
+				xfbml      : true,
+				version    : 'v2.10'
+			});
+			FB.AppEvents.logPageView();   
+		};
+		var js, fjs = d.getElementsByTagName(s)[0];
+		if (d.getElementById(id)) return;
+		js = d.createElement(s); js.id = id;
+		js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.11';
+		fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));</script>
 
 	<!-- START NAVBAR -->
 	<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
@@ -22,6 +39,11 @@
 			<span class="navbar-toggler-icon"></span>
 		</button>
 		<a class="navbar-brand" href="#">Class Critic</a>
+		
+		<form class="form-inline my-2 my-lg-0">
+			<input class="form-control mr-sm-2" type="text" placeholder="Search">
+			<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+		</form>
 
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav mr-auto">
@@ -30,15 +52,15 @@
 				</li>
 
 				<li class="nav-item">
-					<a class="nav-link" href="ClassCritic-Search.html">Search Classes <span class="sr-only">(current)</span></a>
+					<a class="nav-link" href="ClassCritic-Search.html">Search Classes</a>
 				</li>
 
 				<li class="nav-item">
-					<a class="nav-link" href="#">Your Profile</a>
+					<a class="nav-link" href="ClassCritic-Review.html">Write a Review</a>
 				</li>
 
 				<li class="nav-item">
-					<a class="nav-link" href="#">Your Reviews</a>
+					<div class="fb-login-button nav-link" data-max-rows="1" data-size="medium" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></div>
 				</li>
 
 			</ul>
@@ -60,8 +82,12 @@
 					<i class="star fa fa-star fa-4x" aria-hidden="true"></i>
 					<i class="star fa fa-star fa-4x" aria-hidden="true"></i>
 					<i class="star fa fa-star-half-o fa-4x" aria-hidden="true"></i>
+					<h5>4.5</h5>
 				</div>
 			</div>
+
+			<h4 class="col-12 attributes">BU-SCIEN</h4>
+			
 
 			<!-- START REST OF CONTENT -->
 			<div class="description col-12">
@@ -70,22 +96,24 @@
 
 			<div class="overallRatingsContainer">
 				<div class="row">
-					<div class="rating col-6">
+					<div class="rating col-7">
 						<h2>Difficulty: </h2>
 						<i class="star fa fa-star fa-3x" aria-hidden="true"></i>
 						<i class="star fa fa-star fa-3x" aria-hidden="true"></i>
 						<i class="star fa fa-star fa-3x" aria-hidden="true"></i>
 						<i class="star fa fa-star fa-3x" aria-hidden="true"></i>
 						<i class="star fa fa-star-half-o fa-3x" aria-hidden="true"></i>
+						<h7>4.5</h7>
 					</div>
 
-					<div class="rating col-6">
+					<div class="rating col-7">
 						<h2>Workload: </h2>
 						<i class="star fa fa-star fa-3x" aria-hidden="true"></i>
 						<i class="star fa fa-star fa-3x" aria-hidden="true"></i>
 						<i class="star fa fa-star fa-3x" aria-hidden="true"></i>
 						<i class="star fa fa-star fa-3x" aria-hidden="true"></i>
 						<i class="star fa fa-star-half-o fa-3x" aria-hidden="true"></i>
+						<h7>4.5</h7>
 					</div>
 				</div>
 
@@ -97,6 +125,7 @@
 						<i class="star fa fa-star fa-3x" aria-hidden="true"></i>
 						<i class="star fa fa-star fa-3x" aria-hidden="true"></i>
 						<i class="star fa fa-star-half-o fa-3x" aria-hidden="true"></i>
+						<h7>4.5</h7>
 					</div>
 
 					<div class="rating col-7">
@@ -106,6 +135,7 @@
 						<i class="star fa fa-star fa-3x" aria-hidden="true"></i>
 						<i class="star fa fa-star fa-3x" aria-hidden="true"></i>
 						<i class="star fa fa-star-half-o fa-3x" aria-hidden="true"></i>
+						<h7>4.5</h7>
 					</div>
 
 				</div>
@@ -145,6 +175,7 @@
 										<i class="star fa fa-star fa-2x" aria-hidden="true"></i>
 										<i class="star fa fa-star fa-2x" aria-hidden="true"></i>
 										<i class="star fa fa-star-half-o fa-2x" aria-hidden="true"></i>
+										<h7>4.5</h7>
 									</div>
 
 									<div class="ratingRating col">
@@ -154,6 +185,7 @@
 										<i class="star fa fa-star fa-2x" aria-hidden="true"></i>
 										<i class="star fa fa-star fa-2x" aria-hidden="true"></i>
 										<i class="star fa fa-star-half-o fa-2x" aria-hidden="true"></i>
+										<h7>4.5</h7>
 									</div>
 								</div>
 
@@ -165,6 +197,7 @@
 										<i class="star fa fa-star fa-2x" aria-hidden="true"></i>
 										<i class="star fa fa-star fa-2x" aria-hidden="true"></i>
 										<i class="star fa fa-star-half-o fa-2x" aria-hidden="true"></i>
+										<h7>4.5</h7>
 									</div>
 
 									<div class="ratingRating col">
@@ -174,6 +207,7 @@
 										<i class="star fa fa-star fa-2x" aria-hidden="true"></i>
 										<i class="star fa fa-star fa-2x" aria-hidden="true"></i>
 										<i class="star fa fa-star-half-o fa-2x" aria-hidden="true"></i>
+										<h7>4.5</h7>
 									</div>
 								</div>
 								<!-- end class stars row -->
@@ -181,112 +215,120 @@
 							<!-- end class stars -->
 
 							<div class="row">
-								<p class="writtenReview">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean luctus eu metus nec posuere. Ut eu laoreet nulla. Morbi auctor ultricies aliquet. Etiam rhoncus turpis gravida luctus scelerisque. Donec consequat tempor ex, et consequat enim ornare sit amet. Nullam vulputate mi id sem lacinia, vitae sodales lectus pulvinar. Morbi eu lobortis diam. Integer eleifend vestibulum libero eu porttitor. Donec mattis massa eu massa feugiat maximus. Curabitur nunc mauris, lacinia nec nibh id, tempus semper sapien.</p>
+								<p class="writtenReview">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean luctus eu metus nec posuere. Ut eu laoreet nulla. Morbi auctor ultricies aliquet. Etiam rhoncus turpis gravida luctus scelerisque. </p>
 
-								<div class="expandContainer">
-								<button class="fa fa-chevron-down expand"></button>
+								<!-- <div class="expandContainer">
+									<button class="fa fa-chevron-down expand-1"></button>
 								</div>
-
+ -->
 								<!-- <div class="thumbsContainer">
 								<button class="fa fa-thumbs-o-up up"></button>
 								<button class="fa fa-thumbs-o-down down"></button>
-								</div> -->
-							</div>
-
+							</div> -->
 						</div>
+
 					</div>
-					<!-- END INDIVIDUAL RATING -->
-
-					<div class="individualRating col-6">
-						<!-- individual rating container -->
-						<div class="background">
-							<div class="row">
-								<div class="col">
-									<div class="userImage">
-										<i class="fa fa-user-circle fa-5x" aria-hidden="true"></i>
-									</div>
-								</div>
-
-								<div class="col info">
-									<h4>Anonymous</h4>
-									<h6><strong>Class of 2018</strong></h6>
-									<h6><strong>Professor:</strong> Ron Cytron</h6>
-									<h6><strong>Taken:</strong> Spring 2015</h6>
-								</div>
-							</div>
-
-							<div class="classStars">
-								<div class="row">
-									<div class="ratingRating col">
-										<h5>Difficulty: </h5>
-										<i class="star fa fa-star fa-2x" aria-hidden="true"></i>
-										<i class="star fa fa-star fa-2x" aria-hidden="true"></i>
-										<i class="star fa fa-star fa-2x" aria-hidden="true"></i>
-										<i class="star fa fa-star fa-2x" aria-hidden="true"></i>
-										<i class="star fa fa-star-half-o fa-2x" aria-hidden="true"></i>
-									</div>
-
-									<div class="ratingRating col">
-										<h5>Content: </h5>
-										<i class="star fa fa-star fa-2x" aria-hidden="true"></i>
-										<i class="star fa fa-star fa-2x" aria-hidden="true"></i>
-										<i class="star fa fa-star fa-2x" aria-hidden="true"></i>
-										<i class="star fa fa-star fa-2x" aria-hidden="true"></i>
-										<i class="star fa fa-star-half-o fa-2x" aria-hidden="true"></i>
-									</div>
-								</div>
-
-								<div class="row">
-									<div class="ratingRating col">
-										<h5>Workload: </h5>
-										<i class="star fa fa-star fa-2x" aria-hidden="true"></i>
-										<i class="star fa fa-star fa-2x" aria-hidden="true"></i>
-										<i class="star fa fa-star fa-2x" aria-hidden="true"></i>
-										<i class="star fa fa-star fa-2x" aria-hidden="true"></i>
-										<i class="star fa fa-star-half-o fa-2x" aria-hidden="true"></i>
-									</div>
-
-									<div class="ratingRating col">
-										<h5>Grading: </h5>
-										<i class="star fa fa-star fa-2x" aria-hidden="true"></i>
-										<i class="star fa fa-star fa-2x" aria-hidden="true"></i>
-										<i class="star fa fa-star fa-2x" aria-hidden="true"></i>
-										<i class="star fa fa-star fa-2x" aria-hidden="true"></i>
-										<i class="star fa fa-star-half-o fa-2x" aria-hidden="true"></i>
-									</div>
-								</div>
-								<!-- end class stars row -->
-							</div>
-							<!-- end class stars -->
-
-							<div class="row">
-								<p class="writtenReview">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean luctus eu metus nec posuere. Ut eu laoreet nulla. Morbi auctor ultricies aliquet. Etiam rhoncus turpis gravida luctus scelerisque. Donec consequat tempor ex, et consequat enim ornare sit amet. Nullam vulputate mi id sem lacinia, vitae sodales lectus pulvinar. Morbi eu lobortis diam. Integer eleifend vestibulum libero eu porttitor. Donec mattis massa eu massa feugiat maximus. Curabitur nunc mauris, lacinia nec nibh id, tempus semper sapien.</p>
-
-								<div class="expandContainer">
-								<button class="fa fa-chevron-down expand"></button>
-								</div>
-
-								<!-- <div class="thumbsContainer">
-								<button class="fa fa-thumbs-o-up up"></button>
-								<button class="fa fa-thumbs-o-down down"></button>
-								</div> -->
-							</div>
-
-						</div>
-					</div>
-					<!-- END INDIVIDUAL RATING -->
-
 				</div>
+				<!-- END INDIVIDUAL RATING -->
+
+				<div class="individualRating col-6">
+					<!-- individual rating container -->
+					<div class="background">
+						<div class="row">
+							<div class="col">
+								<div class="userImage">
+									<i class="fa fa-user-circle fa-5x" aria-hidden="true"></i>
+								</div>
+							</div>
+
+							<div class="col info">
+								<h4>Anonymous</h4>
+								<h6><strong>Class of 2018</strong></h6>
+								<h6><strong>Professor:</strong> Ron Cytron</h6>
+								<h6><strong>Taken:</strong> Spring 2015</h6>
+							</div>
+						</div>
+
+						<div class="classStars">
+							<div class="row">
+								<div class="ratingRating col">
+									<h5>Difficulty: </h5>
+									<i class="star fa fa-star fa-2x" aria-hidden="true"></i>
+									<i class="star fa fa-star fa-2x" aria-hidden="true"></i>
+									<i class="star fa fa-star fa-2x" aria-hidden="true"></i>
+									<i class="star fa fa-star fa-2x" aria-hidden="true"></i>
+									<i class="star fa fa-star-half-o fa-2x" aria-hidden="true"></i>
+									<h7>4.5</h7>
+								</div>
+
+								<div class="ratingRating col">
+									<h5>Content: </h5>
+									<i class="star fa fa-star fa-2x" aria-hidden="true"></i>
+									<i class="star fa fa-star fa-2x" aria-hidden="true"></i>
+									<i class="star fa fa-star fa-2x" aria-hidden="true"></i>
+									<i class="star fa fa-star fa-2x" aria-hidden="true"></i>
+									<i class="star fa fa-star-half-o fa-2x" aria-hidden="true"></i>
+									<h7>4.5</h7>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="ratingRating col">
+									<h5>Workload: </h5>
+									<i class="star fa fa-star fa-2x" aria-hidden="true"></i>
+									<i class="star fa fa-star fa-2x" aria-hidden="true"></i>
+									<i class="star fa fa-star fa-2x" aria-hidden="true"></i>
+									<i class="star fa fa-star fa-2x" aria-hidden="true"></i>
+									<i class="star fa fa-star-half-o fa-2x" aria-hidden="true"></i>
+									<h7>4.5</h7>
+								</div>
+
+								<div class="ratingRating col">
+									<h5>Grading: </h5>
+									<i class="star fa fa-star fa-2x" aria-hidden="true"></i>
+									<i class="star fa fa-star fa-2x" aria-hidden="true"></i>
+									<i class="star fa fa-star fa-2x" aria-hidden="true"></i>
+									<i class="star fa fa-star fa-2x" aria-hidden="true"></i>
+									<i class="star fa fa-star-half-o fa-2x" aria-hidden="true"></i>
+									<h7>4.5</h7>
+								</div>
+							</div>
+							<!-- end class stars row -->
+						</div>
+						<!-- end class stars -->
+
+						<div class="row">
+							<p class="writtenReview">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean luctus eu metus nec posuere. Ut eu laoreet nulla. Morbi auctor ultricies aliquet. Etiam rhoncus turpis gravida luctus scelerisque. Donec consequat tempor ex, et consequat enim ornare sit amet. Nullam vulputate mi id sem lacinia, vitae sodales lectus pulvinar. </p>
+
+							<!-- <div class="expandContainer">
+								<button class="fa fa-chevron-down expand-2"></button>
+							</div> -->
+
+								<!-- <div class="thumbsContainer">
+								<button class="fa fa-thumbs-o-up up"></button>
+								<button class="fa fa-thumbs-o-down down"></button>
+							</div> -->
+						</div>
+
+					</div>
+				</div>
+				<!-- END INDIVIDUAL RATING -->
 			</div>
-			<!-- </div> -->
+			<!-- END ROW 1 OF RATINGS -->
+		</div>
+		<!-- END ALL INDIVIDUAL RATINGS -->
+		<!-- </div> -->
 
-
-
+		<div class="jumbotron classRate" style="text-align: center;">
+			<h1>Have you taken this course? Write a review!</h1>
+			<button class="rateButton"><a href="ClassCritic-Review.html">Write a Review</a></button>
 		</div>
 
 	</div>
 
-	<div style="height: 100vh;"></div>
+</div>
+
+<div style="height: 100vh;"></div>
 </div>
 <!-- end contentContainer -->
 
@@ -294,16 +336,25 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 
-			$('.expand').click(function() {
-				$('.writtenReview').css('height','auto');
-				var height = $('writtenReview').css("height");
-				// console.log(height);
-				$('.writtenReview').css('overflow','visible');
-				$(this).css('display','none');
-				// console.log('clicked');
-			});
+		// $('.expand-1').click(function() {
+		// 	$('.writtenReview-1').css('height','auto');
+		// 	var height = $('writtenReview-1').css("height");
+		// 		// console.log(height);
+		// 		$('.writtenReview-1').css('overflow','visible');
+		// 		$(this).css('display','none');
+		// 		// console.log('clicked');
+		// 	});
 
-		});
+		// $('.expand-2').click(function() {
+		// 	$('.writtenReview-2').css('height','auto');
+		// 	var height = $('writtenReview-2').css("height");
+		// 		// console.log(height);
+		// 		$('.writtenReview-2').css('overflow','visible');
+		// 		$(this).css('display','none');
+		// 		// console.log('clicked');
+		// 	});
+
+	});
 
 
 </script>

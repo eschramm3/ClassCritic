@@ -17,7 +17,24 @@
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
 </head>
-<body style="height:120vh;">
+<body>
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+		window.fbAsyncInit = function() {
+			FB.init({
+				appId      : '317590075369877',
+				cookie     : true,
+				xfbml      : true,
+				version    : 'v2.10'
+			});
+			FB.AppEvents.logPageView();   
+		};
+		var js, fjs = d.getElementsByTagName(s)[0];
+		if (d.getElementById(id)) return;
+		js = d.createElement(s); js.id = id;
+		js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.11';
+		fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));</script>
 
 	<!-- START NAVBAR -->
 	<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
@@ -25,6 +42,11 @@
 			<span class="navbar-toggler-icon"></span>
 		</button>
 		<a class="navbar-brand" href="#">Class Critic</a>
+		
+		<form class="form-inline my-2 my-lg-0">
+			<input class="form-control mr-sm-2" type="text" placeholder="Search">
+			<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+		</form>
 
 		<form class="form-inline my-2 my-lg-0">
  			<input class="form-control mr-sm-2" type="text" placeholder="Search">
@@ -39,15 +61,15 @@
 				</li>
 
 				<li class="nav-item">
-					<a class="nav-link" href="ClassCritic-Search.html">Search Classes <span class="sr-only">(current)</span></a>
+					<a class="nav-link" href="ClassCritic-Search.html">Search Classes</a>
 				</li>
 
 				<li class="nav-item">
-					<a class="nav-link" href="#">Your Profile</a>
+					<a class="nav-link" href="ClassCritic-Review.html">Write a Review</a>
 				</li>
 
 				<li class="nav-item">
-					<a class="nav-link" href="#">Your Reviews</a>
+					<div class="fb-login-button nav-link" data-max-rows="1" data-size="medium" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></div>
 				</li>
 
 			</ul>
@@ -212,6 +234,8 @@
 				<div class="row" id="rowMain">>
 					
 				</div>
+
+				<button class="go btn btn-primary loadButton">Load More</button>
 
 				<div class="searchFooter jumbotron">
 					<h1>Didn't find what you're looking for? Search by name!</h1>
