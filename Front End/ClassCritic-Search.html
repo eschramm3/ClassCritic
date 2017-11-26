@@ -5,6 +5,9 @@
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
+	<script src="courseSearch.js"></script>
+
+
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 	<!-- Required meta tags -->
@@ -22,6 +25,12 @@
 			<span class="navbar-toggler-icon"></span>
 		</button>
 		<a class="navbar-brand" href="#">Class Critic</a>
+
+		<form class="form-inline my-2 my-lg-0">
+ 			<input class="form-control mr-sm-2" type="text" placeholder="Search">
+ 			<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+ 		</form>
+
 
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav mr-auto">
@@ -74,52 +83,120 @@
 				</select> -->
 
 				<!-- School Dropdown -->
-				<select size=1 class="dropdown show">
+				<select class="dropdown show" id="schoolDropdown"
+69.					 onchange="newDeptDropDown()">
 					<option class="btn btn-secondary dropdown-toggle" href="https://example.com" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">School
 					</option>
 
 					<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-						<option class="dropdown-item" href="#">Engineering and Applied Sciences</option>
-						<option class="dropdown-item" href="#">Olin School of Business</option>
-						<option class="dropdown-item" href="#">Arts and Sciences</option>
-						<option class="dropdown-item" href="#">Sam Fox School of Design</option>
+						<option class="dropdown-item" value="E" href="#">Engineering and Applied Sciences</option>
+						<option class="dropdown-item" value="B" href="#">Olin School of Business</option>
+						<option class="dropdown-item" value="L" href="#">Arts and Sciences</option>
+						<option class="dropdown-item" value="A" href="#">Sam Fox School of Design</option>
 					</div>
 				</select>
 
 				<!-- Major Dropdown -->
-				<select size=1 class="dropdown show">
+				<select class="dropdown show" id="deptDropdown">
 					<option class="btn btn-secondary dropdown-toggle" href="https://example.com" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Major
 					</option>
 
-					<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-						<option class="dropdown-item" href="#">Computer Science</option>
-						<option class="dropdown-item" href="#">Systems</option>
-						<option class="dropdown-item" href="#">Electrical</option>
-						<option class="dropdown-item" href="#">Mechanical</option>
+					<div class="dropdown-menu" aria-labelledby="dropdownMenuLink" id="deptDivDrop">
+						<option class="dropdown-item" href="#">Mechanical Engineering and Materials Science</option>
+						<option class="dropdown-item" href="#">Computer Science and Engineering</option>
+						<option class="dropdown-item" href="#">Electrical and Systems</option>
+						
+						
 						<option class="dropdown-item" href="#">Biomedical</option>
-						<option class="dropdown-item" href="#">Chemical</option>
+						<option class="dropdown-item" href="#">Energy, Environmental, and Chemical</option>
 					</div>
 				</select>
 
-				<!-- degree requirement Dropdown -->
-				<select size=1 class="dropdown show">
-					<option class="btn btn-secondary dropdown-toggle" href="https://example.com" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Degree Requirements
+
+				
+				<select class="dropdown show" id="attrBoxes" multiple>
+					<option class="btn btn-secondary dropdown-toggle" href="https://example.com" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Major
 					</option>
 
-					<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-						<option class="dropdown-item">English Proficiency</option>
-						<option option="dropdown-item" href="#">Humanities and Social Sciences</option>
-						<option class="dropdown-item" href="#">Engineering Topics Units</option>
-						<option class="dropdown-item" href="#">Other Degree Requirements</option>
-						<option class="dropdown-item" href="#">Core Requirementes</option>
-						<option class="dropdown-item" href="#">Technical Electives</option>
-						<option class="dropdown-item" href="#">Math Requirements</option>
-						<option class="dropdown-item" href="#">Additional Requirements</option>
+					<div class="dropdown-menu" aria-labelledby="dropdownMenuLink" id="attrDivDrop">
+					<optgroup value="EN" label="Engineering">
+				      <option value="DU"/>Engineering Design Units</option>
+				      <option value="H"/>Engineering Humanity</option>
+				      <option value="LU"/>Engineering Lab Units</option>
+				      <option value="S"/>Engineering Social Science</option>
+				      <option value="SU"/>Engineering Science Units</option>
+				      <option value="TU"/>Engineering Topics Units</option>
+				    </optgroup>
 
-					</div>
-				</select>
+				    <optgroup value="BU" label="Business">
+				      <option value="BA"/>Behavioral Analysis</option>
+				      <option value="ETH"/>Ethics/Values</option>
+				      <option value="HUM"/>Humanities</option>
+				      <option value="IS"/>International Studies</option>
+				      <option value="SCI"/>Physical/Life Science</option>
+				    </optgroup>
 
-				<button class="go btn btn-primary goButton" type="submit">Go!</button>
+				    <optgroup value="A/S" label="ArtSci">
+				      <option value="LA"/>Language and Arts</option>
+				      <option value="NS"/>Natural Sciences and Mathematics</option>
+				      <option value="SS"/>Social Sciences</option>
+				      <option value="TH"/>Textual and Historical Studies</option>
+				      <option value="CD"/>Cultural Diversity</option>
+				      <option value="QA"/>Quantitative Analysis</option>
+				      <option value="SD"/>Social Differentiation Disc</option>
+				      <option value="WI"/>Writing Intensive Disc</option>
+				    </optgroup>
+
+				    <optgroup value="A/S IQ" label="ArtSci IQ">
+			      	  <option value="AN"/>Applied Numeracy</option>
+				      <option value="LS"/>Language and Cultural Diversity - Language</option>
+				      <option value="SD"/>Social Differentiation IQ</option>
+				      <option value="WI"/>Writing Intensive IQ</option>
+				      <option value="HUM"/>Humanities</option>
+				      <option value="LCD"/>Language and Cultural Diversity - Culture</option>
+				      <option value="NSM"/>Natural Sciences and Mathematics</option>
+				      <option value="SSC"/>Social Sciences</option>
+				    </optgroup>
+
+				    <optgroup value="ART" label="Art">
+
+				      <option value="AH"/>FA Art History</option>
+				      <option value="CDES"/>FA Communication Design</option>
+				      <option value="COMP"/>FA English Composition</option>
+				      <option value="FAAM"/>FA Art Minor</option>
+				      <option value="FADM"/>FA Design Minor</option>
+				      <option value="HUM"/>FA Humanities</option>
+				      <option value="LIT"/>FA Literature</option>
+				      <option value="LNG"/>FA Foreign Language</option>
+				      <option value="NSM"/>FA Natural Sciences or Mathematics</option>
+				      <option value="SSC"/>FA Social and Behavioral Sciences</option>
+				      <option value="SSP"/>FA Social Sciences or Philosophy</option>
+				      <option value="GFAH"/>GF Art History</option>
+				    </optgroup>
+
+				    <optgroup value="ARCH" label="Architecture">
+				      <option value="CAST"/>AR Case Studies</option>
+				      <option value="HT"/>AR History Theory</option>
+				      <option value="HUM"/>AR Humanities</option>
+				      <option value="LIT"/>AR Literature</option>
+				      <option value="NSM"/>AR Natural Science or Mathematics</option>
+				      <option value="RW"/>AR Research and Writing</option>
+				      <option value="SSC"/>AR Social and Behavioral Sciences</option>
+				      <option value="SSP"/>AR Social Science or Philosophy</option>
+				      <option value="UI"/>AR Urban Issues</option>
+				      <option value="ECOL"/>GA Ecological Elective</option>
+				      <option value="GACS"/>GA Case Studies</option>
+				      <option value="GAHT"/>GA History/Theory</option>
+				      <option value="GAMUD"/>GA MUD Track</option>
+				      <option value="GANS"/>GA Natural Systems</option>
+				      <option value="GARW"/>GA Research and Writing</option>
+				      <option value="GAUI"/>GA Urban Issues</option>
+				    </optgroup>
+
+			      </div>
+			    </select>
+
+				<button class="go btn btn-primary goButton" type="submit" onclick='getProducts()'>Go!</button>
 			</div>
 			<!-- end dropdownContainer -->
 
@@ -127,50 +204,16 @@
 			<div class="searchDisplay"> 
 				
 				<!-- ROW 1 -->
-				<div class="row">
-					<a href="ClassCritic-Class.html" target="_blank" class="col-9 individualClass">
-						<h2 class="classNumber">CSE 131</h2>
-						<h1 class="className">Computer Science 1</h1>
-						<i class="star fa fa-star fa-2x" aria-hidden="true"></i>
-						<i class="star fa fa-star fa-2x" aria-hidden="true"></i>
-						<i class="star fa fa-star fa-2x" aria-hidden="true"></i>
-						<i class="star fa fa-star fa-2x" aria-hidden="true"></i>
-						<i class="star fa fa-star-half-o fa-2x" aria-hidden="true"></i>
-					</a>
+				<div id="courseContent">
 
-					<a href="ClassCritic-Class.html" target="_blank" class="col-9 individualClass">
-						<h2 class="classNumber">CSE 247</h2>
-						<h1 class="className">Data Structures and Algorithms</h1>
-						<i class="star fa fa-star fa-2x" aria-hidden="true"></i>
-						<i class="star fa fa-star fa-2x" aria-hidden="true"></i>
-						<i class="star fa fa-star fa-2x" aria-hidden="true"></i>
-						<i class="star fa fa-star fa-2x" aria-hidden="true"></i>
-						<i class="star fa fa-star-o fa-2x" aria-hidden="true"></i>
-					</a>
 				</div>
 
-				<!-- ROW 2 -->
-				<div class="row">
-					<a href="ClassCritic-Class.html" target="_blank" class="col-9 individualClass">
-						<h2 class="classNumber">CSE 131</h2>
-						<h1 class="className">Computer Science 1</h1>
-						<i class="star fa fa-star fa-2x" aria-hidden="true"></i>
-						<i class="star fa fa-star fa-2x" aria-hidden="true"></i>
-						<i class="star fa fa-star fa-2x" aria-hidden="true"></i>
-						<i class="star fa fa-star-half-o fa-2x" aria-hidden="true"></i>
-						<i class="star fa fa fa-star-o fa-2x" aria-hidden="true"></i>
-						
-					</a>
 
-					<a href="ClassCritic-Class.html" target="_blank" class="col-9 individualClass">
-						<h2 class="classNumber">CSE 247</h2>
-						<h1 class="className">Data Structures and Algorithms</h1>
-						<i class="star fa fa-star fa-2x" aria-hidden="true"></i>
-						<i class="star fa fa-star fa-2x" aria-hidden="true"></i>
-						<i class="star fa fa-star fa-2x" aria-hidden="true"></i>
-						<i class="star fa fa-star-o fa-2x" aria-hidden="true"></i>
-						<i class="star fa fa-star-o fa-2x" aria-hidden="true"></i>
-					</a>
+				
+
+				<!-- ROW 2 -->
+				<div class="row" id="rowMain">>
+					
 				</div>
 
 				<div class="searchFooter jumbotron">
@@ -179,7 +222,7 @@
 
 				<form style="padding-bottom: 100px;" class="form-inline my-2 my-lg-0">
 					<input class="form-control mr-sm-2" type="text" placeholder="Search">
-					<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+					<button class="btn btn-outline-success my-2 my-sm-0" type="submit" onclick='getProducts()'>Search</button>
 				</form>
 
 			</div>
@@ -202,11 +245,7 @@
 
 			$('.individualClass').mouseover(function() {
 				// $(this).toggleClass("selected");
-				$('classNumber').css({
-					color:black,
-					textDecoration:none
-				});
-				$('className').css('color',black);
+				
 				// $(this).css('height',getHeight());
 			});
 
