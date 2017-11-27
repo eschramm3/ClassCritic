@@ -19,6 +19,14 @@
     function changeToClass() {
         document.getElementById("searchContentContainer").style.display = "none";
         document.getElementById("classContentContainer").style.display="block";
+        document.getElementById("reviewContainer").style.display="none";
+    
+    }
+
+    function changeToReview() {
+        document.getElementById("searchContentContainer").style.display = "none";
+        document.getElementById("classContentContainer").style.display="none";
+        document.getElementById("reviewContainer").style.display="block";
     }
     
 
@@ -226,19 +234,36 @@
 
     let deptSelected = {}
 
-    function viewRatings(obj) {
 
-        console.log(obj);
-        var urlClass = 'https://cors-anywhere.herokuapp.com/http://ratemycourse-env.dxtgyiksq8.us-east-2.elasticbeanstalk.com/api/courses/id/' + obj;
-        changeToClass();
+    function getInfoById(classID) {
+        var urlClass = 'https://cors-anywhere.herokuapp.com/http://ratemycourse-env.dxtgyiksq8.us-east-2.elasticbeanstalk.com/api/courses/id/' + classID;
         var xmlHttpClass = new XMLHttpRequest();
         xmlHttpClass.open( "GET", urlClass, false ); // false for synchronous request
         xmlHttpClass.send( null );
         var parsedClassText = JSON.parse(xmlHttpClass.responseText);
-        console.log(parsedClassText);
+        return parsedClassText;
+    }
+
+    function viewRatings(obj) {
+
+        console.log(obj);
+        var parsedClassText = getInfoById(obj);
+        changeToClass();
         document.getElementById('classFocusNumber').innerHTML = parsedClassText.id;
         document.getElementById('classFocusName').innerHTML = parsedClassText.name;
         document.getElementById('classDescription').innerHTML = parsedClassText.description;
+        //document.getElementById('classDescription').innerHTML = parsedClassText.description;
+    }
+
+    function changeRateToReview() {
+
+        courseIDToReview = document.getElementById('classFocusNumber');
+
+        
+        var parsedReviewText = getInfoById(courseIDToReview);
+        changeToReview();
+        console.log(parsedReviewText);
+        document.getElementById('schoolToReview').innerHTML = parsedReviewText.school;
         //document.getElementById('classDescription').innerHTML = parsedClassText.description;
     }
 
@@ -299,3 +324,51 @@
         
     }
 
+    var overallRating = 0;
+    var difficultyRating = 0;
+    var contentRating = 0;
+    var workloadRating = 0;
+    var gradingRating = 0;
+
+    function setOverall(num) {
+        console.log(num);
+        overallRating = num;
+    }
+    function setDifficulty(num) {
+        console.log(num);
+        difficultyRating = num;
+    }
+    function setContent(num) {
+        console.log(num);
+        contentRating = num;
+    }
+    function setWorkload(num) {
+        console.log(num);
+        workloadRating = num;
+    }
+    function setGrading(num) {
+        console.log(num);
+        gradingRating = num;
+    }
+
+    function leaveReview() {
+        var urlPost = "https://cors-anywhere.herokuapp.com/"
+        + "http://ratemycourse-env.dxtgyiksq8.us-east-2.elasticbeanstalk.com/api/ratings/add?"
+        + "val="+document.getElementById("valToReview").innerHTML
+        + "userID="+document.getElementById("userIDToReview").innerHTML
+        + "score="+document.getElementById("valToReview").innerHTML
+        + "val="+document.getElementById("valToReview").innerHTML
+        + "val="+document.getElementById("valToReview").innerHTML
+        + "val="+document.getElementById("valToReview").innerHTML
+        + "val="+document.getElementById("valToReview").innerHTML
+        + "val="+document.getElementById("valToReview").innerHTML
+        var xmlHttpPost = new XMLHttpRequest();
+        xmlHttpPost.open( "POST", proxyurl+url, false ); // false for synchronous request
+        xmlHttpPost.send( null );
+        var parsedText = JSON.parse(xmlHttpPost.responseText);
+    }
+
+    /*http://ratemycourse-env.dxtgyiksq8.us-east-2.elasticbeanstalk.com/
+    api/ratings/add?val=55&userID=dteich&score=5&workload=5&difficulty=5&
+    content=4&grading=4&review=Tough but great!&isAnon=false&
+    semTaken=FL2016*/

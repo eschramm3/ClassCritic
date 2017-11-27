@@ -496,12 +496,207 @@
 
 			<div class="jumbotron classRate" style="text-align: center;">
 				<h1>Have you taken this course? Write a review!</h1>
-				<button class="rateButton"><a href="ClassCritic-Review.html">Write a Review</a></button>
+				<button class="rateButton" onClick="changeToReview()">Write a Review</button>
 			</div>
 
 		</div>
 
 		</div>
+
+		<div id="reviewContainer" style="display: none;">
+		<div class="searchReviewContainer">
+
+			<div class="jumbotron">
+				<h1>Write a Review</h1>
+			</div>
+
+			<div class="dropdownContainer">
+
+				<h3 id="schoolToReview"></h3>
+				<h3 id="deptToReview"></h3>
+				<h3 id="classToReview"></h3>
+				<h3 id="valToReview"></h3>
+				<h3 id="userIDToReview"></h3>
+
+				<!-- School Dropdown -->
+				<select size=1 class="dropdown show">
+					<option class="btn btn-secondary dropdown-toggle" href="https://example.com" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">School
+					</option>
+
+					<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+						<option class="dropdown-item" href="#">Engineering and Applied Sciences</option>
+						<option class="dropdown-item" href="#">Olin School of Business</option>
+						<option class="dropdown-item" href="#">Arts and Sciences</option>
+						<option class="dropdown-item" href="#">Sam Fox School of Design</option>
+					</div>
+				</select>
+
+				<!-- Major Dropdown -->
+				<select size=1 class="dropdown show">
+					<option class="btn btn-secondary dropdown-toggle" href="https://example.com" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Department
+					</option>
+
+					<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+						<option class="dropdown-item" href="#">Computer Science</option>
+						<option class="dropdown-item" href="#">Systems</option>
+						<option class="dropdown-item" href="#">Electrical</option>
+						<option class="dropdown-item" href="#">Mechanical</option>
+						<option class="dropdown-item" href="#">Biomedical</option>
+						<option class="dropdown-item" href="#">Chemical</option>
+					</div>
+				</select>
+
+				<!-- class Dropdown -->
+				<select size=1 class="dropdown show">
+					<option class="btn btn-secondary dropdown-toggle" href="https://example.com" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Class
+					</option>
+
+					<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+						<option class="dropdown-item">CSE 131 Introduction to Computer Science</option>
+						<option option="dropdown-item" href="#">CSE 247 Data Structures and Algorithms</option>
+						<option class="dropdown-item" href="#">CSE 437 Software Engineering Workshop</option>
+						<option class="dropdown-item" href="#">CSE 132 Computer Science II</option>
+						<option class="dropdown-item" href="#">CSE 222 Internet of Things</option>
+
+					</div>
+				</select>
+
+				<button class="go btn btn-primary reviewButton" type="submit">Go!</button>
+			</div>
+			<!-- end dropdownContainer -->
+
+			<!-- START DISPLAYING SEARCH RESULTS -->
+			<div class="reviewDisplay"> 
+				
+				<!-- ROW 1 -->
+				<div class="row">
+					<div class="col-12">
+						<h3 class="reviewOverall">Overall rating:</h3>
+						<div class="stars">
+							<form action="">
+								<input class="star star-5" id="star-5" type="radio" name="star"/>
+								<label class="star star-5" for="star-5"
+								onclick="setOverall(5)"></label>
+								<input class="star star-4" id="star-4" type="radio" name="star"/>
+								<label class="star star-4" for="star-4" onclick="setOverall(4)"></label>
+								<input class="star star-3" id="star-3" type="radio" name="star"/>
+								<label class="star star-3" for="star-3"onclick="setOverall(3)"></label>
+								<input class="star star-2" id="star-2" type="radio" name="star"/>
+								<label class="star star-2" for="star-2"onclick="setOverall(2)"></label>
+								<input class="star star-1" id="star-1" type="radio" name="star"/>
+								<label class="star star-1" for="star-1"onclick="setOverall(1)"></label>
+							</form>
+						</div>
+
+					</div>
+
+				</div>
+
+				<div class="row">
+
+					<div class="col-3">
+						<h4 class="reviewOverall">Difficulty:</h4>
+						<div class="stars">
+							<form action="">
+								<input class="star star-5" id="star-5-2" type="radio" name="star"/>
+								<label class="star star-5" for="star-5-2" onclick="setDifficulty(5)"></label>
+								<input class="star star-4" id="star-4-2" type="radio" name="star"/>
+								<label class="star star-4" for="star-4-2" onclick="setDifficulty(4)"></label>
+								<input class="star star-3" id="star-3-2" type="radio" name="star"/>
+								<label class="star star-3" for="star-3-2" onclick="setDifficulty(3)"></label>
+								<input class="star star-2" id="star-2-2" type="radio" name="star"/>
+								<label class="star star-2" for="star-2-2" onclick="setDifficulty(2)"></label>
+								<input class="star star-1" id="star-1-2" type="radio" name="star"/>
+								<label class="star star-1" for="star-1-2" onclick="setDifficulty(1)"></label>
+							</form>
+						</div>
+					</div>
+
+					<div class="col-3">
+						<h4 class="reviewOverall">Content:</h4>
+						<div class="stars">
+							<form action="">
+								<input class="star star-5" id="star-5-2" type="radio" name="star"/>
+								<label class="star star-5" for="star-5-2"onclick="setContent(5)"></label>
+								<input class="star star-4" id="star-4-2" type="radio" name="star"/>
+								<label class="star star-4" for="star-4-2" onclick="setContent(4)"></label>
+								<input class="star star-3" id="star-3-2" type="radio" name="star"/>
+								<label class="star star-3" for="star-3-2" onclick="setContent(3)"></label>
+								<input class="star star-2" id="star-2-2" type="radio" name="star"/>
+								<label class="star star-2" for="star-2-2" onclick="setContent(2)"></label>
+								<input class="star star-1" id="star-1-2" type="radio" name="star"/>
+								<label class="star star-1" for="star-1-2" onclick="setContent(1)"></label>
+							</form>
+						</div>
+					</div>
+
+					<div class="col-3">
+						<h4 class="reviewOverall">Workload:</h4>
+						<div class="stars">
+							<form action="">
+								<input class="star star-5" id="star-5-3" type="radio" name="star"/>
+								<label class="star star-5" for="star-5-3" onclick="setWorkload(5)"></label>
+								<input class="star star-4" id="star-4-3" type="radio" name="star"/>
+								<label class="star star-4" for="star-4-3"onclick="setWorkload(4)"></label>
+								<input class="star star-3" id="star-3-3" type="radio" name="star"/>
+								<label class="star star-3" for="star-3-3"onclick="setWorkload(3)"></label>
+								<input class="star star-2" id="star-2-3" type="radio" name="star"/>
+								<label class="star star-2" for="star-2-3"onclick="setWorkload(2)"></label>
+								<input class="star star-1" id="star-1-3" type="radio" name="star"/>
+								<label class="star star-1" for="star-1-3"onclick="setWorkload(1)"></label>
+							</form>
+						</div>
+					</div>
+
+					<div class="col-3">
+						<h4 class="reviewOverall">Grading:</h4>
+						<div class="stars">
+							<form action="">
+								<input class="star star-5" id="star-5-3" type="radio" name="star"/>
+								<label class="star star-5" for="star-5-3"
+								onclick="setGrading(5)"></label>
+								<input class="star star-4" id="star-4-3" type="radio" name="star"/>
+								<label class="star star-4" for="star-4-3"
+								onclick="setGrading(4)"></label>
+								<input class="star star-3" id="star-3-3" type="radio" name="star"/>
+								<label class="star star-3" for="star-3-3"
+								onclick="setGrading(3)"></label>
+								<input class="star star-2" id="star-2-3" type="radio" name="star"/>
+								<label class="star star-2" for="star-2-3"
+								onclick="setGrading(2)"></label>
+								<input class="star star-1" id="star-1-3" type="radio" name="star"/>
+								<label class="star star-1" for="star-1-3"
+								onclick="setGrading(1)"></label>
+							</form>
+						</div>
+					</div>
+
+				</div>
+
+				<div class="form-group comments">
+					<h4 for="leaveComment">Leave a review (optional)</h4>
+					<textarea class="form-control" id="exampleTextarea" rows="5"></textarea>
+				</div>
+
+				<button class="go btn btn-primary reviewButton" onclick="leaveReview()" type="submit">Submit</button>
+
+			</div>
+
+			<div class="searchFooter jumbotron">
+				<h1>Didn't find what you're looking for? Search by name!</h1>
+			</div>
+
+			<form style="padding-bottom: 100px;" class="form-inline my-2 my-lg-0">
+				<input class="form-control mr-sm-2" type="text" placeholder="Search">
+				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+			</form>
+
+		</div>
+
+	</div>
+	<!-- end searchContainer -->
+
+</div>
 
 
 
