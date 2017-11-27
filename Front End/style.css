@@ -128,9 +128,9 @@ a {
 .individualClass {
 	/*background-color: silver;*/
 	border:solid silver;
-	margin-top: 10px;
+	/*margin-top: 10px;*/
 	margin-left:3.5vw;
-	
+	margin-bottom: 20px;
 }
 
 .indvidualClass:hover {
@@ -158,11 +158,6 @@ a {
 	height: 0px;
 	/*margin-top: 5px;*/
 	margin-bottom: 20px;
-}
-
-.star:hover {
-	color: #f4e842;
-	text-decoration: none;
 }
 
 .searchDisplay {
