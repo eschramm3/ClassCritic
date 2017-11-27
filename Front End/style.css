@@ -284,7 +284,7 @@ a {
 
 .reviewDisplay {
 	margin-top: 50px;
-	display: none;
+	/*display: none;*/
 	background-color: #dee8f7;
 	padding:20px;
 }
@@ -326,6 +326,19 @@ label.star:hover { color: #FD4}
 label.star:before {
   content: '\f006';
   font-family: FontAwesome;
+}
+
+.semesterDropdown {
+	margin-bottom: 0px;
+	margin-bottom: 30px;
+}
+
+.anonymous {
+	font-size: 20px;
+}
+
+.form-check {
+	margin-bottom: 30px;
 }
 
 
