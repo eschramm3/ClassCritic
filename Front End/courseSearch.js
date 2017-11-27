@@ -4,8 +4,9 @@
 
     //const olinDeptNameArray = ["All","Accounting (Undergrad)", "Accounting (Grad)", "Administration", "Finance (Undergrad)", "Finance (Grad)", "Human Resource Management", "International Studies", "Management (Undergrad)", "Management (Grad)", "Managerial Economics (Undergrad)", "Managerial Economics (Grad)", "Marketing (Undergrad)", "Marketing (Grad)", "Oper & Manufacturing Mgmt (Undergrad)", "Oper & Manufacturing Mgmt (Grad)", "Operations And Supply Chain Management", "Organizational Behavior", "Quantitative Bus Analysis"];
     //const olinDeptCodeArray = ["all", "B50", "B60", "B51", "B52", "B62", "B56", "B99", "B53", "B63", "B54", "B64", "B55", "B65", "B57", "B67", "B58", "B66", "B59"];
-    $(() => {
 
+
+    
     const engineeringDeptNameArray = ["All", "Biomedical", "Computer Science and Engineering", "Electrical and Systems", "Energy, Environmental, and Chemical", "General", "Mechanical Engineering and Materials Science"];
     const engineeringDeptCodeArray = ["all", "E62", "E81", "E35", "E44", "E60", "E37"];
 
@@ -15,20 +16,21 @@
     const olinDeptNameArray = ["All","Accounting (Undergrad)", "Accounting (Grad)", "Administration", "Finance (Undergrad)", "Finance (Grad)", "Human Resource Management", "International Studies", "Management (Undergrad)", "Management (Grad)", "Managerial Economics (Undergrad)", "Managerial Economics (Grad)", "Marketing (Undergrad)", "Marketing (Grad)", "Oper & Manufacturing Mgmt (Undergrad)", "Oper & Manufacturing Mgmt (Grad)", "Operations And Supply Chain Management", "Organizational Behavior", "Quantitative Bus Analysis"];
     const olinDeptCodeArray = ["all", "B50", "B60", "B51", "B52", "B62", "B56", "B99", "B53", "B63", "B54", "B64", "B55", "B65", "B57", "B67", "B58", "B66", "B59"];
 
+    function changeToClass() {
+        document.getElementById("searchContentContainer").style.display = "none";
+        document.getElementById("classContentContainer").style.display="block";
+    }
+    
 
-    const homePage = document.getElementById("searchContentContainer");
-    const classPage = document.getElementById("classContentContainer");
-
-    const pages = [homePage, classPage];
-
-    const changeToPage = (page) => {
+    function changeToPage(page) {
             page.style.display = "block";
             for(let p of pages) {
+                console.log(p);
                 if (p !== page) {
                     p.style.display = "none";
                 }
             }
-        };
+        }
 
 
     const schoolToDept = [engineeringDeptNameArray, engineeringDeptNameArray, olinDeptNameArray, artSciDeptNameArray];
@@ -125,7 +127,7 @@
         [artSciIQAttrKey]: artSciIQAttrs
     };
 
-    var dictionary = {};
+    let dictionary = {};
     for (let i = 0; i < engineeringDeptNameArray.length; i++) {
         dictionary[engineeringDeptNameArray[i]] = engineeringDeptCodeArray[i];
     }
@@ -146,16 +148,15 @@
         return dictionary[name];
     }
 
-    $('#schoolDropdown').on('change', ()=> {
-        console.log("test");
+    function newDeptDropDown() {
         var deptArray = schoolToDept[document.getElementById("schoolDropdown").selectedIndex];
         document.getElementById("deptDropdown").innerHTML = "";
-        
+        $(document).ready(function(){
             for (i = 0; i < deptArray.length; i++) {
                 $("#deptDropdown").append('<option class="dropdown-item" href="#">'+deptArray[i]+'</option>');
             }
-        
-    });
+        });
+    }
 
     const depts = {
         artsci: artSciDeptNameArray,
@@ -164,74 +165,89 @@
     };   
 
 
-        let loggedIn = false;
-        let userId;
-        const checkLoginState = () => {
-            FB.getLoginStatus((response) => {
-                if (response.status === 'connected') {
-                    loggedIn = true;
-                    console.log("logged in");
-                    userId = response.authResponse.userID;
-                }
-                else {
-                    loggedIn = false;
+    let loggedIn = false;
+    let userId;
+    const checkLoginState = () => {
+        FB.getLoginStatus((response) => {
+            if (response.status === 'connected') {
+                loggedIn = true;
+                console.log("logged in");
+                userId = response.authResponse.userID;
+            }
+            else {
+                loggedIn = false;
             }
         });
-        };
+    };
 
-        const url = "http://Ratemycourse-env.dxtgyiksq8.us-east-2.elasticbeanstalk.com";
-        let curr_school = $('#school option:selected').attr("id");
-        let curr_dept = $('#dept option:selected').attr("id");
-        console.log(curr_school);
+    const url = "http://Ratemycourse-env.dxtgyiksq8.us-east-2.elasticbeanstalk.com";
+    let curr_school = $('#school option:selected').attr("id");
+    let curr_dept = $('#dept option:selected').attr("id");
+    console.log(curr_school);
         
-        $('#school').on('change', () => {
-            curr_school = $('#school option:selected').attr("id");
-            // set dept to all
-            $('#dept').empty().append('<option id="all" selected="selected">All</option>');
-            if (curr_school !== 'all') {
-                console.log(depts[curr_school]);
-                // 0 is all which is already there
-                for (let i = 1; i < depts[curr_school].length; i++) {
-                    $('#dept').append("<option id=" + dictionary[depts[curr_school][i]] + ">" + depts[curr_school][i] + "</option>");
-                }
+    $('#school').on('change', () => {
+        curr_school = $('#school option:selected').attr("id");
+        // set dept to all
+        $('#dept').empty().append('<option id="all" selected="selected">All</option>');
+        if (curr_school !== 'all') {
+            console.log(depts[curr_school]);
+            // 0 is all which is already there
+            for (let i = 1; i < depts[curr_school].length; i++) {
+                $('#dept').append("<option id=" + dictionary[depts[curr_school][i]] + ">" + depts[curr_school][i] + "</option>");
             }
-        });
-
-        $('#dept').on('change', () => {
-            curr_dept = $('#dept option:selected').attr("id"); 
-            console.log(curr_dept);
-
-        });
-
-        const getProducts = () => { 
-            $.ajax({
-                type : "POST",
-                contentType : "application/json",
-                url : url + "/query",
-                dataType : 'json',
-                timeout : 100000,
-                success : function(data) {
-                    // now you have "data" which is in json format-same data that is displayed on browser.
-                },
-                error : function(e) {
-                    //do something
-                },
-                done : function(e) {
-                    //do something
-                }
-            });
         }
     });
 
+    $('#dept').on('change', () => {
+        curr_dept = $('#dept option:selected').attr("id"); 
+        console.log(curr_dept);
+
+    });
+
+    /*const getProducts = () => { 
+        $.ajax({
+            type : "POST",
+            contentType : "application/json",
+            url : url + "/query",
+            dataType : 'json',
+            timeout : 100000,
+            success : function(data) {
+                // now you have "data" which is in json format-same data that is displayed on browser.
+            },
+            error : function(e) {
+                //do something
+            },
+            done : function(e) {
+                //do something
+            }
+        });
+    }*/
+
+
     let deptSelected = {}
 
-    function viewRatings(courseId) {
-        console.log(courseId);
-        changeToPage(classPage);
-        document.getElementById(classFocusNumber).innerHTML = courseId;
+    function viewRatings(obj) {
+
+        console.log(obj);
+        var urlClass = 'https://cors-anywhere.herokuapp.com/http://ratemycourse-env.dxtgyiksq8.us-east-2.elasticbeanstalk.com/api/courses/id/' + obj;
+        changeToClass();
+        var xmlHttpClass = new XMLHttpRequest();
+        xmlHttpClass.open( "GET", urlClass, false ); // false for synchronous request
+        xmlHttpClass.send( null );
+        var parsedClassText = JSON.parse(xmlHttpClass.responseText);
+        console.log(parsedClassText);
+        document.getElementById('classFocusNumber').innerHTML = parsedClassText.id;
+        document.getElementById('classFocusName').innerHTML = parsedClassText.name;
+        document.getElementById('classDescription').innerHTML = parsedClassText.description;
+        //document.getElementById('classDescription').innerHTML = parsedClassText.description;
     }
 
+    
+
     function getProducts() {
+
+        
+
 
         var school = document.getElementById("schoolDropdown");
         var schoolSelected = school.options[school.selectedIndex].value;
@@ -261,24 +277,25 @@
         xmlHttp.send( null );
         var parsedText = JSON.parse(xmlHttp.responseText);
 
-        $(document).ready(function(){
-            document.getElementById("rowMain").innerHTML = "";
+    
+        document.getElementById("rowMain").innerHTML = "";
 
-            for (i = 0; i < parsedText.content.length; i++) {
-                console.log(parsedText.content[i]);
-                var newString = "<a href='#' target='_blank' class='col-9 individualClass'>"
-                +"<h2 class='classNumber'>"+parsedText.content[i].number
-                +"</h2><h1 class='className' value='"+parsedText.content[i].id
-                +"' onclick=viewRatings('"+parsedText.content[i].id+"')>"
-                +parsedText.content[i].name+"</h1>"
-                +"<i class='star fa fa-star fa-2x' aria-hidden='true'></i>"
-                +"<i class='star fa fa-star fa-2x' aria-hidden='true'></i>"
-                +"<i class='star fa fa-star fa-2x' aria-hidden='true'></i>"
-                +"<i class='star fa fa-star-half-o fa-2x' aria-hidden='true'></i>"
-                +"<i class='star fa fa fa-star-o fa-2x' aria-hidden='true'></i>"
-                +"</a>";
-                $("#rowMain").append(newString);
-            }
-        });
+        for (i = 0; i < parsedText.content.length; i++) {
+            console.log(parsedText.content[i]);
+            var temp = parsedText.content[i];
+            var newString = "<a href='#' target='_blank' class='col-9 individualClass'>"
+            +"<h2 class='classNumber'>"+parsedText.content[i].number
+            +"</h2><h1 class='className' value='"+parsedText.content[i].id
+            +"' onclick=viewRatings('"+parsedText.content[i].id+"')>"
+            +parsedText.content[i].name+"</h1>"
+            +"<i class='star fa fa-star fa-2x' aria-hidden='true'></i>"
+            +"<i class='star fa fa-star fa-2x' aria-hidden='true'></i>"
+            +"<i class='star fa fa-star fa-2x' aria-hidden='true'></i>"
+            +"<i class='star fa fa-star-half-o fa-2x' aria-hidden='true'></i>"
+            +"<i class='star fa fa fa-star-o fa-2x' aria-hidden='true'></i>"
+            +"</a>";
+            $("#rowMain").append(newString);
+        }
+        
     }
 

@@ -85,7 +85,7 @@
 		</div> -->
 
 		<!-- START REST OF CONTENT -->
-		<div class="searchContentContainer">
+		<div id="searchContentContainer" style="display: block;">
 			<div class="search container">
 
 				<div class="jumbotron">
@@ -93,20 +93,9 @@
 				</div>
 
 				<div class="dropdownContainer">
-					<!-- University Dropdown -->
-					<!-- <select class="dropdown show">
-						<option class="btn btn-secondary dropdown-toggle" href="https://example.com" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">University
-						</option>
-
-						<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-							<option class="dropdown-item" href="#">Wash U</option>
-							<option class="dropdown-item" href="#">UMSL</option>
-							<option class="dropdown-item" href="#">SLU</option>
-						</div>
-					</select> -->
-
+					
 					<!-- School Dropdown -->
-					<select class="dropdown show" id="schoolDropdown">
+					<select class="dropdown show" id="schoolDropdown" onclick="newDeptDropDown()">
 						<option class="btn btn-secondary dropdown-toggle" href="https://example.com" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">School
 						</option>
 
@@ -256,7 +245,7 @@
 
 		<!-- Optional JavaScript -->
 
-		<div class="classContentContainer" hidden="true">
+		<div id="classContentContainer" style="display: none;">
 			<div class="container">
 				<!-- HEADER -->
 				<div class="jumbotron" style="text-align: center;">
@@ -276,7 +265,7 @@
 				
 
 				<!-- START REST OF CONTENT -->
-				<div class="description col-12">
+				<div class="description col-12" id="classDescription">
 					<p>An introduction to software concepts and implementation, emphasizing problem solving through abstraction and decomposition. Introduces processes and algorithms, procedural abstraction, data abstraction, encapsulation, and object-oriented programming. Recursion, iteration, and simple data structures are covered. Concepts and skills are mastered through programming projects, many of which employ graphics to enhance conceptual understanding. Java, an object-oriented programming language, is the vehicle of exploration. Active-learning sessions are conducted in a studio setting in which students interact with each other and the professor to solve problems collaboratively. Prerequisites: Comfort with algebra and geometry at the high school level is assumed. Patience, good planning, and organization will promote success. This course assumes no prior experience with programming. Three evening exams at which attendance is required will be on Mondays, February 12th and March 19th and Thursday, April 26th from 6:30-8:30 p.m.</p>
 				</div>
 
