@@ -31,6 +31,14 @@ public class UniqueCourse {
 	@JsonBackReference
 	private List<Rating> ratings;
 	private String main;
+	private long sumOfContent;
+	private double avgContent;
+	private long sumOfDifficulty;
+	private double avgDifficulty;
+	private long sumOfGrading;
+	private double avgGrading;
+	private long sumOfWorkload;
+	private double avgWorkload;
 	
 	public UniqueCourse() {}
 	
@@ -99,7 +107,15 @@ public class UniqueCourse {
 			r.setUniqueCourse(this);
 		++this.numScores;
 		this.sumOfScores += r.getScore();
+		this.sumOfContent += r.getContent();
+		this.sumOfDifficulty += r.getDifficulty();
+		this.sumOfGrading += r.getGrading();
+		this.sumOfWorkload += r.getWorkload();
 		this.avgScore = this.sumOfScores / (double) this.numScores;
+		this.avgContent = this.sumOfContent / (double) this.numScores;
+		this.avgDifficulty = this.sumOfDifficulty / (double) this.numScores;
+		this.avgGrading = this.sumOfGrading / (double) this.numScores;
+		this.avgWorkload = this.sumOfWorkload / (double) this.numScores;
 	}
 	public void deleteRating(Rating r) {
 		this.ratings.remove(r);
@@ -111,6 +127,70 @@ public class UniqueCourse {
 
 	public void setMain(String main) {
 		this.main = main;
+	}
+	
+	public long getSumOfContent() {
+		return sumOfContent;
+	}
+
+	public void setSumOfContent(long sumOfContent) {
+		this.sumOfContent = sumOfContent;
+	}
+
+	public double getAvgContent() {
+		return avgContent;
+	}
+
+	public void setAvgContent(double avgContent) {
+		this.avgContent = avgContent;
+	}
+
+	public long getSumOfDifficulty() {
+		return sumOfDifficulty;
+	}
+
+	public void setSumOfDifficulty(long sumOfDifficulty) {
+		this.sumOfDifficulty = sumOfDifficulty;
+	}
+
+	public double getAvgDifficulty() {
+		return avgDifficulty;
+	}
+
+	public void setAvgDifficulty(double avgDifficulty) {
+		this.avgDifficulty = avgDifficulty;
+	}
+
+	public long getSumOfGrading() {
+		return sumOfGrading;
+	}
+
+	public void setSumOfGrading(long sumOfGrading) {
+		this.sumOfGrading = sumOfGrading;
+	}
+
+	public double getAvgGrading() {
+		return avgGrading;
+	}
+
+	public void setAvgGrading(double avgGrading) {
+		this.avgGrading = avgGrading;
+	}
+
+	public long getSumOfWorkload() {
+		return sumOfWorkload;
+	}
+
+	public void setSumOfWorkload(long sumOfWorkload) {
+		this.sumOfWorkload = sumOfWorkload;
+	}
+
+	public double getAvgWorkload() {
+		return avgWorkload;
+	}
+
+	public void setAvgWorkload(double avgWorkload) {
+		this.avgWorkload = avgWorkload;
 	}
 	
 	

@@ -1,9 +1,26 @@
 nav {
+	/*background-color: #cbede9;*/
 	background-color: #eaeaea;
+	color: white;
+}
+
+.logo {
+	color: #56bcb0;
+	font-weight: bold;
+}
+
+select {
+	background-color: none;
+    color: none;
+	background-color: #eaeaea;
+    color: black;
+	height: 40px;
+	padding-left: 5px;
 }
 
 body {
-	/*display: inline-block;*/
+	font-family: 'Lato', sans-serif;
+	/*background-color: #F7DCD4;*/
 }
 
 button {
@@ -16,12 +33,6 @@ h1 {
 	color: #008CBA;
 }
 
-select {
-	background-color: grey;
-	color: white;
-	height: 40px;
-}
-
 a {
 	text-decoration: none;
 }
@@ -29,14 +40,29 @@ a {
 .carouselHead {
 	position: absolute;
 	left: 20vw;
-	top: 10vh;
+	top: 17vh;
 	background-color: none;
+}
+
+.carouselHead .jumbotron {
+	background-color: #e1ebed;
+}
+
+.carouselContent {
+	font-size: 70px;
+}
+
+.carouselHead button {
+	transform: scale(1.3);
+	margin-left: 30px;
+	margin-top: 10px;
+
 }
 
 .carouselClass {
 	position: absolute;
 	left: 40vw;
-	top: 10vh;
+	top: 17vh;
 	background-color: none;
 }
 
@@ -53,13 +79,13 @@ a {
 
 .sliderDummy {
 	margin-top: 2vh;
-	background-color: #e1ebed;
+	background-color: #dee8f7;
 }
 
 .carousel-inner {
 	height: 60vh;
 	widows: 100vw;
-	background-color: #e1ebed;
+	background-color: #dee8f7;
 }
 
 .carouselExampleControls {
@@ -122,7 +148,7 @@ a {
 
 .searchDisplay {
 	margin-top: 50px;
-	display: none;
+	/*display: none;*/
 }
 
 .individualClass {
@@ -131,6 +157,7 @@ a {
 	/*margin-top: 10px;*/
 	margin-left:3.5vw;
 	margin-bottom: 20px;
+	padding: 10px;
 }
 
 .indvidualClass:hover {
@@ -154,7 +181,7 @@ a {
 }
 
 .star {
-	color: silver;
+	color: #f4d142;
 	height: 0px;
 	/*margin-top: 5px;*/
 	margin-bottom: 20px;
@@ -326,6 +353,8 @@ label.star:before {
 .semesterDropdown {
 	margin-bottom: 0px;
 	margin-bottom: 30px;
+	padding: 0px;
+	padding-left: 10px;
 }
 
 .anonymous {
@@ -334,4 +363,32 @@ label.star:before {
 
 .form-check {
 	margin-bottom: 30px;
+}
+
+#searchType {
+	margin-right: 10px;
+}
+
+#dropdownMenuLink {
+	margin-left: 5px;
+}
+
+#searchBar {
+	width: 255px;;
+}
+
+.ratingButton {
+	margin-top: 10px;
+	background-color: silver;
+}
+
+.ratingButton:hover {
+	background-color: #3b8ff7;
+	color: white;
+}
+
+.rateButton {
+	transform: scale(1.9);
+	margin-top: 20px;
+	color: black;
 }

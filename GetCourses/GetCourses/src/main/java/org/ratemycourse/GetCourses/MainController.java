@@ -106,7 +106,7 @@ public class MainController {
 		if (params.containsKey("school")) {
 			if (params.containsKey("dept")) {
 				if (params.containsKey("number")) {
-					return courseRepository.findBySchoolAndDeptAndNumberAllIgnoreCaseOrderByParent_AvgScoreDesc(school, dept, number, page);
+					return courseRepository.findBySchoolAndDeptAndNumberContainingAllIgnoreCaseOrderByParent_AvgScoreDesc(school, dept, number, page);
 				}
 				if (params.containsKey("name")) {
 					return courseRepository.findBySchoolAndDeptAndNameContainingAllIgnoreCaseOrderByParent_AvgScoreDesc(school, dept, name, page);
@@ -123,7 +123,7 @@ public class MainController {
 				return courseRepository.findDistinctCourseBySchoolAndAttrsInAllIgnoreCase(school, attrs, page);
 			}
 			if (params.containsKey("number")) {
-				return courseRepository.findBySchoolAndNumberAllIgnoreCaseOrderByParent_AvgScoreDesc(school, number, page);
+				return courseRepository.findBySchoolAndNumberContainingAllIgnoreCaseOrderByParent_AvgScoreDesc(school, number, page);
 			}
 			if (params.containsKey("name")) {
 				return courseRepository.findBySchoolAndNameContainingAllIgnoreCaseOrderByParent_AvgScoreDesc(school, name, page);
@@ -140,9 +140,12 @@ public class MainController {
 			if (params.containsKey("name")) {
 				return courseRepository.findDistinctCourseByNameContainingAndAttrsInAllIgnoreCase(name, attrs, page);
 			}
-			return courseRepository.findDistinctCourseByAttrsInIgnoreCase(attrs, page);
+			return courseRepository.findDistinctCourseByAttrsInAllIgnoreCase(attrs, page);
 		}
 		if (params.containsKey("name")) {
+			if (params.containsKey("description")) {
+				return courseRepository.findDistinctCourseByNameContainingOrDescriptionContainingAllIgnoreCase(name, description, page);
+			}
 			return courseRepository.findByNameContainingIgnoreCaseOrderByParent_AvgScoreDesc(name, page);
 		}
 		if (params.containsKey("description")) {
