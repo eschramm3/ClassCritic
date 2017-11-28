@@ -170,15 +170,6 @@
 					</div>
 				</select>
 
-				<select class="dropdown show" id="classDropdown">
-					<option class="btn btn-secondary dropdown-toggle" href="https://example.com" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Class
-					</option>
-
-					<div class="dropdown-menu" aria-labelledby="dropdownMenuLink" id="deptDivDrop">
-						
-					</div>
-				</select>
-
 
 				<select class="dropdown-menu" id="attrBoxes" multiple>
 					<!-- class="form-control selectpicker show-tick" -->
@@ -262,7 +253,7 @@
 				<div id="courseContent">
 				</div>
 				<!-- ROW 2 -->
-				<div class="row" id="rowMain">>
+				<div class="row" id="rowMain">
 				</div>
 
 				<button class="go btn btn-primary loadButton">Load More</button>
@@ -286,8 +277,8 @@
 				<div class="jumbotron" style="text-align: center;">
 					<h3 id="classFocusNumber"></h3>
 					<h1 id="classFocusName"></h1>
-					<h1>Intro to Computer Science</h1>
-					<div class="starContainer">
+					
+					<div class="starContainer" id="avgOverallRatings">
 						<i class="fa fa-star fa-4x" aria-hidden="true"></i>
 						<i class="fa fa-star fa-4x" aria-hidden="true"></i>
 						<i class="fa fa-star fa-4x" aria-hidden="true"></i>
@@ -297,8 +288,6 @@
 					</div>
 				</div>
 
-				<h4 class="col-12 attributes">BU-SCIEN</h4>
-
 
 				<!-- START REST OF CONTENT -->
 				<div class="description col-12" id="classDescription">
@@ -307,7 +296,7 @@
 
 				<div class="overallRatingsContainer">
 					<div class="row">
-						<div class="rating col-7">
+						<div class="rating col-7" id="difficultyAVG">
 							<h2>Difficulty: </h2>
 							<i class="fa fa-star fa-3x" aria-hidden="true"></i>
 							<i class="fa fa-star fa-3x" aria-hidden="true"></i>
@@ -317,7 +306,7 @@
 							<h7>4.5</h7>
 						</div>
 
-						<div class="rating col-7">
+						<div class="rating col-7" id="workloadAVG">
 							<h2>Workload: </h2>
 							<i class="fa fa-star fa-3x" aria-hidden="true"></i>
 							<i class="fa fa-star fa-3x" aria-hidden="true"></i>
@@ -329,7 +318,7 @@
 					</div>
 
 					<div class="row">
-						<div class="rating col-7">
+						<div class="rating col-7" id="contentAVG">
 							<h2>Content: </h2>
 							<i class="fa fa-star fa-3x" aria-hidden="true"></i>
 							<i class="fa fa-star fa-3x" aria-hidden="true"></i>
@@ -339,7 +328,7 @@
 							<h7>4.5</h7>
 						</div>
 
-						<div class="rating col-7">
+						<div class="rating col-7" id="gradingAVG">
 							<h2>Grading: </h2>
 							<i class="fa fa-star fa-3x" aria-hidden="true"></i>
 							<i class="fa fa-star fa-3x" aria-hidden="true"></i>
@@ -356,7 +345,7 @@
 
 				<div id="ratingsContainer" class="ratingsContainer">
 
-					<div class="row" id="allRatings">
+					<div class="row">
 						<!-- overall row  -->
 						<div class="individualRating col-6" id="firstRating" style="display:none;">
 							<!-- individual rating container -->
@@ -364,14 +353,13 @@
 								<div class="row">
 									<div class="col">
 										<div class="userImage">
-											<i class="fa fa-user-circle fa-5x" aria-hidden="true"></i>
+											<i class="fa fa-user-circle fa-3x" aria-hidden="true"></i>
 										</div>
 									</div>
 
 									<div class="col info">
 										<h4>Anonymous</h4>
-										<h6><strong>Class of 2018</strong></h6>
-										<h6><strong>Professor:</strong> Ron Cytron</h6>
+										
 										<h6><strong>Taken:</strong> Spring 2015</h6>
 									</div>
 								</div>

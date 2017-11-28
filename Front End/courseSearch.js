@@ -432,17 +432,169 @@ $(() => {
         document.getElementById('classFocusNumber').innerHTML = parsedClassText.id;
         document.getElementById('classFocusName').innerHTML = parsedClassText.name;
         document.getElementById('classDescription').innerHTML = parsedClassText.description;
-        
+        var newDiv = document.getElementById('firstRating');
+        document.getElementById('ratingsContainer').innerHTML = '';
+
+        if (parsedRatingsText.content.length > 0) {
+
+            document.getElementById('avgOverallRatings').innerHTML = '';
+            for (let j = 1; j < 6; j++) {
+                if (j <= parsedRatingsText.content[0].uniqueCourse.avgScore) {
+                    document.getElementById('avgOverallRatings').innerHTML += "<i class='star fa fa-star fa-4x' aria-hidden='true'></i>";
+                }
+                else {
+                     document.getElementById('avgOverallRatings').innerHTML += "<i class='star fa fa fa-star-o fa-4x' aria-hidden='true'></i>";
+                }
+            }
+            document.getElementById('avgOverallRatings').innerHTML += '<h7>'+parsedRatingsText.content[0].uniqueCourse.avgScore.toFixed(1)+'</h7>';
+
+
+            document.getElementById('difficultyAVG').innerHTML = '<h2>Difficulty: </h2>';
+            for (let j = 1; j < 6; j++) {
+                if (j <= parsedRatingsText.content[0].uniqueCourse.avgDifficulty) {
+                    document.getElementById('difficultyAVG').innerHTML += "<i class='star fa fa-star fa-3x' aria-hidden='true'></i>";
+                }
+                else {
+                     document.getElementById('difficultyAVG').innerHTML += "<i class='star fa fa fa-star-o fa-3x' aria-hidden='true'></i>";
+                }
+            }
+            document.getElementById('difficultyAVG').innerHTML += '<h7>'+parsedRatingsText.content[0].uniqueCourse.avgDifficulty.toFixed(1)+'</h7>';
+
+            document.getElementById('workloadAVG').innerHTML = '<h2>Workload: </h2>';
+            for (let j = 1; j < 6; j++) {
+                if (j <= parsedRatingsText.content[0].uniqueCourse.avgWorkload) {
+                    document.getElementById('workloadAVG').innerHTML += "<i class='star fa fa-star fa-3x' aria-hidden='true'></i>";
+                }
+                else {
+                     document.getElementById('workloadAVG').innerHTML += "<i class='star fa fa fa-star-o fa-3x' aria-hidden='true'></i>";
+                }
+            }
+            document.getElementById('workloadAVG').innerHTML += '<h7>'+parsedRatingsText.content[0].uniqueCourse.avgWorkload.toFixed(1)+'</h7>';
+
+            document.getElementById('contentAVG').innerHTML = '<h2>Content: </h2>';
+            for (let j = 1; j < 6; j++) {
+                if (j <= parsedRatingsText.content[0].uniqueCourse.avgContent) {
+                    document.getElementById('contentAVG').innerHTML += "<i class='star fa fa-star fa-3x' aria-hidden='true'></i>";
+                }
+                else {
+                     document.getElementById('contentAVG').innerHTML += "<i class='star fa fa fa-star-o fa-3x' aria-hidden='true'></i>";
+                }
+            }
+            document.getElementById('contentAVG').innerHTML += '<h7>'+parsedRatingsText.content[0].uniqueCourse.avgContent.toFixed(1)+'</h7>';
+
+            document.getElementById('gradingAVG').innerHTML = '<h2>Grading: </h2>';
+            for (let j = 1; j < 6; j++) {
+                if (j <= parsedRatingsText.content[0].uniqueCourse.avgGrading) {
+                    document.getElementById('gradingAVG').innerHTML += "<i class='star fa fa-star fa-3x' aria-hidden='true'></i>";
+                }
+                else {
+                     document.getElementById('gradingAVG').innerHTML += "<i class='star fa fa fa-star-o fa-3x' aria-hidden='true'></i>";
+                }
+            }
+            document.getElementById('gradingAVG').innerHTML += '<h7>'+parsedRatingsText.content[0].uniqueCourse.avgGrading.toFixed(1)+'</h7>';
+
+        }
+
+        else {
+            document.getElementById('difficultyAVG').innerHTML = '<h2>Difficulty: </h2>';
+            document.getElementById('contentAVG').innerHTML = '<h2>Content: </h2>';
+            document.getElementById('workloadAVG').innerHTML = '<h2>Workload: </h2>';
+            document.getElementById('gradingAVG').innerHTML = '<h2>Grading: </h2>';
+            document.getElementById('avgOverallRatings').innerHTML = '';
+
+            for (let j = 1; j < 6; j++) {
+                document.getElementById('avgOverallRatings').innerHTML += "<i class='star fa fa-star-o fa-3x' aria-hidden='true'></i>";
+                document.getElementById('difficultyAVG').innerHTML += "<i class='star fa fa-star-o fa-3x' aria-hidden='true'></i>";
+                document.getElementById('contentAVG').innerHTML += "<i class='star fa fa-star-o fa-3x' aria-hidden='true'></i>";
+                document.getElementById('workloadAVG').innerHTML += "<i class='star fa fa-star-o fa-3x' aria-hidden='true'></i>";
+                document.getElementById('gradingAVG').innerHTML += "<i class='star fa fa-star-o fa-3x' aria-hidden='true'></i>";
+            } 
+            document.getElementById('difficultyAVG').innerHTML += '<h7>0.0</h7>';
+            document.getElementById('contentAVG').innerHTML += '<h7>0.0</h7>';
+            document.getElementById('workloadAVG').innerHTML += '<h7>0.0</h7>';
+            document.getElementById('gradingAVG').innerHTML += '<h7>0.0</h7>';
+            document.getElementById('avgOverallRatings').innerHTML += '<h7>0.0</h7>';
+        }
+
+
+
+
+
+
         for (i = 0; i < parsedRatingsText.content.length; i++) {
-            var newDiv = document.getElementById('firstRating');
+            //var newDiv = document.getElementById('firstRating');
             var clone = newDiv.cloneNode(true);
-            clone.children[0].children[2].children[0].innerHTML = parsedRatingsText.description;
-            document.getElementById('ratingsContainer').innerHTML += clone;
+            clone.style.display="inline-block";
+            //clone.children[0].children[1].children[0].children[0].children[6].innerHTML = parsedRatingsText.content[i].difficulty;
+            clone.children[0].children[1].children[0].children[1].children[6].innerHTML = parsedRatingsText.content[i].content;
+            clone.children[0].children[1].children[1].children[0].children[6].innerHTML = parsedRatingsText.content[i].workload;
+            clone.children[0].children[1].children[1].children[1].children[6].innerHTML = parsedRatingsText.content[i].grading;
+
+            clone.children[0].children[1].children[0].children[0].innerHTML = "<h5>Difficulty: </h5>"
+            for (let j = 1; j < 6; j++) {
+                if (j <= parsedRatingsText.content[i].difficulty) {
+                    clone.children[0].children[1].children[0].children[0].innerHTML += "<i class='star fa fa-star fa-2x' aria-hidden='true'></i>";
+                }
+                else {
+                    clone.children[0].children[1].children[0].children[0].innerHTML += "<i class='star fa fa fa-star-o fa-2x' aria-hidden='true'></i>";
+                }
+            }
+            clone.children[0].children[1].children[0].children[0].innerHTML += "<h7>"+parsedRatingsText.content[i].difficulty+"</h7>";
+
+            clone.children[0].children[1].children[0].children[1].innerHTML = "<h5>Content: </h5>"
+            for (let j = 1; j < 6; j++) {
+                if (j <= parsedRatingsText.content[i].content) {
+                    clone.children[0].children[1].children[0].children[1].innerHTML += "<i class='star fa fa-star fa-2x' aria-hidden='true'></i>";
+                }
+                else {
+                    clone.children[0].children[1].children[0].children[1].innerHTML += "<i class='star fa fa fa-star-o fa-2x' aria-hidden='true'></i>";
+                }
+            }
+            clone.children[0].children[1].children[0].children[1].innerHTML += "<h7>"+parsedRatingsText.content[i].content+"</h7>";
+
+            clone.children[0].children[1].children[1].children[0].innerHTML = "<h5> Workload: </h5>"
+            for (let j = 1; j < 6; j++) {
+                if (j <= parsedRatingsText.content[i].workload) {
+                    clone.children[0].children[1].children[1].children[0].innerHTML += "<i class='star fa fa-star fa-2x' aria-hidden='true'></i>";
+                }
+                else {
+                    clone.children[0].children[1].children[1].children[0].innerHTML += "<i class='star fa fa fa-star-o fa-2x' aria-hidden='true'></i>";
+                }
+            }
+            clone.children[0].children[1].children[1].children[0].innerHTML += "<h7>"+parsedRatingsText.content[i].workload+"</h7>";
+
+            clone.children[0].children[1].children[1].children[1].innerHTML = "<h5>Grading: </h5>"
+            for (let j = 1; j < 6; j++) {
+                if (j <= parsedRatingsText.content[i].grading) {
+                    clone.children[0].children[1].children[1].children[1].innerHTML += "<i class='star fa fa-star fa-2x' aria-hidden='true'></i>";
+                }
+                else {
+                    clone.children[0].children[1].children[1].children[1].innerHTML += "<i class='star fa fa fa-star-o fa-2x' aria-hidden='true'></i>";
+                }
+            }
+            clone.children[0].children[0].children[1].children[1].innerHTML = "<strong>Taken:</strong> " + parsedRatingsText.content[i].semTaken;
+            clone.children[0].children[1].children[1].children[1].innerHTML += "<h7>"+parsedRatingsText.content[i].grading+"</h7>";
+
+
+            clone.children[0].children[2].children[0].innerHTML = parsedRatingsText.content[i].review;
+            document.getElementById('ratingsContainer').appendChild(clone);
+            console.log(clone);
             console.log("HI");
             
             //console.log
         }
-        
+
+        /*const numStars = c.parent.avgScore;    
+            for (let j = 1; j < 6; j++) {
+                if (j <= numStars) {
+                    output += "<i class='star fa fa-star fa-2x' aria-hidden='true'></i>";
+                }
+                else {
+                    output += "<i class='star fa fa fa-star-o fa-2x' aria-hidden='true'></i>";
+                }
+            }*/
+
+        //document.getElementById('ratingsContainer').innerHTML += '</div>'
         var oldReview = 'lhjg';
 
 
