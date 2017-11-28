@@ -1,3 +1,37 @@
+let loggedIn = false;
+    let userId;
+    let token;
+
+    const checkLoginState = () => {
+        FB.getLoginStatus((response) => {
+            if (response.status === 'connected') {
+                loggedIn = true;
+                console.log("logged in");
+                userId = response.authResponse.userID;
+                token = response.authResponse.accessToken;
+            }
+            else {
+                loggedIn = false;
+                console.log("not logged in");
+                FB.login((response) => {
+                    if (response.status === 'connected') {
+                        // Logged into your app and Facebook.
+                        loggedIn = true;
+                        console.log("logged in");
+                        userId = response.authResponse.userID;
+                        console.log(userId);
+                        token = response.authResponse.accessToken;
+                    } else {
+                        // The person is not logged into this app or we are unable to tell. 
+                        loggedIn = false;
+                        console.log('failed to login');
+                    }
+                });
+            }
+        });
+    };
+
+
 $(() => {
 
 
@@ -20,6 +54,9 @@ $(() => {
     let currPage = homePage;
 
     const changeToPage = (page) => {
+        if ((page == reviewPage) && (currPage == homePage)) {
+            
+        }
         $('.navbar-collapse').collapse('hide');
         currPage.toggle();
         page.toggle();
@@ -28,11 +65,21 @@ $(() => {
     };
 
     const getInfoById = (classID) => {
-        var urlClass = 'https://cors-anywhere.herokuapp.com/http://ratemycourse-env.dxtgyiksq8.us-east-2.elasticbeanstalk.com/api/courses/id/' + classID;
+        var urlClass = 'http://ratemycourse-env.dxtgyiksq8.us-east-2.elasticbeanstalk.com/api/courses/id/' + classID;
         var xmlHttpClass = new XMLHttpRequest();
         xmlHttpClass.open( "GET", urlClass, false ); // false for synchronous request
         xmlHttpClass.send( null );
         var parsedClassText = JSON.parse(xmlHttpClass.responseText);
+        return parsedClassText;
+    };
+
+    const getRatingsById = (classID) => {
+        var urlClass = 'http://ratemycourse-env.dxtgyiksq8.us-east-2.elasticbeanstalk.com/api/ratings/find?val=' + classID;
+        var xmlHttpClass = new XMLHttpRequest();
+        xmlHttpClass.open( "GET", urlClass, false ); // false for synchronous request
+        xmlHttpClass.send( null );
+        var parsedClassText = JSON.parse(xmlHttpClass.responseText);
+        console.log(parsedClassText)
         return parsedClassText;
     };
 
@@ -43,7 +90,7 @@ $(() => {
         console.log('going to search page');
         changeToPage(searchPage);
     });
-    $('.goToReviewPage').click(() => {
+    $('.goToReviewPageFromRatings').click(() => {
         var reviewClassId = document.getElementById('classFocusNumber').innerHTML;
         changeToPage(reviewPage);
         var parsedReviewText = getInfoById(reviewClassId);
@@ -53,6 +100,14 @@ $(() => {
         document.getElementById('valToReview').innerHTML = parsedReviewText.commonVal;
 
     });
+    $('.goToReviewPage').click(() => {
+        changeToPage(reviewPage);
+        document.getElementById("reviewDisplay").style.display = "none";
+    });
+
+
+
+
     $('.goToClassPage').click(() => {
         changeToPage(classPage);
     });
@@ -99,7 +154,7 @@ $(() => {
         var semTaken = document.getElementById("semDropdown")[document.getElementById("semDropdown").selectedIndex].value;
         var urlPost = "http://ratemycourse-env.dxtgyiksq8.us-east-2.elasticbeanstalk.com/api/ratings/add?"
         + "&val="+document.getElementById("valToReview").innerHTML
-        + "&userID="+document.getElementById("userIDToReview").innerHTML
+        + "&userID="+userId
         + "&score="+overallRating
         + "&workload="+workloadRating
         + "&difficulty="+difficultyRating
@@ -115,13 +170,18 @@ $(() => {
         var parsedText = JSON.parse(xmlHttpPost.responseText);
     });
 
-   
+    $('#searchToReview').click(() => {
+        if ((loggedIn) && (document.getElementById("reviewClassDropdown").selectedIndex != 0)) {
+            document.getElementById("reviewDisplay").style.display = "block";
+            document.getElementById("valToReview").innerHTML = document.getElementById("reviewClassDropdown")[document.getElementById("reviewClassDropdown").selectedIndex].value;
+        }
+    });
 
     const attrs = $('#attrBoxes');
     attrs.multiselect({buttonWidth: '400px', maxHeight: 300,});
 
     const schoolToDept = [engineeringDeptNameArray, engineeringDeptNameArray, olinDeptNameArray, artSciDeptNameArray];
-
+    const schoolVal = ['E','E','B','L']
     //   'Engineering and Applied Sciences': engineeringDeptNameArray, 
     //   'Arts and Sciences': artSciDeptNameArray,
     //   'Olin School of Business': olinDeptNameArray
@@ -171,6 +231,7 @@ $(() => {
         'SSC': 'Social Sciences'
     };
 
+    
     /*
     Art attributes: (Art)
     AH  FA Art History
@@ -229,9 +290,63 @@ $(() => {
         dictionary[engineeringDeptNameArray[i]] = engineeringDeptCodeArray[i];
     }
 
+    var schoolDictionary = {
+        'Engineering and Applied Sciences': 'E',
+        'Olin School of Business': 'B',
+        'Arts and Sciences': 'L',
+
+
+    };
+
+
+
+
+
+
+
+
+
     const getCodeFromDeptName = (name) => {
         return dictionary[name];
     };
+
+    $('#reviewSchoolDropdown').on('change', ()=> {
+        console.log("test");
+        var deptArray = schoolToDept[document.getElementById("reviewSchoolDropdown").selectedIndex];
+        document.getElementById("reviewDeptDropdown").innerHTML = "";
+        document.getElementById("reviewClassDropdown").innerHTML = '<option class="btn btn-secondary dropdown-toggle" href="https://example.com" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Class</option>';
+
+        for (i = 0; i < deptArray.length; i++) {
+            $("#reviewDeptDropdown").append('<option class="dropdown-item" href="#">'+deptArray[i]+'</option>');
+        }
+        
+    });
+
+    $('#reviewDeptDropdown').on('change', ()=> {
+        console.log("test");
+        //var deptArray = schoolToDept[document.getElementById("reviewSchoolDropdown").selectedIndex];
+        document.getElementById("reviewClassDropdown").innerHTML = '<option class="btn btn-secondary dropdown-toggle" href="https://example.com" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Class</option>';
+
+        var school = document.getElementById("reviewSchoolDropdown");
+        var schoolSelected = school.options[school.selectedIndex].value;
+        var dept = document.getElementById("reviewDeptDropdown");
+        var deptSelected = dept.options[dept.selectedIndex].innerHTML;
+
+
+        var urlFind = "http://Ratemycourse-env.dxtgyiksq8.us-east-2.elasticbeanstalk.com/api/courses/find?school="+schoolDictionary[schoolSelected]+"&dept="+dictionary[deptSelected];
+        console.log(urlFind);
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open( "GET", urlFind, false ); // false for synchronous request
+        xmlHttp.send( null );
+        var parsedText = JSON.parse(xmlHttp.responseText);
+        console.log(parsedText);
+        
+
+        for (i = 0; i < parsedText.content.length; i++) {
+            $("#reviewClassDropdown").append('<option class="dropdown-item" value='+parsedText.content[i].commonVal+' href="#">'+parsedText.content[i].name+'</option>');
+        }
+        
+    });
 
     $('#schoolDropdown').on('change', ()=> {
         console.log("test");
@@ -257,21 +372,6 @@ $(() => {
         business: olinDeptNameArray
     };   
 
-
-    let loggedIn = false;
-    let userId;
-    const checkLoginState = () => {
-        FB.getLoginStatus((response) => {
-            if (response.status === 'connected') {
-                loggedIn = true;
-                console.log("logged in");
-                userId = response.authResponse.userID;
-            }
-            else {
-                loggedIn = false;
-            }
-        });
-    };
 
     const url = "http://Ratemycourse-env.dxtgyiksq8.us-east-2.elasticbeanstalk.com";
     let curr_school = $('#school option:selected').attr("id");
@@ -325,9 +425,27 @@ $(() => {
         console.log(courseId);
         changeToPage(classPage);
         var parsedClassText = getInfoById(courseId);
+        var parsedRatingsText = getRatingsById(parsedClassText.commonVal);
+
+        console.log(parsedRatingsText);
+
         document.getElementById('classFocusNumber').innerHTML = parsedClassText.id;
         document.getElementById('classFocusName').innerHTML = parsedClassText.name;
         document.getElementById('classDescription').innerHTML = parsedClassText.description;
+        
+        for (i = 0; i < parsedRatingsText.content.length; i++) {
+            var newDiv = document.getElementById('firstRating');
+            var clone = newDiv.cloneNode(true);
+            clone.children[0].children[2].children[0].innerHTML = parsedRatingsText.description;
+            document.getElementById('ratingsContainer').innerHTML += clone;
+            console.log("HI");
+            
+            //console.log
+        }
+        
+        var oldReview = 'lhjg';
+
+
     };
 
     
