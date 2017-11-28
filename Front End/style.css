@@ -332,5 +332,12 @@ label.star:before {
   font-family: FontAwesome;
 }
 
+#reviewClassDropdown {
+	max-width: 420px;
+}
+
+#reviewCDeptDropdown {
+	max-width: 330px;
+}
 
 >>>>>>> e73aa929da1cdc317d4755ac0f3fbac43139cf9a

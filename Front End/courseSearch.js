@@ -29,6 +29,7 @@ let loggedIn = false;
                 });
             }
         });
+        return loggedIn;
     };
 
 
@@ -91,6 +92,7 @@ $(() => {
         changeToPage(searchPage);
     });
     $('.goToReviewPageFromRatings').click(() => {
+        checkLoginState();
         var reviewClassId = document.getElementById('classFocusNumber').innerHTML;
         changeToPage(reviewPage);
         var parsedReviewText = getInfoById(reviewClassId);
@@ -101,6 +103,7 @@ $(() => {
 
     });
     $('.goToReviewPage').click(() => {
+        checkLoginState();
         changeToPage(reviewPage);
         document.getElementById("reviewDisplay").style.display = "none";
     });
@@ -171,9 +174,11 @@ $(() => {
     });
 
     $('#searchToReview').click(() => {
-        if ((loggedIn) && (document.getElementById("reviewClassDropdown").selectedIndex != 0)) {
-            document.getElementById("reviewDisplay").style.display = "block";
-            document.getElementById("valToReview").innerHTML = document.getElementById("reviewClassDropdown")[document.getElementById("reviewClassDropdown").selectedIndex].value;
+        if (document.getElementById("reviewClassDropdown").selectedIndex != 0) {
+            if (checkLoginState()) { 
+                document.getElementById("reviewDisplay").style.display = "block";
+                document.getElementById("valToReview").innerHTML = document.getElementById("reviewClassDropdown")[document.getElementById("reviewClassDropdown").selectedIndex].value;
+            }
         }
     });
 
@@ -343,7 +348,7 @@ $(() => {
         
 
         for (i = 0; i < parsedText.content.length; i++) {
-            $("#reviewClassDropdown").append('<option class="dropdown-item" value='+parsedText.content[i].commonVal+' href="#">'+parsedText.content[i].name+'</option>');
+            $("#reviewClassDropdown").append('<option class="dropdown-item" value='+parsedText.content[i].commonVal+' href="#">'+parsedText.content[i].number + " " + parsedText.content[i].name+'</option>');
         }
         
     });
@@ -575,6 +580,16 @@ $(() => {
             clone.children[0].children[0].children[1].children[1].innerHTML = "<strong>Taken:</strong> " + parsedRatingsText.content[i].semTaken;
             clone.children[0].children[1].children[1].children[1].innerHTML += "<h7>"+parsedRatingsText.content[i].grading+"</h7>";
 
+            clone.children[0].children[0].children[1].children[2].children[0].children[0].innerHTML = "<h5>Overall: </h5>"
+            for (let j = 1; j < 6; j++) {
+                if (j <= parsedRatingsText.content[i].score) {
+                    clone.children[0].children[0].children[1].children[2].children[0].children[0].innerHTML += "<i class='star fa fa-star fa-2x' aria-hidden='true'></i>";
+                }
+                else {
+                    clone.children[0].children[0].children[1].children[2].children[0].children[0].innerHTML += "<i class='star fa fa fa-star-o fa-2x' aria-hidden='true'></i>";
+                }
+            }
+            clone.children[0].children[0].children[1].children[2].children[0].children[0].innerHTML += "<h7>"+parsedRatingsText.content[i].score+"</h7>";
 
             clone.children[0].children[2].children[0].innerHTML = parsedRatingsText.content[i].review;
             document.getElementById('ratingsContainer').appendChild(clone);
