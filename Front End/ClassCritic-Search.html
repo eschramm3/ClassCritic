@@ -498,7 +498,7 @@
 								<!-- end class stars -->
 
 								<div class="row">
-									<p class="writtenReview">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean luctus eu metus nec posuere. Ut eu laoreet nulla. Morbi auctor ultricies aliquet. Etiam rhoncus turpis gravida luctus scelerisque. Donec consequat tempor ex, et consequat enim ornare sit amet. Nullam vulputate mi id sem lacinia, vitae sodales lectus pulvinar. </p>
+									<p class="writtenReview">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean luctus eu metus nec posuere. Ut eu laoreet nulla. Morbi auctor ultricies aliquet. Etiam rhoncus turpis gravida luctus scelerisque. Donec consequat tempor ex, et consequat enim ornare sit amet. Nullam vulputate mi id d lacinia, vitae sodales lectus pulvinar. </p>
 
 									<!-- <div class="expandContainer">
 										<button class="fa fa-chevron-down expand-2"></button>
@@ -521,7 +521,7 @@
 
 				<div class="jumbotron classRate" style="text-align: center;">
 					<h1>Have you taken this course? Write a review!</h1>
-					<button class="rateButton"><a href="ClassCritic-Review.html">Write a Review</a></button>
+					<button class="rateButton"><a class="goToReviewPage">Write a Review</a></button>
 				</div>
 
 			</div>
@@ -541,7 +541,11 @@
 				<div class="jumbotron">
 					<h1>Leave a Rating!</h1>
 				</div>
-
+				<h3 id="schoolToReview"></h3>
+				<h3 id="deptToReview"></h3>
+				<h3 id="classToReview"></h3>
+				<h3 id="valToReview"></h3>
+				<h3 id="userIDToReview">TestUser</h3>
 				<div class="dropdownContainer">
 
 					<!-- School Dropdown -->
@@ -593,103 +597,108 @@
 
 				<!-- START DISPLAYING SEARCH RESULTS -->
 				<div class="reviewDisplay"> 
-
-					<!-- ROW 1 -->
-					<div class="row">
-						<div class="col-12">
-							<h3 class="reviewOverall">Overall rating:</h3>
-							<div class="stars">
-								<form action="">
-									<input class="star star-5" id="star-5" type="radio" name="star"/>
-									<label class="star star-5" for="star-5"></label>
-									<input class="star star-4" id="star-4" type="radio" name="star"/>
-									<label class="star star-4" for="star-4"></label>
-									<input class="star star-3" id="star-3" type="radio" name="star"/>
-									<label class="star star-3" for="star-3"></label>
-									<input class="star star-2" id="star-2" type="radio" name="star"/>
-									<label class="star star-2" for="star-2"></label>
-									<input class="star star-1" id="star-1" type="radio" name="star"/>
-									<label class="star star-1" for="star-1"></label>
-								</form>
-							</div>
-
-						</div>
-
+			
+			<!-- ROW 1 -->
+			<div class="row">
+				<div class="col-12">
+					<h3 class="reviewOverall">Overall rating:</h3>
+					<div class="stars">
+						<form action="">
+							<input class="star star-5" id="star-5" type="radio" name="star"/>
+							<label class="star star-5 setOverall" for="star-5" value=5></label>
+							<input class="star star-4" id="star-4" type="radio" name="star"/>
+							<label class="star star-4 setOverall" for="star-4" class="" value=4></label>
+							<input class="star star-3" id="star-3" type="radio" name="star"/>
+							<label class="star star-3 setOverall" for="star-3"class="" value=3></label>
+							<input class="star star-2" id="star-2" type="radio" name="star"/>
+							<label class="star star-2 setOverall" for="star-2"class="" value=2></label>
+							<input class="star star-1" id="star-1" type="radio" name="star"/>
+							<label class="star star-1 setOverall" for="star-1"class="" value=1></label>
+						</form>
 					</div>
 
-					<div class="row">
+				</div>
 
-						<div class="col-3">
-							<h4 class="reviewOverall">Difficulty:</h4>
-							<div class="stars">
-								<form action="">
-									<input class="star star-5" id="star-5-2" type="radio" name="star"/>
-									<label class="star star-5" for="star-5-2"></label>
-									<input class="star star-4" id="star-4-2" type="radio" name="star"/>
-									<label class="star star-4" for="star-4-2"></label>
-									<input class="star star-3" id="star-3-2" type="radio" name="star"/>
-									<label class="star star-3" for="star-3-2"></label>
-									<input class="star star-2" id="star-2-2" type="radio" name="star"/>
-									<label class="star star-2" for="star-2-2"></label>
-									<input class="star star-1" id="star-1-2" type="radio" name="star"/>
-									<label class="star star-1" for="star-1-2"></label>
-								</form>
-							</div>
-						</div>
+			</div>
 
-						<div class="col-3">
-							<h4 class="reviewOverall">Content:</h4>
-							<div class="stars">
-								<form action="">
-									<input class="star star-5" id="star-5-4" type="radio" name="star"/>
-									<label class="star star-5" for="star-5-4"></label>
-									<input class="star star-4" id="star-4-4" type="radio" name="star"/>
-									<label class="star star-4" for="star-4-4"></label>
-									<input class="star star-3" id="star-3-4" type="radio" name="star"/>
-									<label class="star star-3" for="star-3-4"></label>
-									<input class="star star-2" id="star-2-4" type="radio" name="star"/>
-									<label class="star star-2" for="star-2-4"></label>
-									<input class="star star-1" id="star-1-4" type="radio" name="star"/>
-									<label class="star star-1" for="star-1-4"></label>
-								</form>
-							</div>
-						</div>
+			<div class="row">
 
-						<div class="col-3">
-							<h4 class="reviewOverall">Workload:</h4>
-							<div class="stars">
-								<form action="">
-									<input class="star star-5" id="star-5-3" type="radio" name="star"/>
-									<label class="star star-5" for="star-5-3"></label>
-									<input class="star star-4" id="star-4-3" type="radio" name="star"/>
-									<label class="star star-4" for="star-4-3"></label>
-									<input class="star star-3" id="star-3-3" type="radio" name="star"/>
-									<label class="star star-3" for="star-3-3"></label>
-									<input class="star star-2" id="star-2-3" type="radio" name="star"/>
-									<label class="star star-2" for="star-2-3"></label>
-									<input class="star star-1" id="star-1-3" type="radio" name="star"/>
-									<label class="star star-1" for="star-1-3"></label>
-								</form>
-							</div>
-						</div>
+				<div class="col-3">
+					<h4 class="reviewOverall">Difficulty:</h4>
+					<div class="stars">
+						<form action="">
+							<input class="star star-5" id="star-5-2" type="radio" name="star"/>
+							<label class="star star-5 setDifficulty" for="star-5-2" value=5></label>
+							<input class="star star-4" id="star-4-2" type="radio" name="star"/>
+							<label class="star star-4 setDifficulty" for="star-4-2" value=4></label>
+							<input class="star star-3" id="star-3-2" type="radio" name="star"/>
+							<label class="star star-3 setDifficulty" for="star-3-2" value=3></label>
+							<input class="star star-2" id="star-2-2" type="radio" name="star"/>
+							<label class="star star-2 setDifficulty" for="star-2-2" value=2></label>
+							<input class="star star-1" id="star-1-2" type="radio" name="star"/>
+							<label class="star star-1 setDifficulty" for="star-1-2" value=1></label>
+						</form>
+					</div>
+				</div>
 
-						<div class="col-3">
-							<h4 class="reviewOverall">Grading:</h4>
-							<div class="stars">
-								<form action="">
-									<input class="star star-5" id="star-5-5" type="radio" name="star"/>
-									<label class="star star-5" for="star-5-5"></label>
-									<input class="star star-4" id="star-4-5" type="radio" name="star"/>
-									<label class="star star-4" for="star-4-5"></label>
-									<input class="star star-3" id="star-3-5" type="radio" name="star"/>
-									<label class="star star-3" for="star-3-5"></label>
-									<input class="star star-2" id="star-2-5" type="radio" name="star"/>
-									<label class="star star-2" for="star-2-5"></label>
-									<input class="star star-1" id="star-1-5" type="radio" name="star"/>
-									<label class="star star-1" for="star-1-5"></label>
-								</form>
-							</div>
-						</div>
+				<div class="col-3">
+					<h4 class="reviewOverall">Content:</h4>
+					<div class="stars">
+						<form action="">
+							<input class="star star-5" id="star-5-4" type="radio" name="star"/>
+							<label class="star star-5 setContent" for="star-5-4" value=5></label>
+							<input class="star star-4" id="star-4-4" type="radio" name="star"/>
+							<label class="star star-4 setContent" for="star-4-4"  value=4></label>
+							<input class="star star-3" id="star-3-4" type="radio" name="star"/>
+							<label class="star star-3 setContent" for="star-3-4"  value=3></label>
+							<input class="star star-2" id="star-2-4" type="radio" name="star"/>
+							<label class="star star-2 setContent" for="star-2-4"  value=2></label>
+							<input class="star star-1" id="star-1-4" type="radio" name="star"/>
+							<label class="star star-1 setContent" for="star-1-4"  value=1></label>
+						</form>
+					</div>
+				</div>
+
+				<div class="col-3">
+					<h4 class="reviewOverall">Workload:</h4>
+					<div class="stars">
+						<form action="">
+							<input class="star star-5" id="star-5-3" type="radio" name="star"/>
+							<label class="star star-5 setWorkload" for="star-5-3"  value=5></label>
+							<input class="star star-4" id="star-4-3" type="radio" name="star"/>
+							<label class="star star-4 setWorkload" for="star-4-3" value=4></label>
+							<input class="star star-3" id="star-3-3" type="radio" name="star"/>
+							<label class="star star-3 setWorkload" for="star-3-3" value=3></label>
+							<input class="star star-2" id="star-2-3" type="radio" name="star"/>
+							<label class="star star-2 setWorkload" for="star-2-3" value=2></label>
+							<input class="star star-1" id="star-1-3" type="radio" name="star"/>
+							<label class="star star-1 setWorkload" for="star-1-3" value=1></label>
+						</form>
+					</div>
+				</div>
+
+				<div class="col-3">
+					<h4 class="reviewOverall">Grading:</h4>
+					<div class="stars">
+						<form action="">
+							<input class="star star-5" id="star-5-5" type="radio" name="star"/>
+							<label class="star star-5 setGrading" for="star-5-5"
+							value=5></label>
+							<input class="star star-4" id="star-4-5" type="radio" name="star"/>
+							<label class="star star-4 setGrading" for="star-4-5"
+							value=4></label>
+							<input class="star star-3" id="star-3-5" type="radio" name="star"/>
+							<label class="star star-3 setGrading" for="star-3-5"
+							value=3></label>
+							<input class="star star-2" id="star-2-5" type="radio" name="star"/>
+							<label class="star star-2 setGrading" for="star-2-5"
+							value=2></label>
+							<input class="star star-1" id="star-1-5" type="radio" name="star"/>
+							<label class="star star-1 setGrading" for="star-1-5"
+							value=1></label>
+						</form>
+					</div>
+				</div>
 
 					</div>
 
@@ -704,7 +713,7 @@
 						</div>
 
 						<div class="col">
-							<select class="form-control form-control-lg semesterDropdown">
+							<select id="semDropdown" class="form-control form-control-lg semesterDropdown">
 								<option>Semester you took this class</option>
 								<option value="FL2017">Fall 2017</option>
 								<option value="SP2017">Spring 2017</option>
@@ -724,7 +733,7 @@
 						<textarea class="form-control" id="exampleTextarea" rows="5"></textarea>
 					</div>
 
-					<button class="go btn btn-primary reviewButton" type="submit">Submit</button>
+					<button id="submitReview" class="go btn btn-primary reviewButton" type="submit">Submit</button>
 
 				</div>
 

@@ -44,12 +44,76 @@ $(() => {
         changeToPage(searchPage);
     });
     $('.goToReviewPage').click(() => {
+        var reviewClassId = document.getElementById('classFocusNumber').innerHTML;
         changeToPage(reviewPage);
+        var parsedReviewText = getInfoById(reviewClassId);
+        document.getElementById('schoolToReview').innerHTML = parsedReviewText.school;
+        document.getElementById('deptToReview').innerHTML = parsedReviewText.dept;
+        document.getElementById('classToReview').innerHTML = parsedReviewText.id;
+        document.getElementById('valToReview').innerHTML = parsedReviewText.commonVal;
+
     });
     $('.goToClassPage').click(() => {
         changeToPage(classPage);
     });
+
+    var overallRating = 0;
+    var difficultyRating = 0;
+    var contentRating = 0;
+    var workloadRating = 0;
+    var gradingRating = 0;
+
+    $('.setOverall').click((obj) => {
+        console.dir(obj);
+        
+        console.log(obj.currentTarget.attributes[2].value);
+        overallRating = obj.currentTarget.attributes[2].value;
+    });
+    $('.setDifficulty').click((obj) => {
+        console.dir(obj);
+        
+        console.log(obj.currentTarget.attributes[2].value);
+        difficultyRating = obj.currentTarget.attributes[2].value;
+    });
+    $('.setContent').click((obj) => {
+        console.dir(obj);
+        
+        console.log(obj.currentTarget.attributes[2].value);
+        contentRating = obj.currentTarget.attributes[2].value;
+    });
+    $('.setWorkload').click((obj) => {
+        console.dir(obj);
+        
+        console.log(obj.currentTarget.attributes[2].value);
+        workloadRating = obj.currentTarget.attributes[2].value;
+    });
+    $('.setGrading').click((obj) => {
+        console.dir(obj);
+        
+        console.log(obj.currentTarget.attributes[2].value);
+        gradingRating = obj.currentTarget.attributes[2].value;
+    });
     
+
+    $('#submitReview').click(() => {
+        var semTaken = document.getElementById("semDropdown")[document.getElementById("semDropdown").selectedIndex].value;
+        var urlPost = "http://ratemycourse-env.dxtgyiksq8.us-east-2.elasticbeanstalk.com/api/ratings/add?"
+        + "&val="+document.getElementById("valToReview").innerHTML
+        + "&userID="+document.getElementById("userIDToReview").innerHTML
+        + "&score="+overallRating
+        + "&workload="+workloadRating
+        + "&difficulty="+difficultyRating
+        + "&content="+contentRating
+        + "&grading="+gradingRating
+        + "&review="+document.getElementById("exampleTextarea").value
+        + "&isAnon="+document.getElementById("inlineCheckbox1").checked
+        + "&semTaken="+semTaken;
+        console.log(urlPost);
+        var xmlHttpPost = new XMLHttpRequest();
+        xmlHttpPost.open( "POST", urlPost, false ); // false for synchronous request
+        xmlHttpPost.send( null );
+        var parsedText = JSON.parse(xmlHttpPost.responseText);
+    });
 
    
 
