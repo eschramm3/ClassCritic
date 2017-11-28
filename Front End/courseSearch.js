@@ -1,12 +1,7 @@
-
-    //onst olinDeptNameArray = ["All","Accounting (Undergrad)", "Accounting (Grad)", "Administration", "Finance (Undergrad)", "Finance (Grad)", "Human Resource Management", "International Studies", "Management (Undergrad)", "Management (Grad)", "Managerial Economics (Undergrad)", "Managerial Economics (Grad)", "Marketing (Undergrad)", "Marketing (Grad)", "Oper & Manufacturing Mgmt (Undergrad)", "Oper & Manufacturing Mgmt (Grad)", "Operations And Supply Chain Management", "Organizational Behavior", "Quantitative Bus Analysis"];
-    //const olinDeptCodeArray = ["all", "B50", "B60", "B51", "B52", "B62", "B56", "B99", "B53", "B63", "B54", "B64", "B55", "B65", "B57", "B67", "B58", "B66", "B59"];
-
-    //const olinDeptNameArray = ["All","Accounting (Undergrad)", "Accounting (Grad)", "Administration", "Finance (Undergrad)", "Finance (Grad)", "Human Resource Management", "International Studies", "Management (Undergrad)", "Management (Grad)", "Managerial Economics (Undergrad)", "Managerial Economics (Grad)", "Marketing (Undergrad)", "Marketing (Grad)", "Oper & Manufacturing Mgmt (Undergrad)", "Oper & Manufacturing Mgmt (Grad)", "Operations And Supply Chain Management", "Organizational Behavior", "Quantitative Bus Analysis"];
-    //const olinDeptCodeArray = ["all", "B50", "B60", "B51", "B52", "B62", "B56", "B99", "B53", "B63", "B54", "B64", "B55", "B65", "B57", "B67", "B58", "B66", "B59"];
+$(() => {
 
 
-    
+
     const engineeringDeptNameArray = ["All", "Biomedical", "Computer Science and Engineering", "Electrical and Systems", "Energy, Environmental, and Chemical", "General", "Mechanical Engineering and Materials Science"];
     const engineeringDeptCodeArray = ["all", "E62", "E81", "E35", "E44", "E60", "E37"];
 
@@ -16,30 +11,50 @@
     const olinDeptNameArray = ["All","Accounting (Undergrad)", "Accounting (Grad)", "Administration", "Finance (Undergrad)", "Finance (Grad)", "Human Resource Management", "International Studies", "Management (Undergrad)", "Management (Grad)", "Managerial Economics (Undergrad)", "Managerial Economics (Grad)", "Marketing (Undergrad)", "Marketing (Grad)", "Oper & Manufacturing Mgmt (Undergrad)", "Oper & Manufacturing Mgmt (Grad)", "Operations And Supply Chain Management", "Organizational Behavior", "Quantitative Bus Analysis"];
     const olinDeptCodeArray = ["all", "B50", "B60", "B51", "B52", "B62", "B56", "B99", "B53", "B63", "B54", "B64", "B55", "B65", "B57", "B67", "B58", "B66", "B59"];
 
-    function changeToClass() {
-        document.getElementById("searchContentContainer").style.display = "none";
-        document.getElementById("classContentContainer").style.display="block";
-        document.getElementById("reviewContainer").style.display="none";
+
+    const homePage = $('#homePage');
+    const searchPage = $('#searchPage');
+    const classPage = $('#classPage');
+    const reviewPage = $('#reviewPage');
+    const pages = [homePage, searchPage, classPage, reviewPage];
+    let currPage = homePage;
+
+    const changeToPage = (page) => {
+        $('.navbar-collapse').collapse('hide');
+        currPage.toggle();
+        page.toggle();
+        currPage = page;
+        console.log("CHANGING");
+    };
+
+    const getInfoById = (classID) => {
+        var urlClass = 'https://cors-anywhere.herokuapp.com/http://ratemycourse-env.dxtgyiksq8.us-east-2.elasticbeanstalk.com/api/courses/id/' + classID;
+        var xmlHttpClass = new XMLHttpRequest();
+        xmlHttpClass.open( "GET", urlClass, false ); // false for synchronous request
+        xmlHttpClass.send( null );
+        var parsedClassText = JSON.parse(xmlHttpClass.responseText);
+        return parsedClassText;
+    };
+
+    $('.goToHomePage').click(() => {
+        changeToPage(homePage);
+    });
+    $('.goToSearchPage').click(() => {
+        console.log('going to search page');
+        changeToPage(searchPage);
+    });
+    $('.goToReviewPage').click(() => {
+        changeToPage(reviewPage);
+    });
+    $('.goToClassPage').click(() => {
+        changeToPage(classPage);
+    });
     
-    }
 
-    function changeToReview() {
-        document.getElementById("searchContentContainer").style.display = "none";
-        document.getElementById("classContentContainer").style.display="none";
-        document.getElementById("reviewContainer").style.display="block";
-    }
-    
+   
 
-    function changeToPage(page) {
-            page.style.display = "block";
-            for(let p of pages) {
-                console.log(p);
-                if (p !== page) {
-                    p.style.display = "none";
-                }
-            }
-        }
-
+    const attrs = $('#attrBoxes');
+    attrs.multiselect({buttonWidth: '400px', maxHeight: 300,});
 
     const schoolToDept = [engineeringDeptNameArray, engineeringDeptNameArray, olinDeptNameArray, artSciDeptNameArray];
 
@@ -52,48 +67,48 @@
 
     const engineeringAttrKey = "EN";
     const engineeringAttrs = {
-        'DU':   ['Engineering Design Units'],
-        'H':    ['Engineering Humanity'],
-        'LU':   ['Engineering Lab Units'],
-        'S':    ['Engineering Social Science'],
-        'SU':   ['Engineering Science Units'],
-        'TU':   ['Engineering Topics Units']
+        'DU':   'Engineering Design Units',
+        'H':    'Engineering Humanity',
+        'LU':   'Engineering Lab Units',
+        'S':    'Engineering Social Science',
+        'SU':   'Engineering Science Units',
+        'TU':   'Engineering Topics Units'
     };
 
     const businessAttrKey = "BU";
     const businessAttrs = {
-        'BA':   ['Behavioral Analysis'],
-        'ETH':  ['Ethics/Values'],
-        'HUM':  ['Humanities', 45],
-        'IS':   ['International Studies'],
-        'SCI':  ['Physical/Life Science']
+        'BA':   'Behavioral Analysis',
+        'ETH':  'Ethics/Values',
+        'HUM':  'Humanities',
+        'IS':   'International Studies',
+        'SCI':  'Physical/Life Science'
     };
 
     const artSciAttrKey = "A&S";
     const artSciAttrs = {
-        'LA': ['Language and Arts', 7],
-        'NS': ['Natural Sciences and Mathematics'],
-        'SS': ['Social Sciences'],
-        'TH': ['Textual and Historical Studies', 6],
-        'CD': ['Cultural Diversity'],
-        'QA': ['Quantitative Analysis'],
-        'SD': ['Social Differentiation Disc', 11],
-        'WI': ['Writing Intensive Disc', 12]
+        'LA': 'Language and Arts',
+        'NS': 'Natural Sciences and Mathematics',
+        'SS': 'Social Sciences',
+        'TH': 'Textual and Historical Studies',
+        'CD': 'Cultural Diversity',
+        'QA': 'Quantitative Analysis',
+        'SD': 'Social Differentiation Disc',
+        'WI': 'Writing Intensive Disc'
     };
-
     const artSciIQAttrKey = "A&S IQ";
     const artSciIQAttrs = {
-        'AN': ['Applied Numeracy'],
-        'LS': ['Language & Cultural Diversity - Language'],
-        'SD': ['Social Differentiation IQ', 110],
-        'WI': ['Writing Intensive IQ', 111],
-        'HUM': ['Humanities', 103],
-        'LCD': ['Language & Cultural Diversity - Culture'],
-        'NSM': ['Natural Sciences and Mathematics'],
-        'SSC': ['Social Sciences', 105]
+        'AN': 'Applied Numeracy',
+        'LS': 'Language & Cultural Diversity - Language',
+        'SD': 'Social Differentiation IQ',
+        'WI': 'Writing Intensive IQ',
+        'HUM': 'Humanities',
+        'LCD': 'Language & Cultural Diversity - Culture',
+        'NSM': 'Natural Sciences and Mathematics',
+        'SSC': 'Social Sciences'
     };
 
-    /*Art attributes: (Art)
+    /*
+    Art attributes: (Art)
     AH  FA Art History
     CDES    FA Communication Design
     Comp    FA English Composition
@@ -123,7 +138,8 @@
     GAMUD   GA MUD Track
     GANS    GA Natural Systems
     GARW    GA Research & Writing
-    GAUI    GA Urban Issues*/
+    GAUI    GA Urban Issues
+    */
 
 
     var expanded = false;
@@ -135,36 +151,41 @@
         [artSciIQAttrKey]: artSciIQAttrs
     };
 
-    let dictionary = {};
+    var dictionary = {};
     for (let i = 0; i < engineeringDeptNameArray.length; i++) {
         dictionary[engineeringDeptNameArray[i]] = engineeringDeptCodeArray[i];
     }
-
     for (let i = 0; i < artSciDeptNameArray.length; i++) {
         dictionary[artSciDeptNameArray[i]] = artSciDeptCodeArray[i];
     }
-
     for (let i = 0; i < olinDeptNameArray.length; i++) {
         dictionary[olinDeptNameArray[i]] = olinDeptCodeArray[i];
     }
-
     for (let i = 0; i < engineeringDeptNameArray.length; i++) {
         dictionary[engineeringDeptNameArray[i]] = engineeringDeptCodeArray[i];
     }
 
-    function getCodeFromDeptName(name) {
+    const getCodeFromDeptName = (name) => {
         return dictionary[name];
-    }
+    };
 
-    function newDeptDropDown() {
+    $('#schoolDropdown').on('change', ()=> {
+        console.log("test");
         var deptArray = schoolToDept[document.getElementById("schoolDropdown").selectedIndex];
         document.getElementById("deptDropdown").innerHTML = "";
-        $(document).ready(function(){
-            for (i = 0; i < deptArray.length; i++) {
-                $("#deptDropdown").append('<option class="dropdown-item" href="#">'+deptArray[i]+'</option>');
-            }
-        });
-    }
+        
+        for (i = 0; i < deptArray.length; i++) {
+            $("#deptDropdown").append('<option class="dropdown-item" href="#">'+deptArray[i]+'</option>');
+        }
+        
+    });
+
+    $('#searchButton').on('click', () => {
+        console.log("EYYYY");
+        let keywords = $('#searchBar').text();
+        searchForClass();
+        console.log("DONE");
+    });
 
     const depts = {
         artsci: artSciDeptNameArray,
@@ -192,13 +213,13 @@
     let curr_school = $('#school option:selected').attr("id");
     let curr_dept = $('#dept option:selected').attr("id");
     console.log(curr_school);
-        
+
     $('#school').on('change', () => {
         curr_school = $('#school option:selected').attr("id");
-        // set dept to all
-        $('#dept').empty().append('<option id="all" selected="selected">All</option>');
-        if (curr_school !== 'all') {
-            console.log(depts[curr_school]);
+            // set dept to all
+            $('#dept').empty().append('<option id="all" selected="selected">All</option>');
+            if (curr_school !== 'all') {
+                console.log(depts[curr_school]);
             // 0 is all which is already there
             for (let i = 1; i < depts[curr_school].length; i++) {
                 $('#dept').append("<option id=" + dictionary[depts[curr_school][i]] + ">" + depts[curr_school][i] + "</option>");
@@ -212,7 +233,7 @@
 
     });
 
-    /*const getProducts = () => { 
+    const getProducts = () => { 
         $.ajax({
             type : "POST",
             contentType : "application/json",
@@ -229,146 +250,104 @@
                 //do something
             }
         });
-    }*/
+    };
 
+    let deptSelected = {};
 
-    let deptSelected = {}
-
-
-    function getInfoById(classID) {
-        var urlClass = 'https://cors-anywhere.herokuapp.com/http://ratemycourse-env.dxtgyiksq8.us-east-2.elasticbeanstalk.com/api/courses/id/' + classID;
-        var xmlHttpClass = new XMLHttpRequest();
-        xmlHttpClass.open( "GET", urlClass, false ); // false for synchronous request
-        xmlHttpClass.send( null );
-        var parsedClassText = JSON.parse(xmlHttpClass.responseText);
-        return parsedClassText;
-    }
-
-    function viewRatings(obj) {
-
-        console.log(obj);
-        var parsedClassText = getInfoById(obj);
-        changeToClass();
-        document.getElementById('classFocusNumber').innerHTML = parsedClassText.id;
-        document.getElementById('classFocusName').innerHTML = parsedClassText.name;
-        document.getElementById('classDescription').innerHTML = parsedClassText.description;
-        //document.getElementById('classDescription').innerHTML = parsedClassText.description;
-    }
-
-    function changeRateToReview() {
-
-        courseIDToReview = document.getElementById('classFocusNumber');
-
-        
-        var parsedReviewText = getInfoById(courseIDToReview);
-        changeToReview();
-        console.log(parsedReviewText);
-        document.getElementById('schoolToReview').innerHTML = parsedReviewText.school;
-        //document.getElementById('classDescription').innerHTML = parsedClassText.description;
-    }
 
     
 
-    function getProducts() {
+    const viewRatings = (courseId) => {
+        console.log(courseId);
+        changeToPage(classPage);
+        var parsedClassText = getInfoById(courseId);
+        document.getElementById('classFocusNumber').innerHTML = parsedClassText.id;
+        document.getElementById('classFocusName').innerHTML = parsedClassText.name;
+        document.getElementById('classDescription').innerHTML = parsedClassText.description;
+    };
 
-        
+    
+    function searchForClass() {
 
-
+        console.log('search button clicked!');
         var school = document.getElementById("schoolDropdown");
         var schoolSelected = school.options[school.selectedIndex].value;
         var dept = document.getElementById("deptDropdown");
         deptSelected = dept.options[dept.selectedIndex].innerHTML;
+
         
-        var attrs = document.getElementById("attrBoxes");
         //var attrSelected = attrs.options[attrs.selectedOptions].value;
 
+
+        // $.getJSON( url + "/api/courses/find", {school:'e', dept:'e81'}, (data) => {
+        //     console.log('success!');
+        //     console.dir(data);
+        // })
+        // .done(function() {
+        //     console.log( "second success" );
+        // })
+        // .fail(function() {
+        //     console.log( "error" );
+        // });
 
 
         console.log(deptSelected);
         console.log(dictionary);
         console.log(dictionary[deptSelected]);
-        const proxyurl = "https://cors-anywhere.herokuapp.com/";
-        var url = "http://ratemycourse-env.dxtgyiksq8.us-east-2.elasticbeanstalk.com/api/courses/find?school="
-        + schoolSelected + "&dept=" + dictionary[deptSelected]; // site that doesn't send Access-Control-*
+        //const proxyurl = "https://cors-anywhere.herokuapp.com/";
         
-        for (i = 0; i < attrs.selectedOptions.length; i++) {
-            url = url + "&attrs=" + attrs.selectedOptions[i].value;
+        //+ schoolSelected + "&dept=" + dictionary[deptSelected]; // site that doesn't send Access-Control-*
+        
+
+        var urlFind = url + "/api/courses/find?school="+ schoolSelected + "&dept=" + dictionary[deptSelected];
+        /*console.log(attrs);
+        console.log(attrs.selectedOptions);
+        console.log(document.getElementById('attrBoxes'));
+        console.log(document.getElementById('attrBoxes').selectedOptions);
+
+        attrs = document.getElementById('attrBoxes');*/
+        //url = url +
+        for (i = 0; i < document.getElementById('attrBoxes').selectedOptions.length; i++) {
+            console.log(i);
+            urlFind = urlFind + "&attrs=" + document.getElementById('attrBoxes').selectedOptions[i].value;
         }
 
 
-        console.log(url);
+        console.log(urlFind);
         var xmlHttp = new XMLHttpRequest();
-        xmlHttp.open( "GET", proxyurl+url, false ); // false for synchronous request
+        xmlHttp.open( "GET", urlFind, false ); // false for synchronous request
         xmlHttp.send( null );
         var parsedText = JSON.parse(xmlHttp.responseText);
 
-    
         document.getElementById("rowMain").innerHTML = "";
 
         for (i = 0; i < parsedText.content.length; i++) {
             console.log(parsedText.content[i]);
-            var temp = parsedText.content[i];
-            var newString = "<a href='#' target='_blank' class='col-9 individualClass'>"
+            var newString = "<div class='col-9 individualClass'>"
             +"<h2 class='classNumber'>"+parsedText.content[i].number
-            +"</h2><h1 class='className' value='"+parsedText.content[i].id
-            +"' onclick=viewRatings('"+parsedText.content[i].id+"')>"
+            +"</h2><h1 value='"+parsedText.content[i].id+"'"
+            +" class='courseTitle'>"
             +parsedText.content[i].name+"</h1>"
             +"<i class='star fa fa-star fa-2x' aria-hidden='true'></i>"
             +"<i class='star fa fa-star fa-2x' aria-hidden='true'></i>"
             +"<i class='star fa fa-star fa-2x' aria-hidden='true'></i>"
             +"<i class='star fa fa-star-half-o fa-2x' aria-hidden='true'></i>"
             +"<i class='star fa fa fa-star-o fa-2x' aria-hidden='true'></i>"
-            +"</a>";
+            +"</div>";
             $("#rowMain").append(newString);
         }
-        
+        console.log("END OF FUNC HOPEFULLY");
+        //return 0;
+        $('.courseTitle').click((obj) => {
+            console.dir(obj);
+            console.log(obj.value);
+            viewRatings(obj.currentTarget.attributes[0].value);
+        });
+
+    
     }
 
-    var overallRating = 0;
-    var difficultyRating = 0;
-    var contentRating = 0;
-    var workloadRating = 0;
-    var gradingRating = 0;
 
-    function setOverall(num) {
-        console.log(num);
-        overallRating = num;
-    }
-    function setDifficulty(num) {
-        console.log(num);
-        difficultyRating = num;
-    }
-    function setContent(num) {
-        console.log(num);
-        contentRating = num;
-    }
-    function setWorkload(num) {
-        console.log(num);
-        workloadRating = num;
-    }
-    function setGrading(num) {
-        console.log(num);
-        gradingRating = num;
-    }
-
-    function leaveReview() {
-        var urlPost = "https://cors-anywhere.herokuapp.com/"
-        + "http://ratemycourse-env.dxtgyiksq8.us-east-2.elasticbeanstalk.com/api/ratings/add?"
-        + "val="+document.getElementById("valToReview").innerHTML
-        + "userID="+document.getElementById("userIDToReview").innerHTML
-        + "score="+document.getElementById("valToReview").innerHTML
-        + "val="+document.getElementById("valToReview").innerHTML
-        + "val="+document.getElementById("valToReview").innerHTML
-        + "val="+document.getElementById("valToReview").innerHTML
-        + "val="+document.getElementById("valToReview").innerHTML
-        + "val="+document.getElementById("valToReview").innerHTML
-        var xmlHttpPost = new XMLHttpRequest();
-        xmlHttpPost.open( "POST", proxyurl+url, false ); // false for synchronous request
-        xmlHttpPost.send( null );
-        var parsedText = JSON.parse(xmlHttpPost.responseText);
-    }
-
-    /*http://ratemycourse-env.dxtgyiksq8.us-east-2.elasticbeanstalk.com/
-    api/ratings/add?val=55&userID=dteich&score=5&workload=5&difficulty=5&
-    content=4&grading=4&review=Tough but great!&isAnon=false&
-    semTaken=FL2016*/
+    //$('#searchButton').click(searchForClass);
+    
+});
