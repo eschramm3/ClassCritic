@@ -165,14 +165,35 @@ $(() => {
                 return appendCourses(data);
             }
             else if (currPage === classPage) {
-
+                if (api.includes('course')) {
+                    $('#valToReview').html(data.commonVal);
+                    return viewRatings(data);
+                }
+                else {
+                    return appendRatings(data);
+                }
+            }
+            else if (currPage === reviewPage) {
+                return fillReview(data);
             }
         })
-        // .done((data) => {
-        //     console.log( "Done! success!" );
-        //     console.dir(data);
-        //     return data;
-        // })
+        .fail((e) => {
+            console.log( "error" );
+            console.dir(e);
+        })
+        .always(() => {
+            console.log( "complete" );
+        });
+    };
+
+    const getClass = (api, params) => { 
+        $.getJSON(url + api, params, (data) => {
+            // now you have "data" which is in json format-same data that is displayed on browser.
+            console.log('request succeeded');
+            console.dir(data);
+            $('#valToReview').html(data.commonVal);
+            return fillReview(data);
+        })
         .fail((e) => {
             console.log( "error" );
             console.dir(e);
@@ -225,15 +246,24 @@ $(() => {
         changeToPage(searchPage);
     });
 
+    const fillReview = (parsedReviewText) => {
+        $('#valToReview').html(parsedReviewText.commonVal);
+        $('#reviewSchoolDropdown option[value='+ parsedReviewText.school +']').attr("selected", "selected");
+        $('#reviewDeptDropdown option[value='+ parsedReviewText.dept +']').attr('selected', 'selected');
+    };
+
     $('.goToReviewPage').click(() => {
-        if (currPage === searchPage) {
-            const reviewClassId = $('#classFocusNumber').text();
-            const courseInfo = getClassById(reviewClassId);
-            $('#reviewSchoolDropdown option[value='+ courseInfo.school +']').attr("selected", "selected");
-            $('#reviewDeptDropdown option[value='+ courseInfo.dept +']').attr('selected', 'selected');
-        }
         checkLoginState();
-        changeToPage(reviewPage);
+        if (currPage === classPage) {
+            const reviewClassId = $('#classFocusNumber').text();
+            console.log(reviewClassId);
+            changeToPage(reviewPage);
+            getClassById(reviewClassId);
+        }
+        else {
+            changeToPage(reviewPage);    
+        }
+        
     });
 
     $('.goToClassPage').click(() => {
@@ -290,9 +320,9 @@ $(() => {
         const semTaken = $("#semDropdown").val();
         if (overallRating > 0 && contentRating > 0 && gradingRating > 0 && workloadRating > 0 && difficultyRating > 0) {
             const classId = $("#reviewClassDropdown option:selected").val();
-            const curr_class = getClassById(classId);
+            // const curr_class = getClassById(classId);
             const urlPost = "/api/ratings/add?"
-            + "&val=" + curr_class.val
+            + "&val=" + $('#valToReview').html()
             + "&userID=" + userId
             + "&score=" + overallRating
             + "&workload=" + workloadRating
@@ -300,7 +330,7 @@ $(() => {
             + "&content=" + contentRating
             + "&grading=" + gradingRating
             + "&review=" + $("#exampleTextarea").text()
-            + "&isAnon=" + $("#inlineCheckbox1").attr('checked')
+            + "&isAnon=" + $("#inlineCheckbox1").is(":checked")
             + "&semTaken=" + semTaken;
             console.log(urlPost);
             postRating(urlPost);
@@ -333,7 +363,7 @@ $(() => {
 
     $('#reviewSchoolDropdown').on('change', ()=> {
         console.log("test");
-        var deptArray = schoolToDepts[document.getElementById("reviewSchoolDropdown").selectedIndex];
+        var deptArray = schoolToDepts[$("#reviewSchoolDropdown").val()];
         document.getElementById("reviewDeptDropdown").innerHTML = "";
         document.getElementById("reviewClassDropdown").innerHTML = '<option class="btn btn-secondary dropdown-toggle" href="https://example.com" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Class</option>';
 
@@ -343,18 +373,26 @@ $(() => {
         
     });
 
+    var schoolDictionary = {
+        'Engineering and Applied Sciences': 'E',
+        'Olin School of Business': 'B',
+        'Arts and Sciences': 'L',
+        'Art': 'F',
+        'Architecture': 'A'
+    };
+
     $('#reviewDeptDropdown').on('change', ()=> {
         console.log("test");
         //var deptArray = schoolToDepts[document.getElementById("reviewSchoolDropdown").selectedIndex];
         document.getElementById("reviewClassDropdown").innerHTML = '<option class="btn btn-secondary dropdown-toggle" href="https://example.com" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Class</option>';
 
         var school = document.getElementById("reviewSchoolDropdown");
-        var schoolSelected = school.options[school.selectedIndex].value;
+        var schoolSelected = $("#reviewSchoolDropdown").val();
         var dept = document.getElementById("reviewDeptDropdown");
         var deptSelected = dept.options[dept.selectedIndex].innerHTML;
 
 
-        var urlFind = "http://Ratemycourse-env.dxtgyiksq8.us-east-2.elasticbeanstalk.com/api/courses/find?school="+schoolDictionary[schoolSelected]+"&dept="+dictionary[deptSelected];
+        var urlFind = "http://Ratemycourse-env.dxtgyiksq8.us-east-2.elasticbeanstalk.com/api/courses/find?school="+schoolSelected+"&dept="+dictionary[deptSelected];
         console.log(urlFind);
         var xmlHttp = new XMLHttpRequest();
         xmlHttp.open( "GET", urlFind, false ); // false for synchronous request
@@ -368,9 +406,6 @@ $(() => {
         }
         
     });
-
-
-
 
     // SEARCH ----------------------------------------------------------------------------------------------------
 
@@ -387,10 +422,10 @@ $(() => {
         const example = $('#row1');
         $.each(courses, (i, c) => {
             let output = "<div class='col-9 individualClass' id='"
-                + c.id + "_SearchListing'>"
-                + "<h2 class='classNumber'>" + c.number
-                + "</h2><h1 value='" + c.id + "'"
-                + " class='courseTitle'>" + c.name + "</h1>";
+            + c.id + "_SearchListing'>"
+            + "<h2 class='classNumber'>" + c.number
+            + "</h2><h1 value='" + c.id + "'"
+            + " class='courseTitle'><a>" + c.name + "</a></h1>";
             const numStars = c.parent.avgScore;    
             for (let j = 1; j < 6; j++) {
                 if (j <= numStars) {
@@ -401,10 +436,10 @@ $(() => {
                 }
             }
                 // + "<i class='star fa fa-star-half-o fa-2x' aria-hidden='true'></i>"
-            output += "</div>";
-            $("#rowMain").append(output);
+                output += "</div>";
+                $("#rowMain").append(output);
 
-        });
+            });
         $("#rowMain").show();
         // $('#loadMoreRatings').show();
 
@@ -412,7 +447,9 @@ $(() => {
             console.dir(obj);
             let crsId = obj.target.parentElement.id;
             crsId = crsId.substring(0, crsId.indexOf('_'));
-            viewRatings(crsId);
+            console.log(crsId);
+            changeToPage(classPage);
+            getClassById(crsId);
         });
     };
 
@@ -489,6 +526,7 @@ $(() => {
     });
 
     $('#searchButton').click(() => {
+        changeToPage(searchPage);
         console.log("searchbar search");
         const key = $('#searchBar').val();
         console.log(key);
@@ -499,33 +537,151 @@ $(() => {
 
     let deptSelected = {};
 
-    const viewRatings = (courseId) => {
-        console.log(courseId);
-        changeToPage(classPage);
-        var parsedClassText = getClassById(courseId);
-        var parsedRatingsText = getRatingsById(parsedClassText.commonVal);
+    const addStars = (elem, numStars, size) => {
+        for (let j = 1; j < 6; j++) {
+            if (j <= numStars) {
+                elem.append("<i class='star fa fa-star fa-"+size+"x' aria-hidden='true'></i>");
+            }
+            else {
+                elem.append("<i class='star fa fa fa-star-o fa-"+size+"x' aria-hidden='true'></i>");
+            }
+        }
+    };
 
+    let parsedClassText;
+
+    const viewRatings = (data) => {
+        console.dir(data);
+        parsedClassText = data;
+        getRatingsById(data.id);
+    };
+
+    const appendRatings = (parsedRatingsText) => {
         console.log(parsedRatingsText);
 
         $('#classFocusNumber').html(parsedClassText.id);
         $('#classFocusName').html(parsedClassText.name);
         $('#classDescription').html(parsedClassText.description);
+        $('#valToReview').html(parsedClassText.commonVal);
         
+        var newDiv = document.getElementById('firstRating');
+        $('#ratingsContainer').html('');
+
+        let avgOverallRatings = $('#avgOverallRatings');
+        let difficultyAVG = $('#difficultyAVG');
+        let workloadAVG = $('#workloadAVG');
+        let contentAVG = $('#contentAVG');
+        let gradingAVG = $('#gradingAVG');
+
+        if (parsedRatingsText.content.length > 0) {
+
+            avgOverallRatings.html('');
+            addStars(avgOverallRatings, parsedRatingsText.content[0].uniqueCourse.avgScore, 4);
+            avgOverallRatings.append('<h7>'+parsedRatingsText.content[0].uniqueCourse.avgScore.toFixed(1)+'</h7>');
+
+            difficultyAVG.html('<h2>Difficulty: </h2>');
+            addStars(difficultyAVG, parsedRatingsText.content[0].uniqueCourse.avgDifficulty, 3);
+            difficultyAVG.append('<h7>'+parsedRatingsText.content[0].uniqueCourse.avgDifficulty.toFixed(1)+'</h7>');
+
+            workloadAVG.html('<h2>Workload: </h2>');
+            addStars(workloadAVG, parsedRatingsText.content[0].uniqueCourse.avgWorkload, 3);
+            workloadAVG.append('<h7>'+parsedRatingsText.content[0].uniqueCourse.avgWorkload.toFixed(1)+'</h7>');
+
+            contentAVG.html('<h2>Content: </h2>');
+            addStars(contentAVG, parsedRatingsText.content[0].uniqueCourse.avgContent, 3);
+            contentAVG.append('<h7>'+parsedRatingsText.content[0].uniqueCourse.avgContent.toFixed(1)+'</h7>');
+            
+            gradingAVG.html('<h2>Grading: </h2>');
+            addStars(gradingAVG, parsedRatingsText.content[0].uniqueCourse.avgGrading, 3);
+            gradingAVG.append('<h7>'+parsedRatingsText.content[0].uniqueCourse.avgGrading.toFixed(1)+'</h7>');
+
+        }
+        else {
+            difficultyAVG.html('<h2>Difficulty: </h2>');
+            contentAVG.html('<h2>Content: </h2>');
+            workloadAVG.html('<h2>Workload: </h2>');
+            gradingAVG.html('<h2>Grading: </h2>');
+            avgOverallRatings.html('');
+
+            for (let j = 1; j < 6; j++) {
+                document.getElementById('avgOverallRatings').innerHTML += "<i class='star fa fa-star-o fa-3x' aria-hidden='true'></i>";
+                document.getElementById('difficultyAVG').innerHTML += "<i class='star fa fa-star-o fa-3x' aria-hidden='true'></i>";
+                document.getElementById('contentAVG').innerHTML += "<i class='star fa fa-star-o fa-3x' aria-hidden='true'></i>";
+                document.getElementById('workloadAVG').innerHTML += "<i class='star fa fa-star-o fa-3x' aria-hidden='true'></i>";
+                document.getElementById('gradingAVG').innerHTML += "<i class='star fa fa-star-o fa-3x' aria-hidden='true'></i>";
+            } 
+            difficultyAVG.append('<h7>0.0</h7>');
+            contentAVG.append('<h7>0.0</h7>');
+            workloadAVG.append('<h7>0.0</h7>');
+            gradingAVG.append('<h7>0.0</h7>');
+            avgOverallRatings.append('<h7>0.0</h7>');
+        }
+
         for (i = 0; i < parsedRatingsText.content.length; i++) {
-            var newDiv = document.getElementById('firstRating');
             var clone = newDiv.cloneNode(true);
-            clone.children[0].children[2].children[0].innerHTML = parsedRatingsText.description;
-            document.getElementById('ratingsContainer').innerHTML += clone;
+            // clone.style.display="inline-block";
+            clone.children[0].children[1].children[0].children[0].children[6].innerHTML = parsedRatingsText.content[i].difficulty;
+            clone.children[0].children[1].children[0].children[1].children[6].innerHTML = parsedRatingsText.content[i].content;
+            clone.children[0].children[1].children[1].children[0].children[6].innerHTML = parsedRatingsText.content[i].workload;
+            clone.children[0].children[1].children[1].children[1].children[6].innerHTML = parsedRatingsText.content[i].grading;
+            // clone.children[0].children[2].children[0].innerHTML = parsedRatingsText.content[i].review;
+
+            clone.children[0].children[1].children[0].children[0].innerHTML = "<h5>Difficulty: </h5>"
+            for (let j = 1; j < 6; j++) {
+                if (j <= parsedRatingsText.content[i].difficulty) {
+                    clone.children[0].children[1].children[0].children[0].innerHTML += "<i class='star fa fa-star fa-2x' aria-hidden='true'></i>";
+                }
+                else {
+                    clone.children[0].children[1].children[0].children[0].innerHTML += "<i class='star fa fa fa-star-o fa-2x' aria-hidden='true'></i>";
+                }
+            }
+            clone.children[0].children[1].children[0].children[0].innerHTML += "<h7>"+parsedRatingsText.content[i].difficulty+"</h7>";
+
+            clone.children[0].children[1].children[0].children[1].innerHTML = "<h5>Content: </h5>"
+            for (let j = 1; j < 6; j++) {
+                if (j <= parsedRatingsText.content[i].content) {
+                    clone.children[0].children[1].children[0].children[1].innerHTML += "<i class='star fa fa-star fa-2x' aria-hidden='true'></i>";
+                }
+                else {
+                    clone.children[0].children[1].children[0].children[1].innerHTML += "<i class='star fa fa fa-star-o fa-2x' aria-hidden='true'></i>";
+                }
+            }
+            clone.children[0].children[1].children[0].children[1].innerHTML += "<h7>"+parsedRatingsText.content[i].content+"</h7>";
+
+            clone.children[0].children[1].children[1].children[0].innerHTML = "<h5> Workload: </h5>"
+            for (let j = 1; j < 6; j++) {
+                if (j <= parsedRatingsText.content[i].workload) {
+                    clone.children[0].children[1].children[1].children[0].innerHTML += "<i class='star fa fa-star fa-2x' aria-hidden='true'></i>";
+                }
+                else {
+                    clone.children[0].children[1].children[1].children[0].innerHTML += "<i class='star fa fa fa-star-o fa-2x' aria-hidden='true'></i>";
+                }
+            }
+            clone.children[0].children[1].children[1].children[0].innerHTML += "<h7>"+parsedRatingsText.content[i].workload+"</h7>";
+
+            clone.children[0].children[1].children[1].children[1].innerHTML = "<h5>Grading: </h5>"
+            for (let j = 1; j < 6; j++) {
+                if (j <= parsedRatingsText.content[i].grading) {
+                    clone.children[0].children[1].children[1].children[1].innerHTML += "<i class='star fa fa-star fa-2x' aria-hidden='true'></i>";
+                }
+                else {
+                    clone.children[0].children[1].children[1].children[1].innerHTML += "<i class='star fa fa fa-star-o fa-2x' aria-hidden='true'></i>";
+                }
+            }
+            clone.children[0].children[0].children[1].children[1].innerHTML = "<strong>Taken:</strong> " + parsedRatingsText.content[i].semTaken;
+            clone.children[0].children[1].children[1].children[1].innerHTML += "<h7>"+parsedRatingsText.content[i].grading+"</h7>";
+
+
+            clone.children[0].children[2].children[0].innerHTML = parsedRatingsText.content[i].review;
+            document.getElementById('ratingsContainer').appendChild(clone);
+            console.log(clone);
             console.log("HI");
             
             //console.log
         }
-        
-        var oldReview = 'lhjg';
-
-
     };
 
+    
     
 
 
